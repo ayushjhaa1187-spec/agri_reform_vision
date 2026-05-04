@@ -1,0 +1,37 @@
+version: '3.8'
+
+services:
+  backend:
+    build:
+      context: .
+      dockerfile: backend/Dockerfile
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    environment:
+      - REDIS_HOST=redis
+      - DATABASE_URL=postgresql://user:password@db:5432/agri_db
+      - GOOGLE_API_KEY=${GOOGLE_API_KEY}
+    depends_on:
+      - redis
+      - db
+
+  redis:
+    image: "redis:alpine"
+    ports:
+      - "6379:6379"
+
+  db:
+    image: "postgres:15-alpine"
+    environment:
+      - POSTGRES_USER=user
+      - POSTGRES_PASSWORD=password
+      - POSTGRES_DB=agri_db
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+volumes:
+  postgres_data:
