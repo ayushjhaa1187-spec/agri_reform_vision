@@ -1,27 +1,25 @@
 import { useState } from 'react';
+import { Link, useLocation } from 'react-router-dom';
 
-interface NavigationProps {
-  onNavigate: (section: string) => void;
-}
-
-export default function Navigation({ onNavigate }: NavigationProps) {
+export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const location = useLocation();
 
   const navItems = [
-    { name: 'Overview', href: 'hero' },
-    { name: 'Architecture', href: 'architecture' },
-    { name: 'Agents', href: 'agents' },
-    { name: 'Negotiation', href: 'negotiation' },
-    { name: 'Workflows', href: 'workflows' },
-    { name: 'Tech Stack', href: 'tech-stack' },
-    { name: 'Sprint', href: 'timeline' },
-    { name: 'Dev Book', href: 'command-book' },
-    { name: 'Demo', href: 'connect' }
+    { name: 'Overview', href: '/' },
+    { name: 'Architecture', href: '/architecture' },
+    { name: 'Agents', href: '/agents' },
+    { name: 'Negotiation', href: '/negotiation' },
+    { name: 'Workflows', href: '/workflows' },
+    { name: 'Tech Stack', href: '/tech-stack' },
+    { name: 'Sprint', href: '/timeline' },
+    { name: 'Dev Book', href: '/dev-book' },
+    { name: 'Demo', href: '/demo' }
   ];
 
-  const handleNavClick = (href: string) => {
-    onNavigate(href);
+  const handleNavClick = () => {
     setIsMenuOpen(false);
+    window.scrollTo(0, 0);
   };
 
   return (
@@ -29,32 +27,38 @@ export default function Navigation({ onNavigate }: NavigationProps) {
       <div className="max-w-7xl mx-auto px-6">
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
-          <button onClick={() => handleNavClick('hero')} className="flex items-center gap-3">
+          <Link to="/" onClick={handleNavClick} className="flex items-center gap-3">
             <span className="text-2xl">🌾</span>
             <span className="text-white font-bold text-lg hidden sm:block">Agri-Intelligence</span>
-          </button>
+          </Link>
 
           {/* Desktop Navigation */}
           <div className="hidden lg:flex items-center gap-1">
             {navItems.map((item) => (
-              <button
+              <Link
                 key={item.name}
-                onClick={() => handleNavClick(item.href)}
-                className="px-3 py-2 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg text-sm font-medium transition-colors"
+                to={item.href}
+                onClick={handleNavClick}
+                className={`px-3 py-2 rounded-lg text-sm font-medium transition-colors ${
+                  location.pathname === item.href
+                    ? 'bg-emerald-500/10 text-emerald-400'
+                    : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                }`}
               >
                 {item.name}
-              </button>
+              </Link>
             ))}
           </div>
 
           {/* CTA Button */}
           <div className="hidden lg:block">
-            <button
-              onClick={() => handleNavClick('connect')}
+            <Link
+              to="/demo"
+              onClick={handleNavClick}
               className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-lg hover:from-emerald-600 hover:to-teal-600 transition-all duration-300 text-sm"
             >
               Live Demo
-            </button>
+            </Link>
           </div>
 
           {/* Mobile Menu Button */}
@@ -78,20 +82,26 @@ export default function Navigation({ onNavigate }: NavigationProps) {
           <div className="lg:hidden py-4 border-t border-slate-800">
             <div className="flex flex-col gap-1">
               {navItems.map((item) => (
-                <button
+                <Link
                   key={item.name}
-                  onClick={() => handleNavClick(item.href)}
-                  className="px-4 py-3 text-slate-300 hover:text-white hover:bg-slate-800 rounded-lg text-sm font-medium transition-colors text-left"
+                  to={item.href}
+                  onClick={handleNavClick}
+                  className={`px-4 py-3 rounded-lg text-sm font-medium transition-colors text-left ${
+                    location.pathname === item.href
+                      ? 'bg-emerald-500/10 text-emerald-400'
+                      : 'text-slate-300 hover:text-white hover:bg-slate-800'
+                  }`}
                 >
                   {item.name}
-                </button>
+                </Link>
               ))}
-              <button
-                onClick={() => handleNavClick('connect')}
+              <Link
+                to="/demo"
+                onClick={handleNavClick}
                 className="mx-4 mt-2 px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-lg text-sm text-center"
               >
                 Live Demo
-              </button>
+              </Link>
             </div>
           </div>
         )}

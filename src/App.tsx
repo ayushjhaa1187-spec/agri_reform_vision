@@ -1,46 +1,36 @@
+import { BrowserRouter as Router, Routes, Route } from 'react-router-dom';
 import Navigation from './components/Navigation';
-import Hero from './components/Hero';
-import DeveloperCommandBook from './components/DeveloperCommandBook';
-import ExecutiveSummary from './components/ExecutiveSummary';
-import SystemArchitecture from './components/SystemArchitecture';
-import MultiAgentSystem from './components/MultiAgentSystem';
-import NegotiationProtocol from './components/NegotiationProtocol';
-import Workflows from './components/Workflows';
-import Solution from './components/Solution';
-import TechStack from './components/TechStack';
-import Timeline from './components/Timeline';
-import SuccessCriteria from './components/SuccessCriteria';
-import Impact from './components/Impact';
-import ConnectScreen from './components/ConnectScreen';
 import Footer from './components/Footer';
+import Home from './pages/Home';
+import Architecture from './pages/Architecture';
+import Agents from './pages/Agents';
+import Negotiation from './pages/Negotiation';
+import Workflows from './pages/Workflows';
+import TechStack from './pages/TechStack';
+import Timeline from './pages/Timeline';
+import DevBook from './pages/DevBook';
+import Demo from './pages/Demo';
 
 export default function App() {
-  const handleNavigate = (section: string) => {
-    const element = document.getElementById(section);
-    if (element) {
-      element.scrollIntoView({ behavior: 'smooth' });
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-slate-50">
-      <Navigation onNavigate={handleNavigate} />
-      <main>
-        <Hero onNavigate={handleNavigate} />
-        <ExecutiveSummary />
-        <SystemArchitecture />
-        <MultiAgentSystem />
-        <NegotiationProtocol />
-        <Workflows />
-        <Solution />
-        <TechStack />
-        <Timeline />
-        <SuccessCriteria />
-        <Impact />
-        <DeveloperCommandBook />
-        <ConnectScreen />
-      </main>
-      <Footer />
-    </div>
+    <Router>
+      <div className="min-h-screen bg-slate-50">
+        <Navigation />
+        <main>
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/architecture" element={<Architecture />} />
+            <Route path="/agents" element={<Agents />} />
+            <Route path="/negotiation" element={<Negotiation />} />
+            <Route path="/workflows" element={<Workflows />} />
+            <Route path="/tech-stack" element={<TechStack />} />
+            <Route path="/timeline" element={<Timeline />} />
+            <Route path="/dev-book" element={<DevBook />} />
+            <Route path="/demo" element={<Demo />} />
+          </Routes>
+        </main>
+        <Footer />
+      </div>
+    </Router>
   );
 }
