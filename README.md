@@ -1,137 +1,284 @@
-```markdown
 # Agri-Intelligence
-**Agri‑Intelligence** is more than a hackathon project. It’s a living, learning, and negotiating farm brain — built to put the power of AI into the hands of those who feed the world.
 
-*If you’re a farmer, agronomist, developer, or policymaker — we’d love to collaborate. Let’s make every farm intelligent.*
 **Autonomous Multi-Agent Farming Ecosystem**  
 *From reactive monitoring to proactive, explainable AI decisions.*
 
----
+<br/>
 
-## 🌾 Vision
+<a href="https://github.com/your-org/agri-intelligence">
+  <img src="https://img.shields.io/badge/🌱%20Live%20Demo-coming%20soon-4ADE80?style=for-the-badge&labelColor=0A120B" />
+</a>
 
-Modern farming is drowning in data but starving for decisions. Soil sensors, weather apps, and market boards operate in isolation, forcing farmers to manually juggle conflicting priorities. Agri-Intelligence replaces this cognitive burden with a **collaborative network of AI agents** that perceive, reason, negotiate, and act — continuously and autonomously.
+<br/><br/>
 
-We are building the operating system for precision agriculture where every drop of water, every rupee spent, and every hour of labour is optimized by artificial intelligence that explains its choices.
+[![FastAPI](https://img.shields.io/badge/FastAPI-0.110+-009688?style=for-the-badge&logo=fastapi&logoColor=white)](https://fastapi.tiangolo.com/)
+[![Python](https://img.shields.io/badge/Python-3.11+-3776AB?style=for-the-badge&logo=python&logoColor=white)](https://www.python.org/)
+[![LangChain](https://img.shields.io/badge/LangChain-Agents-1C3C3C?style=for-the-badge&logo=langchain&logoColor=white)](https://www.langchain.com/)
+[![React](https://img.shields.io/badge/React-18.x-61DAFB?style=for-the-badge&logo=react&logoColor=white)](https://react.dev/)
+[![Gemini](https://img.shields.io/badge/AI-Gemini%20Pro-4285F4?style=for-the-badge&logo=google&logoColor=white)](https://ai.google.dev/)
+[![PostgreSQL](https://img.shields.io/badge/PostgreSQL-15-336791?style=for-the-badge&logo=postgresql&logoColor=white)](https://www.postgresql.org/)
+[![Redis](https://img.shields.io/badge/Redis-7.x-DC382D?style=for-the-badge&logo=redis&logoColor=white)](https://redis.io/)
+[![Docker](https://img.shields.io/badge/Docker-24.x-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
+[![License](https://img.shields.io/badge/License-MIT-10B981?style=for-the-badge)](LICENSE)
+[![Status](https://img.shields.io/badge/Status-Prototype%20Ready-8B5CF6?style=for-the-badge)]()
 
----
 
-## 🧩 The Problem We Solve
+<br/>
 
-| Traditional Approach | Our Approach |
-|----------------------|--------------|
-| Data silos: soil, weather, market separate | Unified ingestion layer feeds all data to a single brain |
-| Reactive: act after stress is visible | Predictive: ML models forecast disease & yield decline |
-| Conflicting advice: no single source of truth | Agents negotiate and produce one optimal action |
-| High cognitive load on farmer | Fully autonomous mode or suggestion-only with manual override |
-| No audit trail | Every decision is logged with complete reasoning |
+[🌐 Live Demo](https://agri-intel-demo.vercel.app/) &nbsp;•&nbsp;
+[📋 Proposal](https://github.com/your-org/agri-intelligence/blob/main/proposal.pdf) &nbsp;•&nbsp;
+[🗺️ Implementation Plan](https://github.com/your-org/agri-intelligence/blob/main/implementation_plan.md) &nbsp;•&nbsp;
+[🐛 Report Bug](https://github.com/your-org/agri-intelligence/issues) &nbsp;•&nbsp;
 
-The real question a farmer faces is not *“Is the soil dry?”* but *“Should I irrigate now, wait for rain, avoid peak electricity rates, and still protect my harvest schedule?”*  
-Agri-Intelligence answers that exact multi-objective question in seconds.
-
----
-
-## 🧠 How It Works — The Autonomous Loop
-
-1. **Ingest** – Real-time weather, simulated IoT soil data, market prices, and crop profiles are collected every cycle.
-2. **Predict** – XGBoost ensemble models compute disease risk, yield decline probability, and irrigation urgency.
-3. **Reason** – Three specialist agents (Agronomist, Economist, Logistician) independently analyse the situation and propose actions.
-4. **Negotiate** – A Master Coordinator compares proposals, applies a weighted priority matrix, and resolves conflicts.
-5. **Act** – The final decision is executed (or simulated) and pushed to the dashboard with a full reasoning trace.
-6. **Learn** – Outcomes are logged, and the system refines its recommendations over time.
+</div>
 
 ---
 
-## 🧱 System Architecture
+## 📖 Table of Contents
 
-The platform is built as a **5‑layer event‑driven architecture**:
+- [🌾 What is Agri-Intelligence?](#-what-is-agri-intelligence)
+- [❌ Problem & ✅ Solution](#-problem--solution)
+- [🧠 How It Works — Autonomous Loop](#-how-it-works--autonomous-loop)
+- [🏗️ System Architecture](#-system-architecture)
+- [🔄 Data Flows & Workflows](#-data-flows--workflows)
+- [🤖 The Multi-Agent Team](#-the-multi-agent-team)
+- [✨ Core Features](#-core-features)
+- [🧩 Tech Stack](#-tech-stack)
+- [📁 Project Structure](#-project-structure)
+- [🚀 Quick Start](#-quick-start)
+- [🔧 Environment Variables](#-environment-variables)
+- [🗺️ Roadmap](#-roadmap)
+- [🤝 Contributing](#-contributing)
+- [📄 License](#-license)
+
+---
+
+## 🌾 What is Agri-Intelligence?
+
+> **Agri-Intelligence** is a full‑stack, AI‑first autonomous farming platform that replaces guesswork with a **collaborative network of AI agents**. It continuously ingests weather, soil, market, and crop data, then **negotiates** the optimal farm action — irrigation, fertilisation, harvest timing, and even transport — and shows the farmer exactly why that decision was made.
+
+Think of it as a **24/7 digital farm manager** that understands **crop science**, **market economics**, **logistics**, and **explainability** — all working in a closed‑loop, self‑improving system.
 
 ```
-┌──────────────────────────────────┐
-│   L5  User Experience            │
-│   React Dashboard · Agent Logs   │
-│   Alerts · Reports · Map View    │
-└──────────────┬───────────────────┘
-               │ WebSocket & REST
-┌──────────────┴───────────────────┐
-│   L4  Execution & Orchestration  │
-│   FastAPI · Redis · PostgreSQL   │
-│   Decision Router · Action Logger│
-└──────────────┬───────────────────┘
-               │
-┌──────────────┴───────────────────┐
-│   L3  Multi-Agent Core           │
-│   Coordinator + 3 Specialist     │
-│   Agents (LangChain/LLM)         │
-└──────────────┬───────────────────┘
-               │
-┌──────────────┴───────────────────┐
-│   L2  Intelligence & Prediction  │
-│   XGBoost Ensemble · Disease     │
-│   Risk · Yield Forecast          │
-└──────────────┬───────────────────┘
-               │
-┌──────────────┴───────────────────┐
-│   L1  Data Ingestion             │
-│   OpenWeather API · SoilGrids    │
-│   Mock IoT Sensors · Market Feed │
-└──────────────────────────────────┘
-                ↑
-        Closed-Loop Feedback
+┌──────────────────────────────────────────────────────────────────┐
+│              AGRI-INTELLIGENCE VALUE PROPOSITION                  │
+├─────────────────────┬─────────────────────┬───────────────────────┤
+│   Traditional       │    Our Solution      │     Outcome           │
+├─────────────────────┼─────────────────────┼───────────────────────┤
+│ Siloed apps for     │ Unified data         │ Zero cognitive load   │
+│ soil, weather,      │ ingestion fed to     │ — one decision,      │
+│ and market          │ a single AI core     │ fully explained       │
+├─────────────────────┼─────────────────────┼───────────────────────┤
+│ Farmer decides      │ Agents debate        │ Optimised trade‑offs  │
+│ based on gut feel   │ and vote with        │ between health, cost, │
+│                     │ priority rules       │ and logistics         │
+├─────────────────────┼─────────────────────┼───────────────────────┤
+│ Delayed response    │ Predictive ML        │ Prevent disease,      │
+│ to crop stress      │ + proactive actions  │ save water & cost     │
+├─────────────────────┼─────────────────────┼───────────────────────┤
+│ No audit trail      │ Complete reasoning   │ Trust and             │
+│                     │ logs on dashboard    │ accountability        │
+└─────────────────────┴─────────────────────┴───────────────────────┘
 ```
 
-All data flows upward; decisions flow back to simulated actuators and are re‑measured in the next cycle.
+---
+
+## ❌ Problem & ✅ Solution
+
+### The Fragmentation Problem
+
+Farmers today have access to multiple data sources — soil sensors, weather apps, market boards — but **no single system that synthesises them into a decision**. The real question a farmer faces is rarely simple:
+
+> *“Should I irrigate now, wait for forecast rain, avoid peak electricity rates, and still protect my harvest schedule — all at once?”*
+
+### Our Solution: Agentic Synthesis
+
+Agri-Intelligence deploys **four specialised AI agents** that each receive the same snapshot of the farm. They propose actions from their own expertise, and a **Master Coordinator** resolves any conflicts using a configurable priority matrix. The result is **one optimal, explainable action** — not a dashboard full of numbers.
 
 ---
 
-## 🤖 The Multi‑Agent Team
+## 🧠 How It Works — Autonomous Loop
 
-| Agent | Role | Objective |
-|-------|------|-----------|
-| **Agronomist Agent** | Crop & soil health | Maximise plant health, minimise stress |
-| **Economist Agent** | Financial optimization | Minimise cost, maximise ROI |
-| **Logistician Agent** | Supply chain & timing | Ensure harvest feasibility, transport |
-| **Master Coordinator** | Conflict resolution | Synthesise & produce final action |
+```mermaid
+graph TD
+    subgraph Loop [Closed-Loop Autonomous System]
+        direction TB
+        A[1. INGEST<br/>Weather, soil, market, crop profile] --> B[2. PREDICT<br/>ML models: disease risk, yield, irrigation urgency]
+        B --> C[3. REASON<br/>Three specialist agents + Master Coordinator]
+        C --> D[4. ACT<br/>Final decision → simulated actuator or alert]
+        D --> E[5. LEARN<br/>Action logged, outcomes measured, models refined]
+        E --> A
+    end
 
-**Conflict Resolution Example:**  
-- Agronomist: *Irrigate immediately — soil moisture 32%.*  
-- Economist: *Delay 6 hours — save ₹840 by using off‑peak energy.*  
-- Logistician: *Partial irrigation only — full cycle + possible rain blocks harvester access.*  
-- Coordinator: *Delay 6h, use 40% pump capacity, monitor rain probability. Cancel if rain >80%.*
+    style A fill:#1e3a5f,stroke:#3b82f6,color:#dbeafe
+    style B fill:#14532d,stroke:#22c55e,color:#dcfce7
+    style C fill:#2d1b69,stroke:#7c3aed,color:#ede9fe
+    style D fill:#7c2d12,stroke:#f97316,color:#ffedd5
+    style E fill:#1e1b4b,stroke:#6366f1,color:#e0e7ff
+```
 
-The entire conversation is streamed live to the farmer’s dashboard.
-
----
-
-## 📊 Key Features
-
-- ✅ Real‑time soil, weather & market monitoring
-- ✅ ML‑powered disease risk & yield prediction (≥85% accuracy)
-- ✅ Autonomous irrigation, fertiliser, spray & harvest scheduling
-- ✅ Multi‑agent negotiation with explainable reasoning
-- ✅ Integrated soil & terrain data (pH, organic carbon, texture, elevation)
-- ✅ Market price‑aware logistics & transport coordination
-- ✅ RAG‑based farmer Q&A chatbot (agricultural textbooks + govt. schemes)
-- ✅ Role‑based access (Farmer, Admin, Evaluator)
-- ✅ Manual override & suggestion‑only mode
-- ✅ Full audit trail & impact reports (water saved, cost avoided)
-- ✅ Privacy‑preserving GPS anonymisation & GDPR‑aligned consent
-- ✅ Aligned with Indian Digital Agriculture Mission (AgriStack)
+1. **Ingest** – Real‑time weather (OpenWeather), soil data (SoilGrids, IoT sim), market prices (mock API).  
+2. **Predict** – XGBoost ensemble models output disease risk, yield decline probability, and irrigation urgency scores.  
+3. **Reason** – Agronomist, Economist, and Logistician agents analyse the same context and propose actions. The Coordinator compares and resolves conflicts.  
+4. **Act** – The final decision (e.g., “delay irrigation by 6h, use 40% capacity”) is sent to simulated actuators and pushed to the dashboard.  
+5. **Learn** – Every reasoning trace is stored. When the next sensor cycle comes, the system sees the outcome and adapts.
 
 ---
 
-## 🧪 Tech Stack
+## 🏗️ System Architecture
 
-| Category | Technologies |
-|----------|--------------|
-| **Frontend** | React.js 18, TailwindCSS 4, Framer Motion, Recharts, MapBox |
-| **Backend** | FastAPI, Python 3.11, WebSockets, Redis Pub/Sub |
-| **AI/Agents** | LangChain, LangGraph, GPT‑4o / Gemini API |
-| **Machine Learning** | XGBoost, LightGBM, Scikit‑learn, TensorFlow (for optional image models) |
-| **RAG Chatbot** | FAISS, Sentence Transformers, 19 agricultural textbooks knowledge base |
-| **Databases** | PostgreSQL (main), InfluxDB (time‑series sensor data) |
-| **External APIs** | OpenWeather One Call, SoilGrids, Google Maps Elevation, Agmarknet (scraping) |
-| **DevOps** | Docker, GitHub Actions, AWS/GCP free tier |
+```mermaid
+graph TB
+    subgraph UX[Layer 5 — Dashboard]
+        React[React + Tailwind]
+        Logs[Agent Decision Room]
+        Alerts[Alerts + Actions]
+    end
+
+    subgraph EXEC[Layer 4 — Execution]
+        FastAPI[FastAPI Server]
+        Redis[Redis Pub/Sub]
+        WS[WebSocket Stream]
+        DB[(PostgreSQL)]
+    end
+
+    subgraph AI[Layer 3 — Multi-Agent Core]
+        Coord[Master Coordinator]
+        Ag[Agronomist Agent]
+        Eco[Economist Agent]
+        Log[Logistician Agent]
+    end
+
+    subgraph ML[Layer 2 — Intelligence]
+        XGB[XGBoost Ensemble]
+        RAG[RAG Pipeline]
+        FA[FAISS Vector DB]
+    end
+
+    subgraph DATA[Layer 1 — Data Ingestion]
+        OWM[OpenWeather API]
+        Soil[SoilGrids API]
+        IoT[IoT Simulator]
+        Mkt[Market Feed]
+    end
+
+    DATA --> ML
+    ML --> AI
+    AI --> EXEC
+    EXEC --> UX
+
+    style UX fill:#2d1b69,stroke:#7c3aed,color:#ede9fe
+    style EXEC fill:#1e3a5f,stroke:#3b82f6,color:#dbeafe
+    style AI fill:#1c3328,stroke:#16a34a,color:#dcfce7
+    style ML fill:#3b1515,stroke:#dc2626,color:#fee2e2
+    style DATA fill:#1e1b4b,stroke:#6366f1,color:#e0e7ff
+```
+
+*All five layers communicate asynchronously. A feedback loop connects the execution layer back to ingestion — actions taken today influence tomorrow’s sensor readings.*
+
+---
+
+## 🔄 Data Flows & Workflows
+
+### 1. Agent Negotiation (Irrigation Conflict)
+
+```mermaid
+sequenceDiagram
+    actor Farmer
+    participant UI as Dashboard
+    participant Backend as FastAPI
+    participant Coord as Coordinator
+    participant Agro as Agronomist
+    participant Econ as Economist
+    participant Logi as Logistician
+    participant DB as PostgreSQL
+
+    Note over UI,DB: Soil moisture drops to 32% at 08:14
+
+    Backend->>Coord: New context: moisture 32%, energy peak, rain 65% in 42h
+    Coord->>Agro: Query proposal
+    Agro-->>Coord: Irrigate now (stress 0.41, urgency 0.8)
+    Coord->>Econ: Query proposal
+    Econ-->>Coord: Delay 6h, save ₹840
+    Coord->>Logi: Query proposal
+    Logi-->>Coord: Partial only, harvester risk >55%
+
+    Coord->>Coord: Apply priority matrix (Health 0.45, Cost 0.35, Logistics 0.20)
+    Coord->>Coord: Consensus found: Delay 6h, 40% pump
+    Coord->>Backend: Final decision + reasoning
+    Backend->>DB: Log action
+    Backend->>UI: Push via WebSocket
+    UI-->>Farmer: "Scheduled irrigation at 14:01, 40% capacity. Saved ₹840."
+```
+
+### 2. RAG Chatbot for Farmer Queries
+
+```mermaid
+flowchart LR
+    Q[Farmer asks: What fertilizer for wheat at 45 days?] --> V[FAISS Search]
+    V --> Chunks[Top-3 textbook chunks]
+    Chunks --> LLM[Gemini 1.5 Pro]
+    LLM --> A[Contextual answer with citations]
+    A --> UI[Dashboard chatbot window]
+```
+
+*The knowledge base contains 19 agricultural textbooks, plus Indian government scheme documents, indexed as embeddings.*
+
+### 3. Disease Risk Prediction Pipeline
+
+```mermaid
+flowchart TD
+    W[Weather: temp, humidity, rainfall] --> M[XGBoost Ensemble Model]
+    S[Soil: moisture, NPK] --> M
+    C[Crop growth stage] --> M
+    M --> Score{Disease Risk Score}
+    Score -->|>0.7| Alert[High risk alert<br/>+ preventive spray recommendation]
+    Score -->|<0.3| OK[Monitor only]
+```
+
+---
+
+## 🤖 The Multi-Agent Team
+
+| Agent | Expertise | Objective |
+|-------|-----------|-----------|
+| **Agronomist** | Crop biology, soil science | Maximise plant health, minimise stress |
+| **Economist** | Market pricing, energy tariffs | Minimise cost, maximise ROI |
+| **Logistician** | Harvest, transport, field access | Ensure equipment and labour availability |
+| **Coordinator** | Conflict resolution | Synthesise proposals into one optimal action |
+
+**How the Coordinator resolves conflicts:**  
+Each agent’s proposal is scored against a priority matrix (Health: 0.45, Cost: 0.35, Logistics: 0.20). If the Agronomist reports a crop stress index above 0.4, its concern takes priority. Otherwise, the system optimises for cost and logistics. The final decision always includes a plain‑language justification.
+
+---
+
+## ✨ Core Features
+
+- **Real‑time multi‑source monitoring** – Weather, soil, market prices, crop growth stage.
+- **ML‑powered prediction** – Disease risk, yield reduction, irrigation urgency (>85% accuracy).
+- **Autonomous agent negotiation** – Three specialist agents debate and reach consensus.
+- **Explainable decisions** – Full reasoning trace visible on dashboard.
+- **RAG‑based farmer chatbot** – Answers agronomy questions grounded in textbooks and schemes.
+- **Soil & terrain integration** – Pulls pH, organic carbon, clay/sand/silt, and elevation via free APIs.
+- **Market‑aware logistics** – Harvest timing and transport scheduling optimised against prices.
+- **Manual override** – Farmer can switch to suggestion‑only mode or reject actions.
+- **Privacy by design** – GPS anonymised, role‑based access, consent management.
+- **Closed‑loop learning** – Past decisions logged and fed back into models.
+
+---
+
+## 🧩 Tech Stack
+
+| Layer | Technology |
+|-------|------------|
+| **Frontend** | React 18, TailwindCSS 4, Framer Motion, Recharts, Leaflet/OSM |
+| **Backend** | FastAPI (Python 3.11), WebSockets, Redis Pub/Sub |
+| **AI & Agents** | LangChain, LangGraph, Gemini 1.5 Pro (Free Tier) |
+| **Machine Learning** | XGBoost, LightGBM, Scikit‑learn, Sentence‑Transformers |
+| **RAG** | FAISS, 19 agricultural textbooks + Indian schemes |
+| **Database** | PostgreSQL (main), InfluxDB (time‑series sensor data) |
+| **External APIs** | OpenWeather One Call, SoilGrids, OpenStreetMap/Leaflet |
+| **DevOps** | Docker, Docker Compose, GitHub Actions |
 
 ---
 
@@ -140,376 +287,183 @@ The entire conversation is streamed live to the farmer’s dashboard.
 ```
 agri-intelligence/
 ├── backend/
-│   ├── main.py                  # FastAPI entry point
-│   ├── config.py                # Environment variables
-│   ├── models.py                # SQLAlchemy models
-│   ├── routers/                 # API endpoints
-│   │   ├── farms.py
-│   │   ├── actions.py
-│   │   ├── agents.py
-│   │   └── chatbot.py
+│   ├── main.py                  # FastAPI entry point + WebSocket
+│   ├── config.py                # Environment variable loader
+│   ├── models.py                # SQLAlchemy ORM models
+│   ├── routers/                 # REST endpoints
+│   │   ├── farms.py             # Farm onboarding, status
+│   │   ├── actions.py           # Agent decision history
+│   │   ├── agents.py            # Manual trigger of agent loop
+│   │   └── chatbot.py           # RAG query endpoint
 │   ├── agents/                  # Multi-agent system
-│   │   ├── base.py
-│   │   ├── agronomist.py
-│   │   ├── economist.py
-│   │   ├── logistician.py
-│   │   └── coordinator.py
-│   ├── ml/                      # ML models & prediction
-│   │   ├── train_pipeline.py
-│   │   ├── disease_model.pkl
-│   │   └── yield_model.pkl
-│   ├── data/                    # Ingestion & simulation
-│   │   ├── sensor_simulator.py
-│   │   ├── weather_fetcher.py
-│   │   └── soil_terrain.py
+│   │   ├── base.py              # Base agent class
+│   │   ├── agronomist.py        # Crop health agent
+│   │   ├── economist.py         # Financial agent
+│   │   ├── logistician.py       # Operations agent
+│   │   └── coordinator.py       # Master coordinator + voting
+│   ├── ml/                      # ML training & inference
+│   │   ├── train_pipeline.py    # Train XGBoost ensemble
+│   │   ├── disease_model.pkl    # Serialised model
+│   │   └── predict.py           # Inference functions
+│   ├── stream/                  # Data ingestion & streaming
+│   │   ├── sensor_simulator.py  # Mock IoT sensor publisher
+│   │   ├── weather_fetcher.py   # OpenWeather async client
+│   │   ├── soil_terrain.py      # SoilGrids + elevation
+│   │   └── redis_listener.py    # Redis subscriber → WebSocket
 │   ├── rag/                     # RAG chatbot
-│   │   ├── vector_store.py
-│   │   └── retriever.py
-│   └── utils/                   # Helpers, security, privacy middleware
+│   │   ├── index_documents.py   # Embed & store into FAISS
+│   │   └── retriever.py         # Query pipeline
+│   └── utils/                   # Helpers, security, middleware
+│
 ├── frontend/
 │   ├── src/
 │   │   ├── components/
+│   │   │   ├── Dashboard/       # Main KPIs, charts
+│   │   │   ├── AgentRoom/       # Live negotiation feed
+│   │   │   ├── MapView/         # Leaflet farm plot
+│   │   │   └── Chatbot/         # RAG interface
 │   │   ├── pages/
-│   │   ├── hooks/
+│   │   ├── hooks/               # useWebSocket, useAgentStream
 │   │   └── styles/
 │   └── public/
-├── docker-compose.yml
+│
+├── docker-compose.yml           # Postgres, Redis, FastAPI, React
 ├── .env.example
 └── README.md
 ```
 
 ---
 
-## 🚀 Getting Started
+## 🚀 Quick Start
 
 ### Prerequisites
 - Python 3.11+
 - Node.js 18+
-- Redis & PostgreSQL (provided via Docker)
-- API keys: OpenWeather, Google Gemini, SoilGrids
+- Docker (for Redis & PostgreSQL)
+- Gemini API key (free from [Google AI Studio](https://makersuite.google.com))
 
-### Installation
+### 1. Clone & Set Up Environment
 
 ```bash
-# Clone the repository
 git clone https://github.com/your-org/agri-intelligence.git
 cd agri-intelligence
+cp .env.example .env
+# Edit .env with your Gemini key and other secrets
+```
 
-# Backend
+### 2. Start Infrastructure
+
+```bash
+docker-compose up -d   # starts Redis and PostgreSQL
+```
+
+### 3. Backend
+
+```bash
 cd backend
 python -m venv venv
 source venv/bin/activate   # Windows: venv\Scripts\activate
 pip install -r requirements.txt
+uvicorn main:app --reload
+# API docs at http://localhost:8000/docs
+```
 
-# Frontend
-cd ../frontend
+### 4. Frontend
+
+```bash
+cd frontend
 npm install
-
-# Start services
-docker-compose up -d          # Redis + PostgreSQL
-cd ../backend
-uvicorn main:app --reload     # API at http://localhost:8000
-cd ../frontend
-npm run dev                   # UI at http://localhost:3000
+npm run dev
+# Dashboard at http://localhost:3000
 ```
 
-### Environment Variables (.env)
-
-```env
-OPENWEATHER_API_KEY=your_key
-SOILGRIDS_API_KEY=your_key
-GOOGLE_MAPS_ELEVATION_API_KEY=your_key
-GEMINI_API_KEY=your_key
-DATABASE_URL=postgresql://user:pass@localhost:5432/agriintel
-REDIS_URL=redis://localhost:6379
-JWT_SECRET=your_secret
-```
-
----
-
-## 🔌 API Endpoints (Sample)
-
-| Method | Endpoint | Description |
-|--------|----------|-------------|
-| POST | `/farm/onboard` | Register new farm with soil & crop data |
-| GET | `/farm/{id}/status` | Get current sensor snapshot |
-| GET | `/actions/history` | Paginated agent decision log |
-| POST | `/simulate/scenario` | Inject weather/moisture change (admin) |
-| WS | `/ws/agent-feed` | Real‑time agent negotiation stream |
-| POST | `/chatbot/query` | Ask farming question (RAG) |
-
----
-
-## 🧪 Testing
+### 5. (Optional) Run Sensor Simulator
 
 ```bash
 cd backend
-pytest tests/ -v           # Unit tests for agents, ML, API
-pytest tests/ --cov        # With coverage report
+python stream/sensor_simulator.py
+# Publishes mock soil/weather data to Redis every 5 sec
 ```
 
 ---
 
-## 🔒 Security & Privacy
+## 🔧 Environment Variables
 
-- All API keys stored in environment variables, never committed.
-- JWT authentication with 15‑minute access tokens and refresh rotation.
-- GPS coordinates hashed to 1km² bounding boxes for farmer privacy.
-- Role‑based access control (farmer sees only own data).
-- Input validation on all endpoints (Pydantic schemas).
-- Rate limiting on public endpoints.
-- Consent management for any shared data.
-
----
-
-Here is the **extended continuation** of the Agri‑Intelligence README. It picks up exactly where the previous draft ended and adds the deployment guide, detailed developer onboarding, FAQ, project roadmap, and contributor guide. Together with the previous response, this forms a complete, polished document ready for PDF export or team handover.
+| Variable | Description | Source |
+|----------|-------------|--------|
+| `GEMINI_API_KEY` | Google Gemini API key | [Google AI Studio](https://makersuite.google.com) |
+| `OPENWEATHER_API_KEY` | OpenWeather One Call API | [openweathermap.org](https://openweathermap.org/api) |
+| `SOILGRIDS_API_KEY` | (optional) SoilGrids access | [soilgrids.org](https://soilgrids.org) |
+| `DATABASE_URL` | PostgreSQL connection string | Local: `postgresql://user:pass@localhost:5432/agriintel` |
+| `REDIS_URL` | Redis connection string | Local: `redis://localhost:6379` |
+| `JWT_SECRET` | JWT signing secret | Generate: `openssl rand -hex 32` |
+| `ENCRYPTION_KEY` | For anonymisation middleware | Generate: `openssl rand -hex 32` |
 
 ---
 
-## 🚢 Deployment
-
-### Docker Production Build
-
-```bash
-# Build images
-docker build -t agri-intel-backend -f backend/Dockerfile .
-docker build -t agri-intel-frontend -f frontend/Dockerfile .
-
-# Run full stack
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-### Cloud Deployment (AWS EC2 / GCP VM)
-
-```bash
-# Example for AWS EC2 Amazon Linux
-sudo yum update -y
-sudo yum install docker -y
-sudo service docker start
-sudo usermod -a -G docker ec2-user
-
-# Clone repository and deploy
-git clone https://github.com/your-org/agri-intelligence.git
-cd agri-intelligence
-cp .env.example .env    # edit with real keys
-docker-compose -f docker-compose.prod.yml up -d
-```
-
-### Environment Variables Checklist
-
-| Variable | Purpose | Where to get |
-|----------|---------|---------------|
-| `OPENWEATHER_API_KEY` | Live weather & forecasts | [openweathermap.org](https://openweathermap.org/api) |
-| `SOILGRIDS_API_KEY` | Soil properties (pH, carbon, texture) | [soilgrids.org](https://soilgrids.org) |
-| `GOOGLE_MAPS_ELEVATION_API_KEY` | Terrain elevation data | Google Cloud Console |
-| `GEMINI_API_KEY` | LLM for agent reasoning | [Google AI Studio](https://makersuite.google.com) |
-| `DATABASE_URL` | PostgreSQL connection string | Your cloud database |
-| `REDIS_URL` | Redis Pub/Sub broker | Your cloud Redis |
-| `JWT_SECRET` | Token signing secret | Generate with `openssl rand -hex 32` |
-| `ENCRYPTION_KEY` | For anonymization middleware | Generate with `openssl rand -hex 32` |
-
----
-
-## 🛠️ Developer Onboarding (Deep Dive)
-
-### 1. Understanding the Agent Prompts
-
-Every agent's behaviour is defined by its system prompt. You can find them inside `backend/agents/` as class attributes. For example:
-
-- **Agronomist Agent** prompt template: instructs the LLM to act as a senior crop scientist, always propose an action with a numeric stress and disease risk, and defend its position when challenged.
-- **Economist Agent** prompt: instructs the LLM to calculate ROI, energy cost, and market timing; it must prefix every proposal with a monetary impact estimate.
-- **Logistician Agent** prompt: tells the model to consider field saturation, harvest readiness, and transport availability.
-
-Editing these prompts directly changes how the system behaves without changing any code.
-
-### 2. Adding a New Agent
-
-1. Create a new file in `backend/agents/`, e.g., `water_manager.py`.
-2. Inherit from `BaseAgent` (defined in `base.py`).
-3. Implement `self.system_prompt` and the `propose(context: dict) -> dict` method.
-4. Register the agent in `coordinator.py`’s `self.agents` list.
-5. The coordinator automatically includes it in the next negotiation.
-
-### 3. Training a New ML Model
-
-```bash
-cd backend/ml
-python train_pipeline.py --model disease --data /path/to/dataset.csv --output disease_model_v2.pkl
-```
-
-- The script supports `--model disease`, `--model yield`, `--model irrigation`.
-- Hyperparameters are in `config/model_params.yaml`.
-- Models are automatically versioned with the date.
-
-### 4. Running the RAG Chatbot
-
-The knowledge base consists of 19 agricultural textbooks and Indian government scheme PDFs stored in `backend/rag/data/`. To re‑index:
-
-```bash
-cd backend/rag
-python index_documents.py --data_dir ./data --output ../vector_store/agri_faiss_index
-```
-
-The chatbot endpoint is:
-
-```
-POST /chatbot/query
-{
-  "query": "What is the recommended fertilizer for wheat at 45 days?",
-  "farm_id": "uuid"
-}
-```
-
-Returns: `{ "answer": "...", "sources": ["textbook_page_234", "govt_scheme.pdf"] }`
-
----
-
-## ❓ FAQ
-
-**Q1: Does the system require real IoT sensors to work?**  
-No. The sensor simulator in `backend/data/sensor_simulator.py` generates realistic soil moisture, NPK, temperature, and humidity data. You can switch to real sensors by changing the data source in `config.py`.
-
-**Q2: What happens if the LLM API fails?**  
-The backend has a retry loop with exponential backoff (3 attempts). If all fail, the coordinator falls back to the last known decision rule (a simple threshold‑based logic defined in `coordinator.fallback_rules()`).
-
-**Q3: How do I add a new crop?**  
-Add the crop’s phenological calendar, optimal NPK ranges, and disease susceptibility to `backend/data/crop_profiles.json`. The agents automatically pick up the new profile.
-
-**Q4: Is the system available in Indian languages?**  
-The RAG chatbot supports Hindi and Telugu via a translation layer. The dashboard UI has a language selector. Other languages can be added by contributing translations to `frontend/src/i18n/`.
-
-**Q5: How do I test a specific conflict scenario?**  
-Use the admin simulation panel ( `/simulate/scenario` ). Example payload:
-
-```json
-{
-  "farm_id": "abc-123",
-  "override": {
-    "soil_moisture": 28,
-    "energy_tariff": "peak",
-    "rain_probability": 0.45,
-    "harvest_days": 4
-  }
-}
-```
-
-The agents will immediately negotiate and the dashboard will show the new outcome.
-
-**Q6: Can the system integrate with government schemes?**  
-Yes. The `schemes` module in `backend/data/` contains a list of Indian agricultural schemes with eligibility rules. The Economist agent can suggest schemes a farmer qualifies for.
-
----
-
-## 🗺️ Project Roadmap
+## 🗺️ Roadmap
 
 ### Phase 1 — Hackathon Prototype (Current)
-- [x] Multi‑agent negotiation core
+- [x] Multi-agent negotiation core
 - [x] ML disease & yield prediction
 - [x] Soil & terrain integration
-- [x] RAG chatbot
-- [x] Farmer dashboard with real‑time logs
+- [x] RAG chatbot (19 textbooks)
+- [x] Real-time dashboard with agent logs
 - [x] Admin simulation panel
 
 ### Phase 2 — Post‑Hackathon (Months 1‑3)
 - [ ] Real IoT sensor integration (ESP32, LoRaWAN)
-- [ ] Drone image upload for disease detection (MobileNet fine‑tune)
-- [ ] Multilingual voice interface for farmers
+- [ ] Drone image upload for disease detection
+- [ ] Multilingual voice interface
 - [ ] SMS/WhatsApp alerts for offline farmers
-- [ ] Integration with AgriStack (Farmer ID, Crop Registry)
+- [ ] AgriStack integration
 
-### Phase 3 — Pilot Deployment (Months 4‑6)
+### Phase 3 — Pilot (Months 4‑6)
 - [ ] On‑ground pilot with 50 farmers across 3 states
 - [ ] Water usage & yield impact measurement
-- [ ] Feedback loop fine‑tuning
 - [ ] Mobile app (React Native)
 
 ### Phase 4 — Scale (Months 7‑12)
-- [ ] Marketplace with blockchain traceability (TaniTrack integration)
-- [ ] Carbon credit accounting for sustainable practices
-- [ ] API for agritech startups to build on top
+- [ ] Marketplace with blockchain traceability
+- [ ] Carbon credit accounting
 - [ ] Pan‑India launch
 
 ---
 
-## 🤝 How to Contribute
+## 🤝 Contributing
 
 We welcome contributions that make farming smarter.
 
-### Code Contributions
-1. Fork the repository.
-2. Create a feature branch: `git checkout -b feature/your-feature-name`.
-3. Write your code and tests (`pytest tests/` must pass).
-4. Commit with a descriptive message: `feat: add Punjabi language support to chatbot`.
-5. Open a Pull Request against `main`.
-
-### Non‑Code Contributions
-- **Translations:** Help translate the UI and chatbot responses into Indian languages.
-- **Crop Profiles:** Add or refine crop phenological data in `crop_profiles.json`.
-- **Documentation:** Improve this README or add tutorial notebooks.
-- **Bug Reports & Ideas:** Open an Issue with the `suggestion` or `bug` label.
-
-### Style Guide
-- Python: follow PEP 8, use `black` for formatting.
-- React: use functional components and hooks, TailwindCSS for styling.
-- Commit messages: follow Conventional Commits (`feat:`, `fix:`, `docs:`, etc.).
-
----
-
-## 📖 Glossary
-
-| Term | Definition |
-|------|------------|
-| **Autonomous Loop** | The continuous cycle: sense → predict → negotiate → act → learn. |
-| **Agent** | An AI-powered software component with a specific goal and decision logic. |
-| **Coordinator** | The master agent that resolves conflicts and issues the final action. |
-| **RAG** | Retrieval‑Augmented Generation — a technique that grounds LLM responses in a trusted knowledge base. |
-| **SoilGrids** | Global soil property maps at 250m resolution, provided by ISRIC. |
-| **AgriStack** | India’s digital agriculture framework (Farmer ID, Crop Registry, Geo maps). |
-| **Digital Agriculture Mission 2024** | Government of India mission to create digital public infrastructure for agriculture. |
-
----
-
-## 📈 Impact Metrics
-
-- **Water savings:** up to 30% through optimal scheduling
-- **Cost reduction:** up to 25% by shifting operations to off‑peak hours
-- **Disease prevention:** alerts triggered 48‑72 hours before visible symptoms
-- **Yield improvement:** informed harvest timing & reduced post‑harvest losses
-- **Farmer cognitive load:** fully autonomous mode reduces daily decisions by 80%
-
----
-
-## 📜 License
-
-This project is licensed under the MIT License — see [LICENSE](LICENSE).
-
----
-
-## 🤝 Contributors
-
-- **Ayush Kumar Jha** – Project Lead, IIT Madras
-- *Jahnvi Chauhan - Project system design, IIT Madras*
-
----
-
-## 🙏 Acknowledgements
-
-Inspired by the global open‑source agricultural AI community and built with love for the farmers who feed us. The project draws wisdom from numerous public research initiatives in precision farming, multi‑agent systems, and sustainable agriculture — all respectfully credited in our documentation.
-
----
-
-**Built for Smart India Hackathon 2026 | IIT Madras**  
-*Let’s make every farm an intelligent farm.*
-
-## 📬 Contact & Links
-
-- **Project Lead:** Ayush Kumar Jha, IIT Madras
-- **Project Repository:** [github.com/your-org/agri-intelligence](https://github.com/your-org/agri-intelligence)
-- **Demo Dashboard:** [agri-intel-demo.web.app](https://agri-intel-demo.web.app)
-- **API Documentation:** [agri-intel-demo.web.app/docs](https://agri-intel-demo.web.app/docs) (Swagger UI)
-
----
-
+```bash
+git checkout -b feature/your-feature-name
+# Code + tests (pytest)
+git commit -m "feat: your feature description"
+git push origin feature/your-feature-name
+# Open a Pull Request
 ```
 
+| Prefix | Usage |
+|--------|-------|
+| `feat:` | New feature |
+| `fix:` | Bug fix |
+| `docs:` | Documentation |
+| `refactor:` | Code restructure |
 
+Non‑code contributions: translations, crop profile data, documentation, bug reports.
+
+---
+
+## 📄 License
+
+MIT License — Copyright (c) 2026 Ayush Kumar Jha & Team  
+Permission is hereby granted, free of charge, to any person obtaining a copy of this software to use, copy, modify, merge, and distribute it freely.
+
+---
+
+<div align="center">
+
+**Agri-Intelligence** — *Let’s make every farm an intelligent farm.*
+
+⭐ Star this repo &nbsp;•&nbsp; 🍴 Fork it &nbsp;•&nbsp; 💬 [Join the discussion](https://github.com/your-org/agri-intelligence/discussions)
+
+</div>
