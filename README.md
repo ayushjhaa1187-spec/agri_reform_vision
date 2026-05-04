@@ -1,11 +1,18 @@
-# Agri-Intelligence
+```markdown
+<!--
+  AGRI-INTELLIGENCE — Smart India Hackathon 2026
+  Autonomous Multi-Agent Farming Ecosystem
+  Built by: Ayush Kumar Jha
+  Deployed: Vercel / AWS | Backend: FastAPI | AI: Google Gemini
+-->
 
-**Autonomous Multi-Agent Farming Ecosystem**  
-*From reactive monitoring to proactive, explainable AI decisions.*
+<div align="center">
+
+![Agri-Intelligence Banner](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=220&section=header&text=AGRI-INTELLIGENCE&fontSize=80&fontAlignY=38&desc=Autonomous%20Multi-Agent%20Farming%20Ecosystem&descAlignY=58&descAlign=50&fontColor=ffffff&animation=twinkling)
 
 <br/>
 
-<a href="https://github.com/your-org/agri-intelligence">
+<a href="https://agri-intel-demo.vercel.app/">
   <img src="https://img.shields.io/badge/🌱%20Live%20Demo-coming%20soon-4ADE80?style=for-the-badge&labelColor=0A120B" />
 </a>
 
@@ -22,13 +29,13 @@
 [![License](https://img.shields.io/badge/License-MIT-10B981?style=for-the-badge)](LICENSE)
 [![Status](https://img.shields.io/badge/Status-Prototype%20Ready-8B5CF6?style=for-the-badge)]()
 
-
 <br/>
 
 [🌐 Live Demo](https://agri-intel-demo.vercel.app/) &nbsp;•&nbsp;
 [📋 Proposal](https://github.com/your-org/agri-intelligence/blob/main/proposal.pdf) &nbsp;•&nbsp;
 [🗺️ Implementation Plan](https://github.com/your-org/agri-intelligence/blob/main/implementation_plan.md) &nbsp;•&nbsp;
 [🐛 Report Bug](https://github.com/your-org/agri-intelligence/issues) &nbsp;•&nbsp;
+[💡 Request Feature](https://github.com/your-org/agri-intelligence/issues)
 
 </div>
 
@@ -38,10 +45,10 @@
 
 - [🌾 What is Agri-Intelligence?](#-what-is-agri-intelligence)
 - [❌ Problem & ✅ Solution](#-problem--solution)
-- [🧠 How It Works — Autonomous Loop](#-how-it-works--autonomous-loop)
+- [🧠 How It Works — The Autonomous Loop](#-how-it-works--the-autonomous-loop)
 - [🏗️ System Architecture](#-system-architecture)
 - [🔄 Data Flows & Workflows](#-data-flows--workflows)
-- [🤖 The Multi-Agent Team](#-the-multi-agent-team)
+- [🤖 The Multi‑Agent Team](#-the-multi-agent-team)
 - [✨ Core Features](#-core-features)
 - [🧩 Tech Stack](#-tech-stack)
 - [📁 Project Structure](#-project-structure)
@@ -97,12 +104,11 @@ Agri-Intelligence deploys **four specialised AI agents** that each receive the s
 
 ---
 
-## 🧠 How It Works — Autonomous Loop
+## 🧠 How It Works — The Autonomous Loop
 
 ```mermaid
 graph TD
-    subgraph Loop [Closed-Loop Autonomous System]
-        direction TB
+    subgraph Loop[Closed-Loop Autonomous System]
         A[1. INGEST<br/>Weather, soil, market, crop profile] --> B[2. PREDICT<br/>ML models: disease risk, yield, irrigation urgency]
         B --> C[3. REASON<br/>Three specialist agents + Master Coordinator]
         C --> D[4. ACT<br/>Final decision → simulated actuator or alert]
@@ -174,7 +180,7 @@ graph TB
     style DATA fill:#1e1b4b,stroke:#6366f1,color:#e0e7ff
 ```
 
-*All five layers communicate asynchronously. A feedback loop connects the execution layer back to ingestion — actions taken today influence tomorrow’s sensor readings.*
+All five layers communicate asynchronously. A feedback loop connects the execution layer back to ingestion — actions taken today influence tomorrow’s sensor readings.
 
 ---
 
@@ -238,7 +244,7 @@ flowchart TD
 
 ---
 
-## 🤖 The Multi-Agent Team
+## 🤖 The Multi‑Agent Team
 
 | Agent | Expertise | Objective |
 |-------|-----------|-----------|
@@ -462,8 +468,11 @@ Permission is hereby granted, free of charge, to any person obtaining a copy of 
 
 <div align="center">
 
+![Footer](https://capsule-render.vercel.app/api?type=waving&color=gradient&customColorList=6,11,20&height=120&section=footer&animation=twinkling)
+
 **Agri-Intelligence** — *Let’s make every farm an intelligent farm.*
 
 ⭐ Star this repo &nbsp;•&nbsp; 🍴 Fork it &nbsp;•&nbsp; 💬 [Join the discussion](https://github.com/your-org/agri-intelligence/discussions)
 
 </div>
+```
