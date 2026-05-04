@@ -16,3 +16,5 @@ python-multipart
 jose[cryptography]
 passlib[bcrypt]
 websockets
+asyncpg
+httpx
