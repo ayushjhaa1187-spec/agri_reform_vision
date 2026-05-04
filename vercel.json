@@ -3,6 +3,10 @@
     {
       "source": "/api/:path*",
       "destination": "https://agri-backend.onrender.com/:path*"
+    },
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
     }
   ]
 }
