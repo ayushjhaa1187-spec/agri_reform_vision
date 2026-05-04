@@ -71,13 +71,13 @@ export default function Timeline() {
         {/* Header */}
         <div className="text-center mb-14">
           <span className="inline-block px-4 py-1 bg-indigo-100 text-indigo-700 rounded-full text-sm font-semibold mb-4">
-            14-Day Implementation Sprint
+            Development Roadmap
           </span>
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Tool-Assisted Hackathon Plan
+            Strategic Implementation Roadmap
           </h2>
           <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Every task is mapped to the best <span className="font-semibold text-emerald-600">FREE AI tool</span> to accelerate development during the hackathon.
+            Every phase is optimized for rapid deployment and <span className="font-semibold text-emerald-600">scalable innovation</span> within the agricultural sector.
           </p>
         </div>
 

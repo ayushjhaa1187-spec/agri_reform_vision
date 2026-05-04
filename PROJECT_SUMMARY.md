@@ -1,7 +1,7 @@
 # Agri-Intelligence Project Summary
 
 ## Overview
-A comprehensive website showcasing the **Agri-Intelligence: Autonomous Multi-Agent Farming Ecosystem** proposal for Smart India Hackathon 2026.
+A comprehensive website showcasing the **Agri-Intelligence: Autonomous Multi-Agent Farming Ecosystem** for transforming the agricultural sector.
 
 **Prepared By:** Ayush Kumar Jha  
 **Organization:** IIT MADRAS  
@@ -54,9 +54,9 @@ A comprehensive website showcasing the **Agri-Intelligence: Autonomous Multi-Age
 - Technical implementation details (Frontend, Backend, AI/ML)
 
 ### 7. Timeline
-- 14-day hackathon sprint plan
+- Strategic development roadmap
 - Four phases with tasks and milestones
-- Gantt chart visualization
+- Implementation visualization
 
 ### 8. Impact
 - Impact metrics (30%+ resource waste reduction, 25%+ yield improvement, etc.)
@@ -113,7 +113,7 @@ A comprehensive website showcasing the **Agri-Intelligence: Autonomous Multi-Age
 3. **Interactive Demo** - Functional dashboard simulation
 4. **Visual Architecture** - Clear four-layer system diagram
 5. **Agent Visualization** - Detailed agent cards with examples
-6. **Timeline View** - Hackathon sprint plan with Gantt chart
+6. **Timeline View** - Strategic roadmap with milestone tracking
 7. **Professional Design** - Modern, clean aesthetic with gradients
 
 ---

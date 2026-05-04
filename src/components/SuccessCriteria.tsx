@@ -33,13 +33,13 @@ export default function SuccessCriteria() {
     {
       icon: '💰',
       title: 'Cost Efficiency',
-      description: 'Operational budget stays under $200 using free tiers and hackathon credits',
+      description: 'Operational budget stays under $200 using free tiers and pay-as-you-go optimization',
       metric: '$100–$200'
     }
   ];
 
   const budget = [
-    { item: 'LLM API tokens', detail: 'Free tier + hackathon credits', cost: '$50' },
+    { item: 'LLM API tokens', detail: 'Pay-as-you-go optimization', cost: '$50' },
     { item: 'Cloud hosting', detail: 'AWS/GCP free tier', cost: '$0' },
     { item: 'Domain & misc.', detail: 'Demo URL + extras', cost: '$50' }
   ];
@@ -50,13 +50,13 @@ export default function SuccessCriteria() {
         {/* Header */}
         <div className="text-center mb-14">
           <span className="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">
-            Demo Day Checklist
+            System Success Metrics
           </span>
           <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Success Criteria for Final Demo
+            Operational Success Criteria
           </h2>
           <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Concrete, observable outcomes that prove the system works end-to-end during the hackathon evaluation.
+            Concrete, observable outcomes that prove the system works end-to-end in real-world farming environments.
           </p>
         </div>
 
@@ -90,9 +90,9 @@ export default function SuccessCriteria() {
               <span className="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold mb-4">
                 Operational Budget
               </span>
-              <h3 className="text-3xl font-bold text-white mb-4">Lean Hackathon Budget</h3>
+              <h3 className="text-3xl font-bold text-white mb-4">Scalable Operational Budget</h3>
               <p className="text-slate-300 mb-6">
-                The entire system is engineered to run on free tiers and generous hackathon API credits. Total operational cost stays minimal while delivering a production-grade prototype.
+                The entire system is engineered to run on free tiers and optimized pay-as-you-go API models. Total operational cost stays minimal while delivering a production-grade infrastructure.
               </p>
               <div className="flex items-baseline gap-3">
                 <span className="text-5xl font-bold text-emerald-400">$100</span>

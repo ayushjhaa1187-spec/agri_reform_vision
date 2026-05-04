@@ -22,7 +22,7 @@ export default function Hero({ onNavigate }: HeroProps) {
         {/* Badge */}
         <div className="inline-flex items-center gap-2 px-4 py-2 bg-white/10 backdrop-blur-sm rounded-full border border-white/20 mb-8">
           <span className="w-2 h-2 bg-green-400 rounded-full animate-pulse"></span>
-          <span className="text-emerald-200 text-sm font-medium">Smart India Hackathon 2026 · 14-Day Sprint</span>
+          <span className="text-emerald-200 text-sm font-medium">Empowering the Farming Sector with Autonomous AI</span>
         </div>
 
         {/* Main Title */}
@@ -62,7 +62,7 @@ export default function Hero({ onNavigate }: HeroProps) {
             { value: '15 min', label: 'Decision Loop' },
             { value: '≥85%', label: 'ML Accuracy' },
             { value: '4', label: 'AI Agents' },
-            { value: '14 Days', label: 'Sprint Timeline' },
+            { value: '24/7', label: 'Autonomous Ops' },
           ].map((stat, index) => (
             <div key={index} className="text-center p-4 bg-white/5 backdrop-blur-sm rounded-xl border border-white/10">
               <div className="text-2xl md:text-3xl font-bold text-emerald-400">{stat.value}</div>

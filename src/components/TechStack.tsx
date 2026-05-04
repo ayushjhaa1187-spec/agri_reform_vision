@@ -55,7 +55,7 @@ export default function TechStack() {
             Built with Production-Grade Tools
           </h2>
           <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Every layer uses industry-standard, scalable technologies that translate seamlessly from hackathon prototype to commercial deployment.
+            Every layer uses industry-standard, scalable technologies that translate seamlessly from prototype to enterprise-scale deployment.
           </p>
         </div>
 

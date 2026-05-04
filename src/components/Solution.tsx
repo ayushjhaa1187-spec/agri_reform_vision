@@ -119,7 +119,7 @@ export default function Solution() {
               {
                 icon: '🌐',
                 title: 'Scalable Architecture',
-                desc: 'Easy adaptation to real IoT sensors post-hackathon'
+                desc: 'Easy adaptation to real IoT sensors for field deployment'
               }
             ].map((feature, index) => (
               <div key={index} className="bg-white rounded-xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">

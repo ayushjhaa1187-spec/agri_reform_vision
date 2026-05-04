@@ -109,7 +109,7 @@ export default function Impact() {
               },
               {
                 title: 'Scalability',
-                description: 'Software architecture easily adapts to real-world IoT sensors post-hackathon, providing a viable commercial product.',
+                description: 'Software architecture easily adapts to real-world IoT sensors, providing a viable commercial product.',
                 icon: '📐'
               }
             ].map((benefit, index) => (
