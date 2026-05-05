@@ -1,118 +1,68 @@
-import { useEffect, useRef, useState, useCallback } from 'react';
+import { useEffect, useState } from 'react';
+import { motion, useSpring } from 'framer-motion';
 
 export default function CustomCursor() {
-  const outerRef = useRef<HTMLDivElement>(null);
-  const innerRef = useRef<HTMLDivElement>(null);
-  const mousePos = useRef({ x: -100, y: -100 });
-  const cursorPos = useRef({ x: -100, y: -100 });
-  const [isHovering, setIsHovering] = useState(false);
-  const [isVisible, setIsVisible] = useState(false);
-  const rafRef = useRef<number>(0);
+  const [position, setPosition] = useState({ x: 0, y: 0 });
+  const [isPointer, setIsPointer] = useState(false);
+  const [isHidden, setIsHidden] = useState(true);
 
-  const animate = useCallback(() => {
-    const dx = mousePos.current.x - cursorPos.current.x;
-    const dy = mousePos.current.y - cursorPos.current.y;
-    cursorPos.current.x += dx * 0.15;
-    cursorPos.current.y += dy * 0.15;
-
-    if (outerRef.current) {
-      outerRef.current.style.transform = `translate(${cursorPos.current.x - 20}px, ${cursorPos.current.y - 20}px) scale(${isHovering ? 1.5 : 1})`;
-    }
-    if (innerRef.current) {
-      innerRef.current.style.transform = `translate(${mousePos.current.x - 4}px, ${mousePos.current.y - 4}px)`;
-    }
-    rafRef.current = requestAnimationFrame(animate);
-  }, [isHovering]);
+  const springConfig = { damping: 25, stiffness: 200 };
+  const cursorX = useSpring(0, springConfig);
+  const cursorY = useSpring(0, springConfig);
 
   useEffect(() => {
-    // Only show on desktop (fine pointer)
-    const mq = window.matchMedia('(pointer: fine)');
-    if (!mq.matches) return;
-
-    setIsVisible(true);
-    document.body.classList.add('custom-cursor-active');
-
     const handleMouseMove = (e: MouseEvent) => {
-      mousePos.current = { x: e.clientX, y: e.clientY };
+      setPosition({ x: e.clientX, y: e.clientY });
+      cursorX.set(e.clientX);
+      cursorY.set(e.clientY);
+      setIsHidden(false);
+      
+      const target = e.target as HTMLElement;
+      setIsPointer(
+        window.getComputedStyle(target).cursor === 'pointer' ||
+        target.tagName === 'A' ||
+        target.tagName === 'BUTTON'
+      );
     };
 
-    const handleMouseOver = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.closest('a') ||
-        target.closest('button') ||
-        target.closest('[role="button"]') ||
-        target.closest('[data-magnetic]') ||
-        target.closest('input') ||
-        target.closest('textarea')
-      ) {
-        setIsHovering(true);
-      }
-    };
-
-    const handleMouseOut = (e: MouseEvent) => {
-      const target = e.target as HTMLElement;
-      if (
-        target.closest('a') ||
-        target.closest('button') ||
-        target.closest('[role="button"]') ||
-        target.closest('[data-magnetic]') ||
-        target.closest('input') ||
-        target.closest('textarea')
-      ) {
-        setIsHovering(false);
-      }
-    };
+    const handleMouseLeave = () => setIsHidden(true);
+    const handleMouseEnter = () => setIsHidden(false);
 
     window.addEventListener('mousemove', handleMouseMove);
-    document.addEventListener('mouseover', handleMouseOver);
-    document.addEventListener('mouseout', handleMouseOut);
-    rafRef.current = requestAnimationFrame(animate);
+    window.addEventListener('mouseleave', handleMouseLeave);
+    window.addEventListener('mouseenter', handleMouseEnter);
 
     return () => {
       window.removeEventListener('mousemove', handleMouseMove);
-      document.removeEventListener('mouseover', handleMouseOver);
-      document.removeEventListener('mouseout', handleMouseOut);
-      cancelAnimationFrame(rafRef.current);
-      document.body.classList.remove('custom-cursor-active');
+      window.removeEventListener('mouseleave', handleMouseLeave);
+      window.removeEventListener('mouseenter', handleMouseEnter);
     };
-  }, [animate]);
+  }, [cursorX, cursorY]);
 
-  if (!isVisible) return null;
+  if (isHidden) return null;
 
   return (
     <>
-      {/* Outer ring */}
-      <div
-        ref={outerRef}
-        style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 40,
-          height: 40,
-          borderRadius: '50%',
-          border: `1.5px solid ${isHovering ? 'rgba(16, 185, 129, 0.8)' : 'rgba(16, 185, 129, 0.4)'}`,
-          pointerEvents: 'none',
-          zIndex: 99999,
-          transition: 'border-color 0.3s ease, width 0.3s ease, height 0.3s ease',
-          mixBlendMode: 'difference' as const,
+      <motion.div
+        className="fixed top-0 left-0 w-2 h-2 bg-emerald-400 rounded-full z-[9999] pointer-events-none mix-blend-difference hidden md:block"
+        animate={{
+          x: position.x - 4,
+          y: position.y - 4,
+          scale: isPointer ? 1.5 : 1
         }}
+        transition={{ type: 'spring', damping: 30, stiffness: 400, mass: 0.5 }}
       />
-      {/* Inner dot */}
-      <div
-        ref={innerRef}
+      <motion.div
+        className="fixed top-0 left-0 w-10 h-10 border border-emerald-400/30 rounded-full z-[9998] pointer-events-none hidden md:block"
         style={{
-          position: 'fixed',
-          top: 0,
-          left: 0,
-          width: 8,
-          height: 8,
-          borderRadius: '50%',
-          backgroundColor: '#10b981',
-          pointerEvents: 'none',
-          zIndex: 99999,
-          boxShadow: '0 0 10px rgba(16, 185, 129, 0.5)',
+          x: cursorX,
+          y: cursorY,
+          translateX: '-50%',
+          translateY: '-50%'
+        }}
+        animate={{
+          scale: isPointer ? 1.5 : 1,
+          borderColor: isPointer ? 'rgba(52, 211, 153, 0.6)' : 'rgba(52, 211, 153, 0.3)'
         }}
       />
     </>

@@ -1,4 +1,5 @@
 import json
+import asyncio
 from typing import Dict, Any, List
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_core.prompts import ChatPromptTemplate
@@ -61,6 +62,5 @@ class AgriAgentSystem:
             "decision": final_decision
         }
 
-import asyncio
 # Global instance
 agri_agents = AgriAgentSystem()

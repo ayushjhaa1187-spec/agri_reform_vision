@@ -5,6 +5,8 @@ load_dotenv()
 
 # Database
 DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://user:password@db:5432/agri_db")
+if DATABASE_URL.startswith("postgresql://"):
+    DATABASE_URL = DATABASE_URL.replace("postgresql://", "postgresql+asyncpg://", 1)
 
 # Redis
 # Railway provides REDIS_URL or REDISHOST/REDISPORT
