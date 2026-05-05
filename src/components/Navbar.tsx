@@ -32,7 +32,7 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <a href="#hero" onClick={(e) => handleScroll(e, '#hero')} className="flex items-center gap-2 group">
           <span className="text-2xl group-hover:scale-110 transition-transform">🌾</span>
-          <span className="text-xl font-bold text-white tracking-tighter">Agri<span className="text-emerald-400">Intelligence</span></span>
+          <span className="text-xl font-bold text-white tracking-tighter">Agri-<span className="text-emerald-400">Intelligence</span></span>
         </a>
         
         <div className="hidden md:flex items-center gap-8">

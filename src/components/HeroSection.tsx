@@ -1,3 +1,4 @@
+import { Link } from 'react-router-dom';
 import FadeInSection from './ui/FadeInSection';
 
 export default function HeroSection() {
@@ -16,19 +17,19 @@ export default function HeroSection() {
             Autonomous Multi-Agent Farming
           </span>
           <h1 className="text-5xl md:text-8xl font-black text-white mb-8 tracking-tighter leading-tight">
-            Agri<span className="text-emerald-400 neon-text">Intelligence</span>
+            Agri-<span className="text-emerald-400 neon-text">Intelligence</span>
           </h1>
           <p className="text-xl md:text-2xl text-gray-400 max-w-3xl mx-auto mb-10 leading-relaxed font-light">
             Transforming agriculture from reactive monitoring to <span className="text-white font-medium">proactive, explainable AI decisions</span>.
           </p>
           
           <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-            <button className="px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-full transition-all hover:scale-105 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
-              Explore Platform
-            </button>
-            <button className="px-8 py-4 glass-card hover:bg-white/5 text-white font-bold rounded-full transition-all hover:scale-105 border-white/10">
+            <Link to="/demo" className="px-8 py-4 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-full transition-all hover:scale-105 shadow-[0_0_20px_rgba(16,185,129,0.3)]">
+              Connect
+            </Link>
+            <a href="#demo" className="px-8 py-4 glass-card hover:bg-white/5 text-white font-bold rounded-full transition-all hover:scale-105 border-white/10">
               Watch Demo
-            </button>
+            </a>
           </div>
         </FadeInSection>
 

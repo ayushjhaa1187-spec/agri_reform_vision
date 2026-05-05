@@ -1,11 +1,22 @@
 import asyncio
+from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from backend.stream.redis_listener import connected_clients, start_redis_listener
 from backend.stream.sensor_simulator import sensor_simulator
 from backend.stream.agent_orchestrator import agent_orchestrator
 
-app = FastAPI(title="Agri-Intelligence API")
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    # Startup logic
+    await start_redis_listener()
+    # Start the simulator and orchestrator in the background
+    asyncio.create_task(sensor_simulator())
+    asyncio.create_task(agent_orchestrator())
+    yield
+    # Shutdown logic (if any) could go here
+
+app = FastAPI(title="Agri-Intelligence API", lifespan=lifespan)
 
 # Add CORS middleware
 app.add_middleware(
@@ -15,13 +26,6 @@ app.add_middleware(
     allow_methods=["*"],
     allow_headers=["*"],
 )
-
-@app.on_event("startup")
-async def startup_event():
-    await start_redis_listener()
-    # Start the simulator and orchestrator in the background
-    asyncio.create_task(sensor_simulator())
-    asyncio.create_task(agent_orchestrator())
 
 @app.get("/")
 async def root():

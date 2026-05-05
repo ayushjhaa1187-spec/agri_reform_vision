@@ -17,7 +17,7 @@ export default function DemoSection() {
   useEffect(() => {
     let i = 0;
     const interval = setInterval(() => {
-      setLogs(prev => [...prev, MOCK_LOGS[i % MOCK_LOGS.length]]);
+      setLogs(prev => [...prev, MOCK_LOGS[i % MOCK_LOGS.length]].slice(-50));
       i++;
     }, 3000);
     return () => clearInterval(interval);
