@@ -4,11 +4,7 @@ import FadeInSection from './ui/FadeInSection';
 export default function ExecutiveSummary() {
   const benefits = [
     {
-      icon: (
-        <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M12 9v2m0 4h.01m-6.938 4h13.856c1.54 0 2.502-1.667 1.732-3L13.732 4c-.77-1.333-2.694-1.333-3.464 0L3.34 16c-.77 1.333.192 3 1.732 3z" />
-        </svg>
-      ),
+      icon: '📊',
       title: 'Reduced Crop Loss',
       description: 'Predictive analytics identify risks before they impact yield, enabling preventive action.',
       color: '#10b981',
@@ -16,11 +12,7 @@ export default function ExecutiveSummary() {
       bgColor: 'from-emerald-950/30 to-emerald-900/10',
     },
     {
-      icon: (
-        <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 7h8m0 0v8m0-8l-8 8-4-4-6 6" />
-        </svg>
-      ),
+      icon: '💰',
       title: 'Increased ROI',
       description: 'Optimized resource allocation and market timing maximize financial returns.',
       color: '#3b82f6',
@@ -28,11 +20,7 @@ export default function ExecutiveSummary() {
       bgColor: 'from-blue-950/30 to-blue-900/10',
     },
     {
-      icon: (
-        <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-        </svg>
-      ),
+      icon: '🤖',
       title: 'Autonomous Decisions',
       description: 'AI agents continuously analyze and act without requiring constant human intervention.',
       color: '#a855f7',
@@ -42,116 +30,136 @@ export default function ExecutiveSummary() {
   ];
 
   return (
-    <section id="executive-summary" className="py-28 md:py-36 section-dark border-b border-white/[0.04]">
-      <div className="max-w-7xl mx-auto px-6 md:px-8">
-        {/* Section Header */}
-        <FadeInSection className="text-center mb-20">
-          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-emerald-400 mb-6 border border-emerald-500/20">
+    <section className="py-24 md:py-32 px-6 max-w-7xl mx-auto relative overflow-hidden">
+      {/* Section Header */}
+      <FadeInSection>
+        <div className="text-center mb-16">
+          <h2 className="text-4xl md:text-5xl font-bold bg-gradient-to-r from-white to-gray-200 bg-clip-text text-transparent mb-4">
             Executive Summary
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          </h2>
+          <p className="text-2xl md:text-3xl font-light text-gray-300 max-w-3xl mx-auto">
             The Future of Precision{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+            <span className="font-bold bg-gradient-to-r from-emerald-400 to-blue-400 bg-clip-text text-transparent">
               Agriculture
             </span>
-          </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
-            Modern agriculture is plagued by reactive decision-making. Our solution transforms farming through autonomous AI.
           </p>
-        </FadeInSection>
+          <div className="w-24 h-1 bg-gradient-to-r from-emerald-400 via-teal-400 to-blue-400 mx-auto mt-8 rounded-full" />
+        </div>
 
-        {/* Main Content Grid */}
-        <div className="grid md:grid-cols-2 gap-12 items-center mb-20">
-          {/* Left Content */}
-          <FadeInSection direction="left" delay={0.1}>
-            <div className="space-y-6">
-              <GlassCard className="p-6 rounded-2xl">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20 flex-shrink-0">
-                    <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M18 12H6" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">The Problem</h3>
-                    <p className="text-base text-slate-400 leading-relaxed">
-                      Farmers rely on fragmented data—weather forecasts, soil tests, and market prices—and struggle to synthesize this information in real-time. The cognitive load leads to inefficiencies, resource waste, and lower yields.
-                    </p>
-                  </div>
-                </div>
-              </GlassCard>
-              <GlassCard className="p-6 rounded-2xl">
-                <div className="flex items-start gap-4">
-                  <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20 flex-shrink-0">
-                    <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                    </svg>
-                  </div>
-                  <div>
-                    <h3 className="text-lg font-semibold text-white mb-2">Our Solution</h3>
-                    <p className="text-base text-slate-400 leading-relaxed">
-                      Agri-Intelligence deploys a network of specialized AI agents that negotiate and collaborate to make optimized decisions. By integrating environmental data, predictive ML models, and market APIs, the system autonomously manages irrigation, predicts yields, and optimizes logistics.
-                    </p>
-                  </div>
-                </div>
-              </GlassCard>
+        <div className="w-full h-px bg-gradient-to-r from-transparent via-white/10 to-transparent mb-16" />
+      </FadeInSection>
+
+      {/* Main Content Grid */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-center mb-24">
+        {/* Left Content */}
+        <div className="space-y-10">
+          <FadeInSection delay={0.1}>
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-emerald-400 to-teal-300 bg-clip-text text-transparent mb-4">
+              The Problem
+            </h3>
+            <div className="inline-block mb-6">
+              <span className="px-4 py-1.5 bg-red-500/10 border border-red-500/30 text-red-300 text-sm rounded-full">
+                Fragmented · Reactive · Inefficient
+              </span>
             </div>
+            <p className="text-lg text-gray-300 leading-relaxed max-w-xl">
+              Farmers rely on fragmented data—weather forecasts, soil tests, and market prices—and struggle to synthesize this information in real-time. The cognitive load leads to inefficiencies, resource waste, and lower yields.
+            </p>
           </FadeInSection>
 
-          {/* Right Visual */}
-          <FadeInSection direction="right" delay={0.2}>
-            <GlassCard className="p-8 rounded-2xl" glow>
-              <div className="text-center mb-6">
-                <h3 className="text-xl font-bold text-white mb-2">Reactive → Proactive</h3>
-                <p className="text-sm text-slate-400">AI-driven precision farming that thinks ahead</p>
-              </div>
-              <div className="grid grid-cols-2 gap-4">
-                {[['Before', ['Manual data review', 'Reactive decisions', 'Resource waste', 'Lower yields'], 'red'],
-                  ['After', ['Autonomous AI analysis', 'Proactive action', 'Optimized resources', 'Maximum yields'], 'emerald']].map(([label, items, color]) => (
-                  <div key={label as string} className={`p-4 rounded-xl ${color === 'red' ? 'bg-red-500/5 border border-red-500/20' : 'bg-emerald-500/5 border border-emerald-500/20'}`}>
-                    <div className={`text-sm font-bold mb-3 ${color === 'red' ? 'text-red-400' : 'text-emerald-400'}`}>{label as string}</div>
-                    <ul className="space-y-2">
-                      {(items as string[]).map((item) => (
-                        <li key={item} className={`text-xs ${color === 'red' ? 'text-red-300/70' : 'text-emerald-300/70'} flex items-center gap-2`}>
-                          <span className={`w-1 h-1 rounded-full ${color === 'red' ? 'bg-red-400' : 'bg-emerald-400'} flex-shrink-0`} />
-                          {item}
-                        </li>
-                      ))}
-                    </ul>
-                  </div>
-                ))}
-              </div>
-              {/* Floating decorative elements */}
-              <div className="absolute -top-3 -right-3 w-6 h-6 bg-emerald-400/20 rounded-full animate-pulse-slow" />
-              <div className="absolute -bottom-3 -left-3 w-4 h-4 bg-teal-400/20 rounded-full animate-pulse-slow" style={{ animationDelay: '1s' }} />
-            </GlassCard>
+          <FadeInSection delay={0.2}>
+            <h3 className="text-3xl font-bold bg-gradient-to-r from-teal-400 to-emerald-300 bg-clip-text text-transparent mb-4">
+              Our Solution
+            </h3>
+            <div className="inline-block mb-6">
+              <span className="px-4 py-1.5 bg-emerald-500/10 border border-emerald-500/30 text-emerald-300 text-sm rounded-full">
+                Autonomous · Unified · Continuous
+              </span>
+            </div>
+            <p className="text-lg text-gray-300 leading-relaxed max-w-xl">
+              Agri-Intelligence deploys a network of specialized AI agents that negotiate and collaborate to make optimized decisions. By integrating environmental data, predictive ML models, and market APIs, the system autonomously manages irrigation, predicts yields, and optimizes logistics.
+            </p>
           </FadeInSection>
         </div>
 
-        {/* Benefits Cards */}
-        <div className="grid md:grid-cols-3 gap-6">
-          {benefits.map((benefit, index) => (
-            <FadeInSection key={index} delay={index * 0.1}>
+        {/* Right Visual */}
+        <FadeInSection delay={0.3}>
+          <div className="relative space-y-6">
+            <div className="text-center space-y-3 mb-8">
+              <p className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
+                Reactive Farming
+              </p>
+              <svg className="w-8 h-8 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
+              </svg>
+              <p className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
+                Autonomous Intelligence
+              </p>
+            </div>
+            {[
+              ['Before', [
+                { text: 'Manual data review', color: 'bg-red-400' },
+                { text: 'Reactive decisions', color: 'bg-red-400' },
+                { text: 'Resource waste', color: 'bg-red-400' },
+                { text: 'Lower yields', color: 'bg-red-400' },
+              ], 'red'],
+              ['After', [
+                { text: 'Autonomous AI analysis', color: 'bg-emerald-400' },
+                { text: 'Proactive action', color: 'bg-emerald-400' },
+                { text: 'Optimized resources', color: 'bg-emerald-400' },
+                { text: 'Maximum yields', color: 'bg-emerald-400' },
+              ], 'emerald']
+            ].map(([label, items]: [string, { text: string; color: string }[], string]) => (
               <div
-                className={`relative p-6 rounded-2xl bg-gradient-to-b ${benefit.bgColor} border ${benefit.borderColor} backdrop-blur-sm group hover:scale-[1.02] transition-transform duration-300`}
+                key={label}
+                className={`p-6 rounded-2xl border-2 transition-transform duration-300 hover:scale-[1.02] ${
+                  label === 'Before'
+                    ? 'border-red-500/30 bg-red-500/5'
+                    : 'border-emerald-500/30 bg-emerald-500/10'
+                }`}
               >
-                <div className="absolute -inset-0.5 rounded-2xl opacity-0 group-hover:opacity-100 transition-opacity duration-300"
-                  style={{ background: `radial-gradient(ellipse at center, ${benefit.color}20, transparent 70%)` }}
-                />
-                <div className="relative">
-                  <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 border"
-                    style={{ backgroundColor: `${benefit.color}15`, borderColor: `${benefit.color}30` }}
-                  >
-                    {benefit.icon}
-                  </div>
-                  <h3 className="text-lg font-semibold text-white mb-3">{benefit.title}</h3>
-                  <p className="text-sm md:text-base text-slate-400 leading-relaxed">{benefit.description}</p>
+                <div className={`text-xl font-bold mb-4 ${label === 'Before' ? 'text-red-400' : 'text-emerald-400'}`}>
+                  {label as string}
+                </div>
+                <div className="space-y-3">
+                  {(items as { text: string; color: string }[]).map((item, idx) => (
+                    <div key={idx} className="flex items-center space-x-3">
+                      <div className={`w-2.5 h-2.5 rounded-full ${item.color} animate-pulse`} />
+                      <span className="text-gray-200">{item.text}</span>
+                    </div>
+                  ))}
                 </div>
               </div>
-            </FadeInSection>
+            ))}
+          </div>
+        </FadeInSection>
+      </div>
+
+      {/* Benefits Cards */}
+      <FadeInSection delay={0.4}>
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          {benefits.map((benefit, index) => (
+            <GlassCard
+              key={benefit.title}
+              className={`relative overflow-hidden group hover:scale-[1.02] transition-all duration-500`}>
+              <div className="p-8 h-full flex flex-col group-hover:scale-105 transition-transform duration-500">
+                <div className={`w-16 h-16 rounded-2xl ${benefit.bgColor} flex items-center justify-center text-3xl mb-6 shadow-2xl group-hover:rotate-6 transition-transform duration-700`}>
+                  {benefit.icon}
+                </div>
+                <h4 className="text-2xl font-bold text-white mb-4 group-hover:text-emerald-400 transition-colors duration-300">
+                  {benefit.title}
+                </h4>
+                <p className="text-gray-300 leading-relaxed flex-1 group-hover:text-gray-200 transition-colors duration-300">
+                  {benefit.description}
+                </p>
+              </div>
+              {/* Animated border glow */}
+              <div
+                className={`absolute inset-0 border-2 ${benefit.borderColor} rounded-2xl pointer-events-none transition-opacity opacity-40 group-hover:opacity-100`} />
+            </GlassCard>
           ))}
         </div>
-      </div>
+      </FadeInSection>
     </section>
   );
 }
