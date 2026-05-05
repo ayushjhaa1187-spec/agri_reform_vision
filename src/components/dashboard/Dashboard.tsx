@@ -12,11 +12,13 @@ import {
 } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
-  const { data, isConnected } = useWebSocket('ws://localhost:8000/ws/agent-feed');
+  const { telemetry, agentDecisions, isConnected } = useWebSocket('ws://localhost:8000/ws/agent-feed');
 
   // Fallback / Initial Data
-  const telemetry = data?.type === 'telemetry' ? data.data : null;
-  const decision = data?.type === 'decision' ? data.data : null;
+  const decision = agentDecisions.length > 0 ? {
+    decision: { final_action: agentDecisions[0].decision, justification: "From stream" },
+    proposals: [] // Placeholder if actual proposals aren't in stream
+  } : null;
 
   return (
     <div className="min-h-screen bg-[#050505] text-white p-6">

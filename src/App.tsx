@@ -1,7 +1,5 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
-import Navigation from './components/Navigation';
-import Footer from './components/Footer';
 import CustomCursor from './components/ui/CustomCursor';
 import Home from './pages/Home';
 import Architecture from './pages/Architecture';
@@ -19,7 +17,7 @@ const pageVariants = {
   out: { opacity: 0, y: -8 },
 };
 
-const pageTransition = {
+const pageTransition: any = {
   type: 'tween',
   ease: [0.16, 1, 0.3, 1],
   duration: 0.35,

@@ -109,7 +109,10 @@ export default function ExecutiveSummary() {
                 { text: 'Optimized resources', color: 'bg-emerald-400' },
                 { text: 'Maximum yields', color: 'bg-emerald-400' },
               ], 'emerald']
-            ].map(([label, items]: [string, { text: string; color: string }[], string]) => (
+            ].map((entry: any) => {
+              const label = entry[0] as string;
+              const items = entry[1] as { text: string; color: string }[];
+              return (
               <div
                 key={label}
                 className={`p-6 rounded-2xl border-2 transition-transform duration-300 hover:scale-[1.02] ${
@@ -119,10 +122,10 @@ export default function ExecutiveSummary() {
                 }`}
               >
                 <div className={`text-xl font-bold mb-4 ${label === 'Before' ? 'text-red-400' : 'text-emerald-400'}`}>
-                  {label as string}
+                  {label}
                 </div>
                 <div className="space-y-3">
-                  {(items as { text: string; color: string }[]).map((item, idx) => (
+                  {items.map((item, idx) => (
                     <div key={idx} className="flex items-center space-x-3">
                       <div className={`w-2.5 h-2.5 rounded-full ${item.color} animate-pulse`} />
                       <span className="text-gray-200">{item.text}</span>
@@ -130,7 +133,7 @@ export default function ExecutiveSummary() {
                   ))}
                 </div>
               </div>
-            ))}
+            )})}
           </div>
         </FadeInSection>
       </div>
@@ -138,7 +141,7 @@ export default function ExecutiveSummary() {
       {/* Benefits Cards */}
       <FadeInSection delay={0.4}>
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          {benefits.map((benefit, index) => (
+          {benefits.map((benefit) => (
             <GlassCard
               key={benefit.title}
               className={`relative overflow-hidden group hover:scale-[1.02] transition-all duration-500`}>

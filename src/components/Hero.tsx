@@ -1,27 +1,8 @@
-import { Suspense, lazy, useMemo } from 'react';
+import { Suspense, lazy } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import MagneticButton from './ui/MagneticButton';
 
 const ThreeCanvas = lazy(() => import('./three/HeroCanvas'));
-
-function CharRevealText({ text, className = '', delay = 0 }: { text: string; className?: string; delay?: number }) {
-  const chars = useMemo(() => text.split(''), [text]);
-  return (
-    <span className={className}>
-      {chars.map((char, i) => (
-        <span key={i} className="char-reveal-wrapper">
-          <span
-            className="char-reveal"
-            style={{ animationDelay: `${delay + i * 30}ms` }}
-          >
-            {char === ' ' ? '\u00A0' : char}
-          </span>
-        </span>
-      ))}
-    </span>
-  );
-}
 
 function HeroBg() {
   return (
