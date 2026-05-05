@@ -107,7 +107,7 @@ export default function SystemArchitecture() {
           <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
             A closed-loop pipeline:{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
-              sensor snapshot \u2192 AI negotiation \u2192 decision \u2192 actuator \u2192 new sensor reading
+              sensor snapshot → AI negotiation → decision → actuator → new sensor reading
             </span>
             , enabling continuous learning every 15 minutes.
           </p>
