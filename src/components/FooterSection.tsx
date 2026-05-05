@@ -11,7 +11,7 @@ export default function FooterSection() {
         <FadeInSection>
           <div className="flex items-center gap-2 mb-4">
             <span className="text-2xl">🌾</span>
-            <span className="text-xl font-bold text-white tracking-tighter">Agri<span className="text-emerald-400">Intelligence</span></span>
+            <span className="text-xl font-bold text-white tracking-tighter">Agri-<span className="text-emerald-400">Intelligence</span></span>
           </div>
           <p className="text-sm text-gray-500 leading-relaxed">
             Revolutionizing agriculture through explainable autonomous multi-agent ecosystems. Built at IIT Madras.
