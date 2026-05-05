@@ -1,209 +1,131 @@
-import TiltCard from './ui/TiltCard';
-import useScrollReveal from '../hooks/useScrollReveal';
+import GlassCard from './ui/GlassCard';
+import FadeInSection from './ui/FadeInSection';
 
 export default function Solution() {
-  const { ref, isVisible } = useScrollReveal();
+  const currentState = [
+    'Fragmented data across spreadsheets and apps',
+    'Manual irrigation decisions — often too late',
+    'No real-time market integration',
+    'Reactive pest/disease management',
+    'Supply chain delays and storage waste',
+  ];
+
+  const futureState = [
+    'Unified sensor + weather + market data stream',
+    'Autonomous irrigation triggers every 15 min',
+    'Live AgMarket API with price optimization',
+    'Predictive disease risk scoring via XGBoost',
+    'AI-optimized logistics and cold-chain scheduling',
+  ];
+
+  const agentFlow = [
+    { icon: '\ud83d\udce1', label: 'Sensor Data', color: 'emerald', desc: 'IoT + Weather' },
+    { icon: '\ud83e\udd14', label: 'Agent Analysis', color: 'yellow', desc: 'Debate & Reason' },
+    { icon: '\ud83d\udcac', label: 'Negotiation', color: 'purple', desc: '2-Round Protocol' },
+    { icon: '\u2705', label: 'Consensus', color: 'blue', desc: 'Weighted Vote' },
+    { icon: '\u26a1', label: 'Execution', color: 'emerald', desc: 'Actuator Command' },
+  ];
 
   return (
-    <section id="solution" className="py-24 section-darker border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto px-6" ref={ref}>
+    <section id="solution" className="py-28 md:py-36 section-darker border-t border-white/[0.04]">
+      <div className="max-w-7xl mx-auto px-6 md:px-8">
         {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-emerald-400 mb-4">
+        <FadeInSection className="text-center mb-20">
+          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-emerald-400 mb-6 border border-emerald-500/20">
             Our Solution
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            From Fragmented Data to <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Unified Intelligence</span>
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+            From Fragmented Data to{' '}
+            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+              Unified Intelligence
+            </span>
           </h2>
-          <p className="text-lg text-slate-400 max-w-3xl mx-auto">
+          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
             Agri-Intelligence solves the critical problem of cognitive overload in farming by automating complex decision-making through AI collaboration.
           </p>
-        </div>
+        </FadeInSection>
 
         {/* Problem vs Solution Comparison */}
-        <div className={`grid md:grid-cols-2 gap-8 mb-16 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {/* Current State */}
-          <div className="glass-card rounded-2xl p-8 border-red-500/20">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center border border-red-500/20">
-                <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
-                </svg>
-              </div>
-              <h3 className="text-xl font-bold text-white">Current State</h3>
-            </div>
-            <ul className="space-y-4">
-              {[
-                'Farmers manually check multiple apps and dashboards',
-                'Weather, soil, and market data exist in silos',
-                'Split-second decisions require mental cross-referencing',
-                'Human error leads to resource waste',
-                'Reactive responses to problems after damage occurs',
-                'No continuous monitoring or optimization'
-              ].map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 0L6 8.586l-.707-.707a1 1 0 00-1.414 1.414l1.414 1.414-1.414 1.414a1 1 0 001.414 1.414L6.586 12l1.293 1.293a1 1 0 001.414-1.414L8 10.586l1.293-1.293a1 1 0 000-1.414L8 7.293 8.707 8z" clipRule="evenodd" />
+        <div className="grid md:grid-cols-2 gap-8 mb-20">
+          <FadeInSection direction="left" delay={0.1}>
+            <GlassCard className="p-8 rounded-2xl h-full">
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-red-500/10 flex items-center justify-center border border-red-500/20">
+                  <svg className="w-5 h-5 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                   </svg>
-                  <span className="text-slate-300">{item}</span>
-                </li>
-              ))}
-            </ul>
-          </div>
-
-          {/* Agri-Intelligence State */}
-          <div className="glass-card-glow rounded-2xl p-8 border-emerald-500/30">
-            <div className="flex items-center gap-3 mb-6 relative z-10">
-              <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center border border-emerald-500/30">
-                <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
-                </svg>
+                </div>
+                <h3 className="text-xl font-bold text-white">Current State</h3>
               </div>
-              <h3 className="text-xl font-bold text-white">With Agri-Intelligence</h3>
-            </div>
-            <ul className="space-y-4 relative z-10">
-              {[
-                'Unified dashboard displays all critical information',
-                'AI agents synthesize data from all sources automatically',
-                'Complex decisions computed in seconds',
-                'Optimized resource usage reduces waste by 30%+',
-                'Proactive alerts prevent problems before they occur',
-                '24/7 continuous monitoring and optimization'
-              ].map((item, index) => (
-                <li key={index} className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+              <ul className="space-y-4">
+                {currentState.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-red-500/10 border border-red-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="w-1.5 h-1.5 bg-red-400 rounded-full" />
+                    </span>
+                    <span className="text-sm md:text-base text-slate-400 leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </GlassCard>
+          </FadeInSection>
+
+          <FadeInSection direction="right" delay={0.15}>
+            <GlassCard className="p-8 rounded-2xl h-full border-emerald-500/20" glow>
+              <div className="flex items-center gap-3 mb-6">
+                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
+                  <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
-                  <span className="text-slate-200">{item}</span>
-                </li>
+                </div>
+                <h3 className="text-xl font-bold text-white">With Agri-Intelligence</h3>
+              </div>
+              <ul className="space-y-4">
+                {futureState.map((item, i) => (
+                  <li key={i} className="flex items-start gap-3">
+                    <span className="w-5 h-5 rounded-full bg-emerald-500/10 border border-emerald-500/20 flex items-center justify-center flex-shrink-0 mt-0.5">
+                      <span className="w-1.5 h-1.5 bg-emerald-400 rounded-full" />
+                    </span>
+                    <span className="text-sm md:text-base text-slate-300 leading-relaxed">{item}</span>
+                  </li>
+                ))}
+              </ul>
+            </GlassCard>
+          </FadeInSection>
+        </div>
+
+        {/* Agent Flow */}
+        <FadeInSection delay={0.2}>
+          <div className="glass-card rounded-2xl p-8 md:p-10">
+            <h3 className="text-xl font-bold text-white text-center mb-8">Decision Flow Pipeline</h3>
+            <div className="flex flex-wrap items-center justify-center gap-2 md:gap-0">
+              {agentFlow.map((step, i) => (
+                <div key={i} className="flex items-center">
+                  <div className="flex flex-col items-center group">
+                    <div className={`w-14 h-14 rounded-2xl flex items-center justify-center text-2xl mb-3 border transition-all duration-300 group-hover:scale-110 ${
+                      step.color === 'emerald' ? 'bg-emerald-500/10 border-emerald-500/30 group-hover:bg-emerald-500/20'
+                      : step.color === 'yellow' ? 'bg-yellow-500/10 border-yellow-500/30 group-hover:bg-yellow-500/20'
+                      : step.color === 'purple' ? 'bg-purple-500/10 border-purple-500/30 group-hover:bg-purple-500/20'
+                      : 'bg-blue-500/10 border-blue-500/30 group-hover:bg-blue-500/20'
+                    }`}>
+                      {step.icon}
+                    </div>
+                    <span className="text-xs font-semibold text-white text-center">{step.label}</span>
+                    <span className="text-[10px] text-slate-500 text-center mt-0.5">{step.desc}</span>
+                  </div>
+                  {i < agentFlow.length - 1 && (
+                    <div className="hidden md:flex items-center mx-3">
+                      <svg className="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
+                      </svg>
+                    </div>
+                  )}
+                </div>
               ))}
-            </ul>
-          </div>
-        </div>
-
-        {/* Key Features */}
-        <div className={`mb-16 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <h3 className="text-2xl font-bold text-white text-center mb-10">Key Features</h3>
-          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-            {[
-              {
-                icon: '🔄',
-                title: 'Real-Time Integration',
-                desc: 'Continuous data streams from weather APIs, IoT sensors, and market feeds'
-              },
-              {
-                icon: '🤖',
-                title: 'Multi-Agent AI',
-                desc: 'Specialized agents with distinct objectives that negotiate optimal decisions'
-              },
-              {
-                icon: '📊',
-                title: 'Predictive ML',
-                desc: 'XGBoost models predict disease risk and yield with 85%+ accuracy'
-              },
-              {
-                icon: '📱',
-                title: 'Interactive Dashboard',
-                desc: 'Live visualization of agent decisions, actions, and farm status'
-              },
-              {
-                icon: '⚡',
-                title: 'Autonomous Actions',
-                desc: 'System executes decisions without requiring constant human input'
-              },
-              {
-                icon: '📈',
-                title: 'ROI Optimization',
-                desc: 'Balances crop health with cost efficiency for maximum returns'
-              },
-              {
-                icon: '🔒',
-                title: 'Audit Logging',
-                desc: 'Complete decision trail for transparency and compliance'
-              },
-              {
-                icon: '🌐',
-                title: 'Scalable Architecture',
-                desc: 'Easy adaptation to real IoT sensors for field deployment'
-              }
-            ].map((feature, index) => (
-              <TiltCard key={index} className="p-6 rounded-xl">
-                <div className="text-3xl mb-3">{feature.icon}</div>
-                <h4 className="font-semibold text-white mb-2">{feature.title}</h4>
-                <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
-              </TiltCard>
-            ))}
-          </div>
-        </div>
-
-        {/* Technical Implementation */}
-        <div className={`transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="glass-card rounded-3xl p-8 md:p-12">
-            <div className="text-center mb-10">
-              <h3 className="text-2xl font-bold text-white mb-3">Technical Implementation</h3>
-              <p className="text-slate-400">Built with modern, scalable technologies</p>
             </div>
-
-            <div className="grid md:grid-cols-3 gap-8">
-              {/* Frontend */}
-              <div className="bg-white/[0.02] rounded-2xl p-6 border border-white/[0.05]">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center">
-                    <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-white font-semibold">Frontend</h4>
-                </div>
-                <ul className="space-y-2 text-slate-400 text-sm">
-                  <li>• React.js with TypeScript</li>
-                  <li>• Tailwind CSS + Glassmorphism</li>
-                  <li>• Three.js + Framer Motion</li>
-                  <li>• Real-time WebSocket updates</li>
-                  <li>• Interactive data visualizations</li>
-                </ul>
-              </div>
-
-              {/* Backend */}
-              <div className="bg-white/[0.02] rounded-2xl p-6 border border-white/[0.05]">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center justify-center">
-                    <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-                    </svg>
-                  </div>
-                  <h4 className="text-white font-semibold">Backend</h4>
-                </div>
-                <ul className="space-y-2 text-slate-400 text-sm">
-                  <li>• FastAPI for REST endpoints</li>
-                  <li>• LangChain for agent orchestration</li>
-                  <li>• PostgreSQL for data storage</li>
-                  <li>• Redis for caching & sessions</li>
-                  <li>• Celery for async tasks</li>
-                </ul>
-              </div>
-
-              {/* AI/ML */}
-              <div className="bg-white/[0.02] rounded-2xl p-6 border border-white/[0.05]">
-                <div className="flex items-center gap-3 mb-4">
-                  <div className="w-10 h-10 bg-purple-500/10 border border-purple-500/20 rounded-lg flex items-center justify-center">
-                    <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                    </svg>
-                  </div>
-                  <h4 className="text-white font-semibold">AI/ML Core</h4>
-                </div>
-                <ul className="space-y-2 text-slate-400 text-sm">
-                  <li>• LLM-based agent reasoning</li>
-                  <li>• XGBoost for predictions</li>
-                  <li>• Custom prompt engineering</li>
-                  <li>• Multi-agent negotiation logic</li>
-                  <li>• Open-source agricultural datasets</li>
-                </ul>
-              </div>
-            </div>
+            <p className="text-xs text-slate-500 text-center mt-6">Closed-loop continuous learning · Cycles every 15 minutes</p>
           </div>
-        </div>
+        </FadeInSection>
       </div>
     </section>
   );
