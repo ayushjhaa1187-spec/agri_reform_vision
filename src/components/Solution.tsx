@@ -1,31 +1,36 @@
+import TiltCard from './ui/TiltCard';
+import useScrollReveal from '../hooks/useScrollReveal';
+
 export default function Solution() {
+  const { ref, isVisible } = useScrollReveal();
+
   return (
-    <section id="solution" className="py-20 bg-gradient-to-b from-emerald-50 to-white">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="solution" className="py-24 section-darker border-t border-white/[0.04]">
+      <div className="max-w-7xl mx-auto px-6" ref={ref}>
         {/* Section Header */}
-        <div className="text-center mb-16">
-          <span className="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">
+        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-emerald-400 mb-4">
             Our Solution
           </span>
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            From Fragmented Data to Unified Intelligence
+          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
+            From Fragmented Data to <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Unified Intelligence</span>
           </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
+          <p className="text-lg text-slate-400 max-w-3xl mx-auto">
             Agri-Intelligence solves the critical problem of cognitive overload in farming by automating complex decision-making through AI collaboration.
           </p>
         </div>
 
         {/* Problem vs Solution Comparison */}
-        <div className="grid md:grid-cols-2 gap-8 mb-16">
+        <div className={`grid md:grid-cols-2 gap-8 mb-16 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
           {/* Current State */}
-          <div className="bg-red-50 rounded-2xl p-8 border border-red-100">
+          <div className="glass-card rounded-2xl p-8 border-red-500/20">
             <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-red-100 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-red-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <div className="w-12 h-12 bg-red-500/10 rounded-xl flex items-center justify-center border border-red-500/20">
+                <svg className="w-6 h-6 text-red-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M6 18L18 6M6 6l12 12" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-red-800">Current State</h3>
+              <h3 className="text-xl font-bold text-white">Current State</h3>
             </div>
             <ul className="space-y-4">
               {[
@@ -37,26 +42,26 @@ export default function Solution() {
                 'No continuous monitoring or optimization'
               ].map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-red-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-red-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zM8.707 7.293a1 1 0 00-1.414 0L6 8.586l-.707-.707a1 1 0 00-1.414 1.414l1.414 1.414-1.414 1.414a1 1 0 001.414 1.414L6.586 12l1.293 1.293a1 1 0 001.414-1.414L8 10.586l1.293-1.293a1 1 0 000-1.414L8 7.293 8.707 8z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-red-700">{item}</span>
+                  <span className="text-slate-300">{item}</span>
                 </li>
               ))}
             </ul>
           </div>
 
           {/* Agri-Intelligence State */}
-          <div className="bg-emerald-50 rounded-2xl p-8 border border-emerald-100">
-            <div className="flex items-center gap-3 mb-6">
-              <div className="w-12 h-12 bg-emerald-100 rounded-xl flex items-center justify-center">
-                <svg className="w-6 h-6 text-emerald-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <div className="glass-card-glow rounded-2xl p-8 border-emerald-500/30">
+            <div className="flex items-center gap-3 mb-6 relative z-10">
+              <div className="w-12 h-12 bg-emerald-500/20 rounded-xl flex items-center justify-center border border-emerald-500/30">
+                <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                   <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                 </svg>
               </div>
-              <h3 className="text-xl font-bold text-emerald-800">With Agri-Intelligence</h3>
+              <h3 className="text-xl font-bold text-white">With Agri-Intelligence</h3>
             </div>
-            <ul className="space-y-4">
+            <ul className="space-y-4 relative z-10">
               {[
                 'Unified dashboard displays all critical information',
                 'AI agents synthesize data from all sources automatically',
@@ -66,10 +71,10 @@ export default function Solution() {
                 '24/7 continuous monitoring and optimization'
               ].map((item, index) => (
                 <li key={index} className="flex items-start gap-3">
-                  <svg className="w-5 h-5 text-emerald-500 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                  <svg className="w-5 h-5 text-emerald-400 flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
                     <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
                   </svg>
-                  <span className="text-emerald-700">{item}</span>
+                  <span className="text-slate-200">{item}</span>
                 </li>
               ))}
             </ul>
@@ -77,8 +82,8 @@ export default function Solution() {
         </div>
 
         {/* Key Features */}
-        <div className="mb-16">
-          <h3 className="text-2xl font-bold text-slate-900 text-center mb-10">Key Features</h3>
+        <div className={`mb-16 transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <h3 className="text-2xl font-bold text-white text-center mb-10">Key Features</h3>
           <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
             {[
               {
@@ -122,78 +127,80 @@ export default function Solution() {
                 desc: 'Easy adaptation to real IoT sensors for field deployment'
               }
             ].map((feature, index) => (
-              <div key={index} className="bg-white rounded-xl p-6 shadow-lg border border-slate-100 hover:shadow-xl transition-shadow duration-300">
+              <TiltCard key={index} className="p-6 rounded-xl">
                 <div className="text-3xl mb-3">{feature.icon}</div>
-                <h4 className="font-semibold text-slate-900 mb-2">{feature.title}</h4>
-                <p className="text-slate-600 text-sm">{feature.desc}</p>
-              </div>
+                <h4 className="font-semibold text-white mb-2">{feature.title}</h4>
+                <p className="text-slate-400 text-sm leading-relaxed">{feature.desc}</p>
+              </TiltCard>
             ))}
           </div>
         </div>
 
         {/* Technical Implementation */}
-        <div className="bg-slate-900 rounded-3xl p-8 md:p-12">
-          <div className="text-center mb-10">
-            <h3 className="text-2xl font-bold text-white mb-3">Technical Implementation</h3>
-            <p className="text-slate-400">Built with modern, scalable technologies</p>
-          </div>
-
-          <div className="grid md:grid-cols-3 gap-8">
-            {/* Frontend */}
-            <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-blue-500/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
-                  </svg>
-                </div>
-                <h4 className="text-white font-semibold">Frontend</h4>
-              </div>
-              <ul className="space-y-2 text-slate-300 text-sm">
-                <li>• React.js with TypeScript</li>
-                <li>• Tailwind CSS for styling</li>
-                <li>• Real-time WebSocket updates</li>
-                <li>• Interactive data visualizations</li>
-                <li>• Responsive mobile design</li>
-              </ul>
+        <div className={`transition-all duration-700 delay-400 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className="glass-card rounded-3xl p-8 md:p-12">
+            <div className="text-center mb-10">
+              <h3 className="text-2xl font-bold text-white mb-3">Technical Implementation</h3>
+              <p className="text-slate-400">Built with modern, scalable technologies</p>
             </div>
 
-            {/* Backend */}
-            <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-green-500/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-green-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
-                  </svg>
+            <div className="grid md:grid-cols-3 gap-8">
+              {/* Frontend */}
+              <div className="bg-white/[0.02] rounded-2xl p-6 border border-white/[0.05]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-blue-500/10 border border-blue-500/20 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-blue-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-white font-semibold">Frontend</h4>
                 </div>
-                <h4 className="text-white font-semibold">Backend</h4>
+                <ul className="space-y-2 text-slate-400 text-sm">
+                  <li>• React.js with TypeScript</li>
+                  <li>• Tailwind CSS + Glassmorphism</li>
+                  <li>• Three.js + Framer Motion</li>
+                  <li>• Real-time WebSocket updates</li>
+                  <li>• Interactive data visualizations</li>
+                </ul>
               </div>
-              <ul className="space-y-2 text-slate-300 text-sm">
-                <li>• FastAPI for REST endpoints</li>
-                <li>• LangChain for agent orchestration</li>
-                <li>• PostgreSQL for data storage</li>
-                <li>• Redis for caching & sessions</li>
-                <li>• Celery for async tasks</li>
-              </ul>
-            </div>
 
-            {/* AI/ML */}
-            <div className="bg-slate-800/50 rounded-2xl p-6 border border-slate-700">
-              <div className="flex items-center gap-3 mb-4">
-                <div className="w-10 h-10 bg-purple-500/20 rounded-lg flex items-center justify-center">
-                  <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
-                  </svg>
+              {/* Backend */}
+              <div className="bg-white/[0.02] rounded-2xl p-6 border border-white/[0.05]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-emerald-500/10 border border-emerald-500/20 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 12h14M5 12a2 2 0 01-2-2V6a2 2 0 012-2h14a2 2 0 012 2v4a2 2 0 01-2 2M5 12a2 2 0 00-2 2v4a2 2 0 002 2h14a2 2 0 002-2v-4a2 2 0 00-2-2m-2-4h.01M17 16h.01" />
+                    </svg>
+                  </div>
+                  <h4 className="text-white font-semibold">Backend</h4>
                 </div>
-                <h4 className="text-white font-semibold">AI/ML Core</h4>
+                <ul className="space-y-2 text-slate-400 text-sm">
+                  <li>• FastAPI for REST endpoints</li>
+                  <li>• LangChain for agent orchestration</li>
+                  <li>• PostgreSQL for data storage</li>
+                  <li>• Redis for caching & sessions</li>
+                  <li>• Celery for async tasks</li>
+                </ul>
               </div>
-              <ul className="space-y-2 text-slate-300 text-sm">
-                <li>• LLM-based agent reasoning</li>
-                <li>• XGBoost for predictions</li>
-                <li>• Custom prompt engineering</li>
-                <li>• Multi-agent negotiation logic</li>
-                <li>• Open-source agricultural datasets</li>
-              </ul>
+
+              {/* AI/ML */}
+              <div className="bg-white/[0.02] rounded-2xl p-6 border border-white/[0.05]">
+                <div className="flex items-center gap-3 mb-4">
+                  <div className="w-10 h-10 bg-purple-500/10 border border-purple-500/20 rounded-lg flex items-center justify-center">
+                    <svg className="w-6 h-6 text-purple-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9.663 17h4.673M12 3v1m6.364 1.636l-.707.707M21 12h-1M4 12H3m3.343-5.657l-.707-.707m2.828 9.9a5 5 0 117.072 0l-.548.547A3.374 3.374 0 0014 18.469V19a2 2 0 11-4 0v-.531c0-.895-.356-1.754-.988-2.386l-.548-.547z" />
+                    </svg>
+                  </div>
+                  <h4 className="text-white font-semibold">AI/ML Core</h4>
+                </div>
+                <ul className="space-y-2 text-slate-400 text-sm">
+                  <li>• LLM-based agent reasoning</li>
+                  <li>• XGBoost for predictions</li>
+                  <li>• Custom prompt engineering</li>
+                  <li>• Multi-agent negotiation logic</li>
+                  <li>• Open-source agricultural datasets</li>
+                </ul>
+              </div>
             </div>
           </div>
         </div>

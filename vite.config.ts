@@ -7,7 +7,6 @@ import { defineConfig } from "vite";
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react(), tailwindcss()],
   resolve: {
@@ -16,13 +15,13 @@ export default defineConfig({
     },
   },
   build: {
+    chunkSizeWarningLimit: 1000,
     rollupOptions: {
       output: {
         manualChunks: {
           'vendor': ['react', 'react-dom', 'react-router-dom'],
-          'ui': ['framer-motion', 'lucide-react'],
-          'charts': ['chart.js', 'react-chartjs-2'],
-          'maps': ['leaflet', 'react-leaflet']
+          'animation': ['framer-motion', 'gsap'],
+          'three': ['three', '@react-three/fiber', '@react-three/drei'],
         }
       }
     }
