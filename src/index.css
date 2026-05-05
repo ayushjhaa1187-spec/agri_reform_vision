@@ -278,3 +278,120 @@ body {
     display: none; /* Save GPU on mobile */
   }
 }
+
+
+/* ═══════════════════════════════════════════
+   CINEMATIC UPGRADE ADDITIONS
+   ═══════════════════════════════════════════ */
+
+/* Body top padding for fixed nav */
+body {
+  padding-top: 0;
+}
+
+/* Smooth page transitions */
+.page-transition {
+  animation: fadeIn 0.35s ease-out;
+}
+
+/* Scrollbar thin utility */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 4px;
+}
+.scrollbar-thin::-webkit-scrollbar-track {
+  background: transparent;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  background: rgba(16, 185, 129, 0.2);
+  border-radius: 2px;
+}
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  background: rgba(16, 185, 129, 0.4);
+}
+
+/* Section separator glow line */
+.section-separator {
+  height: 1px;
+  background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.2), transparent);
+  border: none;
+}
+
+/* Hero gradient orbs */
+@keyframes orb-float {
+  0%, 100% { transform: translateY(0) scale(1); }
+  33% { transform: translateY(-20px) scale(1.05); }
+  66% { transform: translateY(10px) scale(0.95); }
+}
+.animate-orb {
+  animation: orb-float 8s ease-in-out infinite;
+}
+
+/* Neon text glow utility */
+.neon-text {
+  text-shadow: 0 0 20px rgba(16, 185, 129, 0.5), 0 0 40px rgba(16, 185, 129, 0.25);
+}
+
+/* Card entrance stagger */
+@keyframes card-entrance {
+  from {
+    opacity: 0;
+    transform: translateY(24px) scale(0.97);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
+}
+.animate-card-entrance {
+  animation: card-entrance 0.5s cubic-bezier(0.16, 1, 0.3, 1) both;
+}
+
+/* Mobile touch targets */
+@media (max-width: 640px) {
+  button, a {
+    min-height: 44px;
+  }
+  .glass-card {
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+  }
+}
+
+/* Hide custom cursor on touch devices */
+@media (pointer: coarse) {
+  .custom-cursor-active * {
+    cursor: auto !important;
+  }
+}
+
+/* Typing cursor blink */
+.typewriter-cursor::after {
+  content: '\258e';
+  animation: typewriter-blink 0.8s step-end infinite;
+  color: var(--glow-green);
+  margin-left: 1px;
+}
+
+/* Focus visible styles for accessibility */
+:focus-visible {
+  outline: 2px solid rgba(16, 185, 129, 0.5);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+/* Glassmorphism card shimmer on hover */
+@keyframes shimmer {
+  0% { background-position: -200% center; }
+  100% { background-position: 200% center; }
+}
+.glass-card-shimmer:hover::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(90deg, transparent 0%, rgba(255,255,255,0.03) 50%, transparent 100%);
+  background-size: 200% auto;
+  animation: shimmer 2s linear infinite;
+  pointer-events: none;
+  border-radius: inherit;
+  z-index: 1;
+}
