@@ -58,11 +58,9 @@ export default function App() {
     <Router>
       <div className="min-h-screen bg-[#030a06]">
         <CustomCursor />
-        <Navigation />
         <main>
           <AnimatedRoutes />
         </main>
-        <Footer />
       </div>
     </Router>
   );

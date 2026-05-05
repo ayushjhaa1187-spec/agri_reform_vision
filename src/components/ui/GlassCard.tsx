@@ -1,31 +1,39 @@
-import { useRef, type ReactNode, type MouseEvent } from 'react';
+import { useState, useRef, ReactNode } from 'react';
 
 interface GlassCardProps {
   children: ReactNode;
   className?: string;
-  glow?: boolean;
-  hoverScale?: boolean;
 }
 
-export default function GlassCard({ children, className = '', glow = false, hoverScale = false }: GlassCardProps) {
-  const highlightRef = useRef<HTMLDivElement>(null);
+export default function GlassCard({ children, className = "" }: GlassCardProps) {
+  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
+  const [opacity, setOpacity] = useState(0);
+  const cardRef = useRef<HTMLDivElement>(null);
 
-  const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
-    if (!highlightRef.current) return;
-    const rect = e.currentTarget.getBoundingClientRect();
-    const x = e.clientX - rect.left;
-    const y = e.clientY - rect.top;
-    highlightRef.current.style.background = `radial-gradient(400px circle at ${x}px ${y}px, rgba(16, 185, 129, 0.06), transparent 60%)`;
+  const handleMouseMove = (e: React.MouseEvent<HTMLDivElement>) => {
+    if (!cardRef.current) return;
+    const rect = cardRef.current.getBoundingClientRect();
+    setMousePosition({
+      x: e.clientX - rect.left,
+      y: e.clientY - rect.top,
+    });
   };
-
-  const baseClass = glow ? 'glass-card-glow' : 'glass-card';
 
   return (
     <div
-      className={`${baseClass} ${hoverScale ? 'transition-transform duration-300 hover:scale-[1.02]' : ''} ${className}`}
+      ref={cardRef}
       onMouseMove={handleMouseMove}
+      onMouseEnter={() => setOpacity(1)}
+      onMouseLeave={() => setOpacity(0)}
+      className={`glass-card relative ${className}`}
     >
-      <div ref={highlightRef} className="glass-card-highlight" />
+      <div
+        className="glass-card-highlight"
+        style={{
+          opacity,
+          background: `radial-gradient(600px circle at ${mousePosition.x}px ${mousePosition.y}px, rgba(16, 185, 129, 0.06), transparent 40%)`,
+        }}
+      />
       {children}
     </div>
   );
