@@ -1,17 +1,16 @@
 import asyncio
 import json
-import redis.asyncio as redis
 from typing import Set
 from fastapi import WebSocket
+from backend.config import get_redis_client
 
 # One global set to hold all connected WebSocket clients
 connected_clients: Set[WebSocket] = set()
 
 async def redis_subscriber():
     """Subscribes to Redis channels and broadcasts to all WebSocket clients."""
-    # Using 'redis' as the hostname for Docker compatibility
     try:
-        r = redis.Redis(host="redis", port=6379, decode_responses=True)
+        r = get_redis_client()
         pubsub = r.pubsub()
         await pubsub.subscribe("agent_decisions", "sensor_data")
         print("Successfully subscribed to Redis channels: agent_decisions, sensor_data")

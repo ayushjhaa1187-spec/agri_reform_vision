@@ -1,36 +1,51 @@
 import { useState } from 'react';
 import TiltCard from './ui/TiltCard';
 import useScrollReveal from '../hooks/useScrollReveal';
+import { useWebSocket } from '../hooks/useWebSocket';
+
+const MOCK_LOGS = [
+  { time: '10:32:45', type: 'decision', agent: 'Master Coordinator', message: 'Pump scheduled for 14:01 @ 40% capacity (₹840 saved)' },
+  { time: '10:31:20', type: 'negotiation', agent: 'Economist', message: 'Counter-proposal: Delay 6h to off-peak tariff' },
+  { time: '10:30:55', type: 'negotiation', agent: 'Logistician', message: 'Warning: Soil >55% would block harvester' },
+  { time: '10:30:15', type: 'alert', agent: 'Agronomist', message: 'Soil moisture 32% — below optimal threshold' },
+  { time: '10:28:00', type: 'data', agent: 'OpenWeather API', message: 'Rain probability 65% in next 42 hours' },
+  { time: '10:25:30', type: 'ml', agent: 'XGBoost Model', message: 'Disease risk score: Low (12%)' }
+];
 
 export default function ConnectScreen() {
   const { ref, isVisible } = useScrollReveal();
   const [activeTab, setActiveTab] = useState<'overview' | 'agents' | 'logs' | 'map'>('overview');
   const [mode, setMode] = useState<'auto' | 'suggest' | 'manual'>('auto');
 
+  // WebSocket Integration
+  const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/agent-feed';
+  const { isConnected, telemetry, agentDecisions } = useWebSocket(wsUrl);
+
   const agentStatus = [
-    { name: 'Agronomist', icon: '🌱', status: 'active', lastAction: 'Soil moisture analyzed', time: '2 min ago' },
-    { name: 'Economist', icon: '💰', status: 'active', lastAction: 'Energy tariff updated', time: '5 min ago' },
-    { name: 'Logistician', icon: '🚚', status: 'monitoring', lastAction: 'Harvest transport scheduled', time: '15 min ago' },
-    { name: 'Master Coordinator', icon: '🎯', status: 'active', lastAction: 'Irrigation conflict resolved', time: '1 min ago' }
+    { name: 'Agronomist', icon: '🌱', status: isConnected ? 'active' : 'monitoring', lastAction: agentDecisions.find(d => d.agent === 'Agronomist')?.decision || 'Soil moisture analyzed', time: 'live' },
+    { name: 'Economist', icon: '💰', status: isConnected ? 'active' : 'monitoring', lastAction: agentDecisions.find(d => d.agent === 'Economist')?.decision || 'Energy tariff updated', time: 'live' },
+    { name: 'Logistician', icon: '🚚', status: isConnected ? 'monitoring' : 'monitoring', lastAction: agentDecisions.find(d => d.agent === 'Logistician')?.decision || 'Harvest transport scheduled', time: 'live' },
+    { name: 'Master Coordinator', icon: '🎯', status: isConnected ? 'active' : 'monitoring', lastAction: agentDecisions.find(d => d.agent === 'Master Coordinator')?.decision || 'Irrigation conflict resolved', time: 'live' }
   ];
 
-  const recentLogs = [
-    { time: '10:32:45', type: 'decision', agent: 'Master Coordinator', message: 'Pump scheduled for 14:01 @ 40% capacity (₹840 saved)' },
-    { time: '10:31:20', type: 'negotiation', agent: 'Economist', message: 'Counter-proposal: Delay 6h to off-peak tariff' },
-    { time: '10:30:55', type: 'negotiation', agent: 'Logistician', message: 'Warning: Soil >55% would block harvester' },
-    { time: '10:30:15', type: 'alert', agent: 'Agronomist', message: 'Soil moisture 32% — below optimal threshold' },
-    { time: '10:28:00', type: 'data', agent: 'OpenWeather API', message: 'Rain probability 65% in next 42 hours' },
-    { time: '10:25:30', type: 'ml', agent: 'XGBoost Model', message: 'Disease risk score: Low (12%)' }
-  ];
+  const recentLogs = agentDecisions.length > 0 
+    ? agentDecisions.map(d => ({
+        time: new Date(d.timestamp).toLocaleTimeString(),
+        type: d.action_type,
+        agent: d.agent,
+        message: d.decision
+      }))
+    : MOCK_LOGS;
 
   const farmMetrics = [
-    { label: 'Soil Moisture', value: '32%', status: 'warning', icon: '💧' },
+    { label: 'Soil Moisture', value: telemetry ? `${telemetry.farm.soil_moisture.toFixed(1)}%` : '32.0%', status: (telemetry?.farm.soil_moisture ?? 32) < 35 ? 'warning' : 'good', icon: '💧' },
     { label: 'Crop Health', value: '94%', status: 'good', icon: '🌱' },
-    { label: 'Disease Risk', value: '12%', status: 'good', icon: '🛡️' },
-    { label: 'Yield Forecast', value: '4.2 t/ha', status: 'good', icon: '📈' },
-    { label: 'Rain Prob (42h)', value: '65%', status: 'warning', icon: '🌧️' },
-    { label: 'NPK Level', value: 'Optimal', status: 'good', icon: '🧪' }
+    { label: 'Disease Risk', value: telemetry ? `${(telemetry.farm.current_disease_risk * 100).toFixed(1)}%` : '12.0%', status: 'good', icon: '🛡️' },
+    { label: 'Yield Forecast', value: telemetry ? `${(4.2 - telemetry.farm.yield_reduction_risk).toFixed(1)} t/ha` : '4.2 t/ha', status: 'good', icon: '📈' },
+    { label: 'Rain Prob (42h)', value: telemetry ? `${telemetry.weather.rain_probability}%` : '65%', status: (telemetry?.weather.rain_probability ?? 65) > 50 ? 'warning' : 'good', icon: '🌧️' },
+    { label: 'Temperature', value: telemetry ? `${telemetry.farm.temperature.toFixed(1)}°C` : '28.5°C', status: 'good', icon: '🌡️' }
   ];
+
 
   // Generate mock field zones (5x4 grid)
   const fieldZones = Array.from({ length: 20 }, (_, i) => {
@@ -239,7 +254,15 @@ export default function ConnectScreen() {
                       <span className="flex items-center gap-1.5"><span className="w-2.5 h-2.5 bg-emerald-500 rounded-full shadow-[0_0_5px_#10b981]"></span><span className="text-slate-300">Optimal &gt;50%</span></span>
                     </div>
                   </div>
-                  <div className="glass-card rounded-2xl p-8">
+                  <div className="perspective-1000">
+                    <div className="glass-card rounded-2xl p-8 transform-gpu transition-all duration-700 hover:rotate-x-2" style={{ transform: 'rotateX(12deg)' }}>
+                      {/* Grid Overlay */}
+                      <div className="absolute inset-0 grid-overlay opacity-30 pointer-events-none rounded-2xl" />
+                      
+                      {/* Holographic Scanline */}
+                      <div className="absolute inset-0 pointer-events-none z-10 rounded-2xl overflow-hidden">
+                        <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-400/5 to-transparent h-full w-full animate-scan opacity-40" />
+                      </div>
                     <div className="grid grid-cols-5 gap-3">
                       {fieldZones.map((zone) => (
                         <div
@@ -260,6 +283,7 @@ export default function ConnectScreen() {
                       <div className="bg-white/[0.03] border border-white/[0.05] rounded-xl p-3"><div className="text-emerald-400 text-2xl font-bold">{fieldZones.filter(z => z.status === 'green').length}</div><div className="text-slate-400 text-xs mt-1">Optimal</div></div>
                     </div>
                   </div>
+                </div>
                 </div>
               )}
 

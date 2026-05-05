@@ -1,4 +1,5 @@
 import { useRef, type ReactNode, type MouseEvent } from 'react';
+import useAudio from '../../hooks/useAudio';
 
 interface MagneticButtonProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface MagneticButtonProps {
 export default function MagneticButton({ children, className = '', onClick, as = 'button', href }: MagneticButtonProps) {
   const ref = useRef<HTMLElement>(null);
   const rippleRef = useRef<HTMLSpanElement>(null);
+  const { playHover, playClick } = useAudio();
 
   const handleMouseMove = (e: MouseEvent) => {
     if (!ref.current) return;
@@ -30,6 +32,7 @@ export default function MagneticButton({ children, className = '', onClick, as =
   };
 
   const handleClick = (e: MouseEvent) => {
+    playClick();
     if (rippleRef.current && ref.current) {
       const rect = ref.current.getBoundingClientRect();
       const x = e.clientX - rect.left;
@@ -48,6 +51,7 @@ export default function MagneticButton({ children, className = '', onClick, as =
     className: `relative overflow-hidden ${className}`,
     onMouseMove: handleMouseMove,
     onMouseLeave: handleMouseLeave,
+    onMouseEnter: () => playHover(),
     onClick: handleClick,
     'data-magnetic': true,
   };

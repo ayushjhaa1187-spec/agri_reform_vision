@@ -20,5 +20,5 @@ RUN pip install --no-cache-dir -U pip && \
 # Copy the rest of the application
 COPY . .
 
-# Production command (no --reload)
-CMD ["uvicorn", "backend.main:app", "--host", "0.0.0.0", "--port", "8000"]
+# Production command (using shell form to support $PORT)
+CMD uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}

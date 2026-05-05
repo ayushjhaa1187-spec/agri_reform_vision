@@ -1,14 +1,13 @@
 import asyncio
 import json
 import random
-import time
 from datetime import datetime
-import redis.asyncio as redis
+from backend.config import get_redis_client
 
 async def sensor_simulator():
     """Simulates real-time IoT sensor data and weather telemetry."""
     print("Starting Sensor Simulator...")
-    r = redis.Redis(host="redis", port=6379, decode_responses=True)
+    r = get_redis_client()
     
     # Punjabi Farm Context ( पंजाब focus)
     farm_context = {

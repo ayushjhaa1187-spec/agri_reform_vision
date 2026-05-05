@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import useAudio from '../hooks/useAudio';
+import Magnetic from './ui/Magnetic';
 
 export default function Navigation() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
@@ -63,21 +64,23 @@ export default function Navigation() {
             {navItems.map((item) => {
               const isActive = location.pathname === item.href;
               return (
-                <Link
-                  key={item.href}
-                  to={item.href}
-                  onClick={handleNavClick}
-                  className={`relative px-3 py-2 text-sm font-medium rounded-lg transition-all duration-300 ${
-                    isActive
-                      ? 'text-emerald-400'
-                      : 'text-slate-400 hover:text-white hover:bg-white/5'
-                  }`}
-                >
-                  {item.name}
-                  {isActive && (
-                    <span className="absolute bottom-0 left-1/2 -translate-x-1/2 w-4 h-0.5 bg-emerald-400 rounded-full" />
-                  )}
-                </Link>
+                <Magnetic strength={0.2} key={item.name}>
+                  <Link
+                    to={item.href}
+                    onClick={handleNavClick}
+                    onMouseEnter={() => audio.playHover()}
+                    className={`relative px-3 py-2 rounded-lg text-sm font-medium transition-all duration-300 ${
+                      isActive
+                        ? 'text-emerald-400'
+                        : 'text-slate-400 hover:text-white'
+                    }`}
+                  >
+                    {item.name}
+                    {isActive && (
+                      <span className="absolute bottom-0.5 left-3 right-3 h-[2px] bg-emerald-400 rounded-full" />
+                    )}
+                  </Link>
+                </Magnetic>
               );
             })}
           </div>
@@ -86,8 +89,10 @@ export default function Navigation() {
           <div className="hidden lg:flex items-center gap-3">
             <button
               onClick={toggleMute}
-              className="p-2 text-slate-400 hover:text-white transition-colors rounded-lg hover:bg-white/5"
-              aria-label={muted ? 'Unmute' : 'Mute'}
+              onMouseEnter={() => audio.playHover()}
+              className="p-2 text-slate-500 hover:text-emerald-400 transition-colors rounded-lg hover:bg-white/5"
+              aria-label={muted ? 'Unmute sounds' : 'Mute sounds'}
+              title={muted ? 'Enable sounds' : 'Mute sounds'}
             >
               {muted ? (
                 <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -103,7 +108,8 @@ export default function Navigation() {
             <Link
               to="/demo"
               onClick={handleNavClick}
-              className="px-5 py-2 bg-emerald-500 text-black text-sm font-bold rounded-full hover:bg-emerald-400 transition-all duration-300 shadow-lg shadow-emerald-500/20 hover:shadow-emerald-500/40 hover:scale-105"
+              onMouseEnter={() => audio.playHover()}
+              className="px-4 py-2 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-semibold rounded-lg hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 text-sm shadow-lg shadow-emerald-500/20"
             >
               Live Demo
             </Link>
@@ -131,12 +137,13 @@ export default function Navigation() {
       {/* Mobile Menu */}
       {isMenuOpen && (
         <div className="lg:hidden bg-black/80 backdrop-blur-2xl border-t border-white/[0.06]">
-          <div className="max-w-7xl mx-auto px-6 py-4 space-y-1">
+          <div className="max-w-7xl mx-auto px-6 py-4 space-y-1 flex flex-col">
             {navItems.map((item) => (
               <Link
                 key={item.href}
                 to={item.href}
                 onClick={handleNavClick}
+                onMouseEnter={() => audio.playHover()}
                 className={`block px-4 py-3 rounded-xl text-sm font-medium transition-all duration-200 ${
                   location.pathname === item.href
                     ? 'text-emerald-400 bg-emerald-500/10'
@@ -150,7 +157,8 @@ export default function Navigation() {
               <Link
                 to="/demo"
                 onClick={handleNavClick}
-                className="block px-4 py-3 bg-emerald-500 text-black text-sm font-bold rounded-xl text-center hover:bg-emerald-400 transition-all"
+                onMouseEnter={() => audio.playHover()}
+                className="block px-4 py-3 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-xl text-center hover:from-emerald-400 hover:to-teal-400 transition-all shadow-lg shadow-emerald-500/20"
               >
                 Live Demo
               </Link>

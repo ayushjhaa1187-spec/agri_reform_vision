@@ -1,4 +1,5 @@
 import { useRef, type ReactNode, type MouseEvent } from 'react';
+import useAudio from '../../hooks/useAudio';
 
 interface TiltCardProps {
   children: ReactNode;
@@ -9,6 +10,7 @@ interface TiltCardProps {
 export default function TiltCard({ children, className = '', maxTilt = 5 }: TiltCardProps) {
   const ref = useRef<HTMLDivElement>(null);
   const glareRef = useRef<HTMLDivElement>(null);
+  const { playHover } = useAudio();
 
   const handleMouseMove = (e: MouseEvent<HTMLDivElement>) => {
     if (!ref.current) return;
@@ -31,6 +33,10 @@ export default function TiltCard({ children, className = '', maxTilt = 5 }: Tilt
     }
   };
 
+  const handleMouseEnter = () => {
+    playHover();
+  };
+
   const handleMouseLeave = () => {
     if (!ref.current) return;
     ref.current.style.transform = 'perspective(1000px) rotateX(0deg) rotateY(0deg) scale(1)';
@@ -48,6 +54,7 @@ export default function TiltCard({ children, className = '', maxTilt = 5 }: Tilt
       ref={ref}
       className={`glass-card relative ${className}`}
       onMouseMove={handleMouseMove}
+      onMouseEnter={handleMouseEnter}
       onMouseLeave={handleMouseLeave}
       style={{ transformStyle: 'preserve-3d', willChange: 'transform' }}
     >

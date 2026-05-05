@@ -1,6 +1,7 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
 import GlassCard from './ui/GlassCard';
 import FadeInSection from './ui/FadeInSection';
+import { useWebSocket } from '../hooks/useWebSocket';
 
 const agents = [
   {
@@ -74,7 +75,7 @@ const coordinator = {
   ],
 };
 
-const liveFeedLines = [
+const MOCK_FEED = [
   { time: '08:14:03', agent: 'SYSTEM', agentColor: 'text-blue-400', message: 'Sensor snapshot complete — Zone A, B, C' },
   { time: '08:14:04', agent: 'AGRONOMIST', agentColor: 'text-emerald-400', message: 'Soil moisture: 30% ↓ Critical threshold' },
   { time: '08:14:05', agent: 'ECONOMIST', agentColor: 'text-yellow-400', message: 'Energy rate: ₹8.2/kWh (off-peak in 6h)' },
@@ -94,6 +95,10 @@ export default function MultiAgentSystem() {
   const [typewriterText, setTypewriterText] = useState('');
   const [isTyping, setIsTyping] = useState(false);
   const gaugeRef = useRef<SVGCircleElement>(null);
+
+  // WebSocket Integration
+  const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/agent-feed';
+  const { isConnected, agentDecisions } = useWebSocket(wsUrl);
 
   useEffect(() => {
     const cycle = setInterval(() => {
@@ -119,7 +124,7 @@ export default function MultiAgentSystem() {
 
   useEffect(() => {
     const interval = setInterval(() => {
-      setFeedIndex(prev => (prev + 1) % liveFeedLines.length);
+      setFeedIndex(prev => (prev + 1) % MOCK_FEED.length);
     }, 1800);
     return () => clearInterval(interval);
   }, []);
@@ -170,9 +175,16 @@ export default function MultiAgentSystem() {
     );
   }, [activeAgent]);
 
-  const visibleFeedLines = [
-    ...liveFeedLines.slice(0, feedIndex + 1),
-  ].slice(-5);
+  const liveFeed = agentDecisions.length > 0 
+    ? agentDecisions.map(d => ({
+        time: new Date(d.timestamp).toLocaleTimeString(),
+        agent: d.agent.toUpperCase(),
+        agentColor: d.action_type === 'alert' ? 'text-red-400' : 'text-emerald-400',
+        message: d.decision
+      }))
+    : MOCK_FEED;
+
+  const visibleFeedLines = liveFeed.slice(-5);
 
   return (
     <section id="agents" className="py-28 md:py-36 section-darker border-t border-white/[0.04]">
@@ -197,9 +209,13 @@ export default function MultiAgentSystem() {
         <FadeInSection delay={0.1} className="mb-12">
           <GlassCard className="p-5 rounded-2xl">
             <div className="flex items-center gap-3 mb-4">
-              <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-              <span className="text-xs font-semibold uppercase tracking-wider text-emerald-400">Live Agent Feed</span>
-              <span className="ml-auto text-xs text-slate-500 font-mono">WebSocket: Connected</span>
+              <span className={`w-2 h-2 rounded-full animate-pulse ${isConnected ? 'bg-emerald-400' : 'bg-red-400'}`} />
+              <span className={`text-xs font-semibold uppercase tracking-wider ${isConnected ? 'text-emerald-400' : 'text-red-400'}`}>
+                {isConnected ? 'Live Agent Feed' : 'Offline Mode (Simulator)'}
+              </span>
+              <span className="ml-auto text-xs text-slate-500 font-mono">
+                WebSocket: {isConnected ? 'Connected' : 'Connecting...'}
+              </span>
             </div>
             <div className="font-mono text-xs space-y-1.5 h-36 overflow-hidden">
               {visibleFeedLines.map((line, i) => (
@@ -233,17 +249,21 @@ export default function MultiAgentSystem() {
                     setActiveAgent(i);
                     setSpeakingAgent(i);
                   }}
+                  style={isActive ? { boxShadow: `0 0 40px -15px ${agent.bgGlow}` } : {}}
                 >
                   {isActive && (
                     <div
-                      className="absolute inset-0 rounded-2xl pointer-events-none"
-                      style={{ boxShadow: `inset 0 0 30px ${agent.bgGlow}` }}
-                    />
+                      className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden"
+                    >
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-400/10 to-transparent h-1/2 w-full animate-scan" />
+                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
+                      <div className="absolute inset-0" style={{ boxShadow: `inset 0 0 30px ${agent.bgGlow}` }} />
+                    </div>
                   )}
                   {/* Agent Header */}
                   <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl border ${
-                      isActive ? `${agent.labelBg} ${agent.borderClass}` : 'bg-white/5 border-white/10'
+                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl border transition-all duration-500 ${
+                      isActive ? `${agent.labelBg} ${agent.borderClass} scale-110` : 'bg-white/5 border-white/10 scale-100'
                     }`}>
                       {agent.icon}
                     </div>
@@ -328,7 +348,7 @@ export default function MultiAgentSystem() {
         {/* Cycle counter */}
         <div className="mt-6 flex justify-end">
           <span className="text-xs text-slate-600 font-mono">
-            Cycle {Math.floor(feedIndex / liveFeedLines.length) + 1} &middot; Round {(dialogueIndex % 3) + 1}/3
+            Cycle {Math.floor(feedIndex / liveFeed.length) + 1} &middot; Round {(dialogueIndex % 3) + 1}/3
           </span>
         </div>
 

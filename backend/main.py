@@ -2,6 +2,7 @@ import asyncio
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from backend.stream.redis_listener import connected_clients, start_redis_listener
+from backend.stream.sensor_simulator import sensor_simulator
 
 app = FastAPI(title="Agri-Intelligence API")
 
@@ -17,6 +18,8 @@ app.add_middleware(
 @app.on_event("startup")
 async def startup_event():
     await start_redis_listener()
+    # Start the simulator in the background
+    asyncio.create_task(sensor_simulator())
 
 @app.get("/")
 async def root():

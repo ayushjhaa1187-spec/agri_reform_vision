@@ -270,6 +270,16 @@ body {
   background-size: 60px 60px;
 }
 
+/* Scan line animation for agents */
+@keyframes scan {
+  0% { transform: translateY(-100%); }
+  100% { transform: translateY(200%); }
+}
+
+.animate-scan {
+  animation: scan 2s linear infinite;
+}
+
 /* ═══════════════════════════════════════════
    RESPONSIVE
    ═══════════════════════════════════════════ */

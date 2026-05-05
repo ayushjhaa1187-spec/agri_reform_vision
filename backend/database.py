@@ -1,12 +1,7 @@
 import os
-from sqlalchemy import create_url
 from sqlalchemy.ext.asyncio import create_async_engine, AsyncSession
 from sqlalchemy.orm import sessionmaker, declarative_base
-from dotenv import load_dotenv
-
-load_dotenv()
-
-DATABASE_URL = os.getenv("DATABASE_URL", "postgresql+asyncpg://user:password@db:5432/agri_db")
+from backend.config import DATABASE_URL
 
 # Async engine for FastAPI
 engine = create_async_engine(DATABASE_URL, echo=True)
