@@ -53,11 +53,11 @@ export default function AgentsSection() {
       <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
         {agents.map((agent, idx) => (
           <FadeInSection key={agent.name} delay={idx * 0.1}>
-            <GlassCard className={`p-8 h-full flex flex-col items-center text-center group hover:scale-[1.02] transition-all duration-500 border ${agent.borderColor}`}>
+            <GlassCard className={`p-8 h-full flex flex-col items-center text-center group hover:scale-[1.02] transition-all duration-500 border ${agent.borderColor} hover:shadow-[0_0_40px_-5px_var(--glow-${agent.color})]`}>
               <div className={`absolute inset-0 bg-gradient-to-br ${agent.gradient} opacity-0 group-hover:opacity-100 transition-opacity duration-700`} />
               
               <div className="relative">
-                <div className="text-5xl mb-6 bg-white/5 w-20 h-20 flex items-center justify-center rounded-2xl border border-white/10 group-hover:animate-pulse transition-all">
+                <div className="text-5xl mb-6 bg-white/5 w-20 h-20 flex items-center justify-center rounded-2xl border border-white/10 group-hover:animate-pulse transition-all shadow-[0_0_15px_-5px_rgba(255,255,255,0.1)]">
                   {agent.icon}
                 </div>
                 <div className={`absolute -inset-2 bg-${agent.color}-500/20 blur-xl rounded-full opacity-0 group-hover:opacity-100 transition-opacity`} />

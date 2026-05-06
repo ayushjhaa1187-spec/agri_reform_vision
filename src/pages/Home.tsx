@@ -13,12 +13,19 @@ export default function Home() {
     <div className="bg-[#030a06] min-h-screen text-white selection:bg-emerald-500/30">
       <Navbar />
       <HeroSection />
+      <div className="section-separator" />
       <ProblemSolutionSection />
+      <div className="section-separator" />
       <ArchitectureSection />
+      <div className="section-separator" />
       <AgentsSection />
+      <div className="section-separator" />
       <YieldPredictor />
+      <div className="section-separator" />
       <DemoSection />
+      <div className="section-separator" />
       <TechStackSection />
+      <div className="section-separator" />
       <FooterSection />
     </div>
   );
