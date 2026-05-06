@@ -12,7 +12,8 @@ import {
 } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
-  const { telemetry, agentDecisions, isConnected } = useWebSocket('ws://localhost:8000/ws/agent-feed');
+  const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/agent-feed';
+  const { telemetry, agentDecisions, isConnected } = useWebSocket(wsUrl);
 
   // Fallback / Initial Data
   const decision = agentDecisions.length > 0 ? {

@@ -32,7 +32,8 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const response = await fetch('http://localhost:8000/chatbot/query', {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await fetch(`${apiUrl}/chatbot/query`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ question: userMsg })
@@ -48,14 +49,14 @@ export default function Chatbot() {
   };
 
   return (
-    <div className="fixed bottom-8 right-24 z-[1000]">
+    <div className="fixed bottom-6 right-6 md:bottom-8 md:right-10 z-[1000]">
       <AnimatePresence>
         {isOpen && (
           <motion.div
             initial={{ opacity: 0, y: 20, scale: 0.95 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 20, scale: 0.95 }}
-            className="absolute bottom-20 right-0 w-80 md:w-96 h-[500px] bg-black/80 backdrop-blur-2xl border border-emerald-500/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
+            className="absolute bottom-16 right-0 w-[calc(100vw-3rem)] md:w-96 h-[500px] max-h-[70vh] bg-black/80 backdrop-blur-2xl border border-emerald-500/30 rounded-2xl shadow-2xl flex flex-col overflow-hidden"
           >
             {/* Header */}
             <div className="bg-emerald-500/20 px-6 py-4 border-b border-emerald-500/30 flex items-center justify-between">

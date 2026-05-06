@@ -10,7 +10,11 @@ from dotenv import load_dotenv
 load_dotenv()
 
 class AgroRAG:
-    def __init__(self, index_path: str = "backend/rag/faiss_index"):
+    def __init__(self, index_path: str = None):
+        if index_path is None:
+            base_dir = os.path.dirname(os.path.abspath(__file__))
+            index_path = os.path.join(base_dir, "faiss_index")
+            
         self.embeddings = GoogleGenerativeAIEmbeddings(model="models/gemini-embedding-001")
         self.llm = ChatGoogleGenerativeAI(model="gemini-flash-latest", temperature=0.3)
         self.index_path = index_path
@@ -22,6 +26,10 @@ class AgroRAG:
                 print("Loaded existing FAISS index.")
             except Exception as e:
                 print(f"Error loading FAISS index: {e}")
+        else:
+            print("FAISS index not found. Initializing with default knowledge...")
+            from backend.rag.knowledge import AGRI_KNOWLEDGE
+            self.index_documents(AGRI_KNOWLEDGE)
 
     def index_documents(self, texts: List[str]):
         """
