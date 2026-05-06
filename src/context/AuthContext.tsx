@@ -6,17 +6,23 @@ import {
   signInWithPopup,
   GoogleAuthProvider,
   signInWithEmailAndPassword,
-  createUserWithEmailAndPassword
+  createUserWithEmailAndPassword,
+  sendEmailVerification,
+  signInWithCustomToken
 } from 'firebase/auth';
 import { auth } from '../lib/firebase';
+import { toast } from 'react-hot-toast';
 
 interface AuthContextType {
   user: User | null;
   loading: boolean;
   isAuthenticated: boolean;
+  isEmailVerified: boolean;
   loginWithGoogle: () => Promise<void>;
   login: (email: string, password: string) => Promise<void>;
   signup: (email: string, password: string) => Promise<void>;
+  sendVerification: () => Promise<void>;
+  loginWithToken: (token: string) => Promise<void>;
   logout: () => Promise<void>;
 }
 
@@ -47,7 +53,10 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const login = async (email: string, password: string) => {
     try {
-      await signInWithEmailAndPassword(auth, email, password);
+      const userCredential = await signInWithEmailAndPassword(auth, email, password);
+      if (userCredential.user && !userCredential.user.emailVerified) {
+        toast.error('Please verify your email address.');
+      }
     } catch (error) {
       console.error('Email Login failed:', error);
       throw error;
@@ -56,10 +65,36 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
 
   const signup = async (email: string, password: string) => {
     try {
-      await createUserWithEmailAndPassword(auth, email, password);
+      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
+      if (userCredential.user) {
+        await sendEmailVerification(userCredential.user);
+        toast.success('Verification email sent! Please check your inbox.');
+      }
     } catch (error) {
       console.error('Signup failed:', error);
       throw error;
+    }
+  };
+
+  const sendVerification = async () => {
+    if (user) {
+      try {
+        await sendEmailVerification(user);
+        toast.success('Verification email sent!');
+      } catch (error) {
+        console.error('Verification failed:', error);
+        toast.error('Failed to send verification email.');
+      }
+    }
+  };
+
+  const loginWithToken = async (token: string) => {
+    try {
+      await signInWithCustomToken(auth, token);
+      toast.success('Logged in with secure token.');
+    } catch (error) {
+      console.error('Token login failed:', error);
+      toast.error('Invalid secure token.');
     }
   };
 
@@ -77,9 +112,12 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
       user, 
       loading, 
       isAuthenticated: !!user,
+      isEmailVerified: user?.emailVerified || false,
       loginWithGoogle, 
       login,
       signup,
+      sendVerification,
+      loginWithToken,
       logout 
     }}>
       {children}

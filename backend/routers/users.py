@@ -1,39 +1,39 @@
 from fastapi import APIRouter, Depends, HTTPException, status
 from pydantic import BaseModel, EmailStr
 from typing import Optional
-from backend.auth import get_password_hash, create_access_token, verify_password, ACCESS_TOKEN_EXPIRE_MINUTES
-from datetime import timedelta
+from backend.auth import get_current_user
+from backend.database import get_db
+from backend.models import User
+from sqlalchemy.ext.asyncio import AsyncSession
+from sqlalchemy import select
 
 router = APIRouter(prefix="/users", tags=["Users"])
 
-class UserCreate(BaseModel):
-    email: EmailStr
-    password: str
-    full_name: str
-    phone_number: Optional[str] = None
+class UserProfile(BaseModel):
+    email: str
+    role: str
+    ai_credits: int
+    subscription_tier: str
 
-class UserLogin(BaseModel):
-    email: EmailStr
-    password: str
-
-class Token(BaseModel):
-    access_token: str
-    token_type: str
-
-@router.post("/register", status_code=status.HTTP_201_CREATED)
-async def register_user(user: UserCreate):
-    """Register a new farmer or user."""
-    # Mock DB insertion
-    hashed_password = get_password_hash(user.password)
-    return {"message": "User registered successfully", "email": user.email}
-
-@router.post("/login", response_model=Token)
-async def login(user_credentials: UserLogin):
-    """Authenticate user and return JWT token."""
-    # Mock authentication
-    # In reality, fetch user from DB and use verify_password(user_credentials.password, db_user.hashed_password)
-    access_token_expires = timedelta(minutes=ACCESS_TOKEN_EXPIRE_MINUTES)
-    access_token = create_access_token(
-        data={"sub": user_credentials.email}, expires_delta=access_token_expires
+@router.get("/me", response_model=UserProfile)
+async def get_me(current_user: dict = Depends(get_current_user), db: AsyncSession = Depends(get_db)):
+    """Fetch current user profile including credits and subscription."""
+    email = current_user["email"]
+    
+    # Try to find the user
+    result = await db.execute(select(User).where(User.email == email))
+    db_user = result.scalar_one_or_none()
+    
+    if not db_user:
+        # Auto-create user for prototype
+        db_user = User(email=email, full_name=email.split('@')[0])
+        db.add(db_user)
+        await db.commit()
+        await db.refresh(db_user)
+        
+    return UserProfile(
+        email=db_user.email,
+        role=db_user.role.value,
+        ai_credits=db_user.ai_credits,
+        subscription_tier=db_user.subscription_tier.value
     )
-    return {"access_token": access_token, "token_type": "bearer"}

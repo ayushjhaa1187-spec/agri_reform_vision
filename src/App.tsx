@@ -16,6 +16,7 @@ import TechStack from './pages/TechStack';
 import Timeline from './pages/Timeline';
 import DevBook from './pages/DevBook';
 import Demo from './pages/Demo';
+import Billing from './pages/Billing';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -57,6 +58,14 @@ function AnimatedRoutes() {
             element={
               <ProtectedRoute>
                 <Demo />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/billing" 
+            element={
+              <ProtectedRoute>
+                <Billing />
               </ProtectedRoute>
             } 
           />

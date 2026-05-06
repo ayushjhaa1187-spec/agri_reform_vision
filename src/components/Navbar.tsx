@@ -57,12 +57,12 @@ export default function Navbar() {
           <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/10">
             {isAuthenticated ? (
               <div className="flex items-center gap-4">
-                <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/10">
+                <Link to="/billing" className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-emerald-500/10 rounded-full border border-white/10 transition-colors group">
                   <UserIcon size={14} className="text-emerald-400" />
-                  <span className="text-[10px] font-bold text-gray-300 uppercase tracking-tighter">
-                    {user?.email.split('@')[0]}
+                  <span className="text-[10px] font-bold text-gray-300 uppercase tracking-tighter group-hover:text-emerald-300">
+                    {user?.email?.split('@')[0]}
                   </span>
-                </div>
+                </Link>
                 <button 
                   onClick={logout}
                   className="p-2 hover:bg-red-500/10 text-gray-400 hover:text-red-400 rounded-full transition-all"
