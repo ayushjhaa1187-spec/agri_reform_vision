@@ -10,7 +10,7 @@ load_dotenv()
 
 class AgriAgentSystem:
     def __init__(self):
-        self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash", temperature=0.2)
+        self.llm = ChatGoogleGenerativeAI(model="gemini-1.5-flash-latest", temperature=0.2)
         print("Agri-Agent System Initialized (Gemini Flash)")
 
     async def get_agent_proposal(self, agent_type: str, prompt_template: str, context: Dict[str, Any]) -> Dict[str, Any]:
