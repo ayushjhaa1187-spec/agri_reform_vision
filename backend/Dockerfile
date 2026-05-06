@@ -13,13 +13,13 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
     libomp-dev \
     && rm -rf /var/lib/apt/lists/*
 
-# Use root context for build
-COPY backend/requirements.txt ./
+# Copy requirements from either root or backend folder
+COPY requirements.txt* backend/requirements.txt* ./
 RUN pip install --no-cache-dir -U pip && \
     pip install --no-cache-dir -r requirements.txt
 
-# Copy everything from root to /app
+# Copy everything
 COPY . .
 
-# Use backend.main:app as it's the standard package path
-CMD uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}
+# Detect if we are in the root or backend folder and start accordingly
+CMD if [ -f "backend/main.py" ]; then uvicorn backend.main:app --host 0.0.0.0 --port ${PORT:-8000}; else uvicorn main:app --host 0.0.0.0 --port ${PORT:-8000}; fi
