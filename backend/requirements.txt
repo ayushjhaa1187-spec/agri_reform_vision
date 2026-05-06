@@ -13,8 +13,7 @@ scikit-learn
 faiss-cpu
 numpy
 python-multipart
-jose[cryptography]
-passlib[bcrypt]
+firebase-admin
 websockets
 asyncpg
 httpx

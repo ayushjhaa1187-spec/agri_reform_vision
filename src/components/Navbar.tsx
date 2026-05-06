@@ -1,9 +1,12 @@
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import { useAuth } from '../context/AuthContext';
+import { LogOut, User as UserIcon } from 'lucide-react';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const { isAuthenticated, user, logout } = useAuth();
 
   useEffect(() => {
     const handleScroll = () => setScrolled(window.scrollY > 50);
@@ -21,12 +24,7 @@ export default function Navbar() {
   ];
 
   const handleNavClick = (e: React.MouseEvent<HTMLAnchorElement, MouseEvent>, href: string) => {
-    if (location.pathname !== '/') {
-      // If not on home, let the default Link behavior happen or navigate manually
-      return;
-    }
-
-    // On home, prevent default and smooth scroll
+    if (location.pathname !== '/') return;
     e.preventDefault();
     const target = document.querySelector(href);
     if (target) {
@@ -55,12 +53,33 @@ export default function Navbar() {
               {item.name}
             </Link>
           ))}
-          <Link
-            to="/demo"
-            className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-full transition-all text-sm hover:scale-105"
-          >
-            Live App
-          </Link>
+          
+          <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/10">
+            {isAuthenticated ? (
+              <div className="flex items-center gap-4">
+                <div className="flex items-center gap-2 px-3 py-1.5 bg-white/5 rounded-full border border-white/10">
+                  <UserIcon size={14} className="text-emerald-400" />
+                  <span className="text-[10px] font-bold text-gray-300 uppercase tracking-tighter">
+                    {user?.email.split('@')[0]}
+                  </span>
+                </div>
+                <button 
+                  onClick={logout}
+                  className="p-2 hover:bg-red-500/10 text-gray-400 hover:text-red-400 rounded-full transition-all"
+                  title="Logout"
+                >
+                  <LogOut size={18} />
+                </button>
+              </div>
+            ) : (
+              <Link
+                to="/login"
+                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-full transition-all text-sm hover:scale-105"
+              >
+                Sign In
+              </Link>
+            )}
+          </div>
         </div>
       </div>
     </nav>

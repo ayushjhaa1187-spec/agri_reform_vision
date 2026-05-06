@@ -1,4 +1,5 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
+import axios from 'axios';
 import TiltCard from './ui/TiltCard';
 import useScrollReveal from '../hooks/useScrollReveal';
 import { useWebSocket } from '../hooks/useWebSocket';
@@ -17,10 +18,29 @@ export default function ConnectScreen() {
   const { ref, isVisible } = useScrollReveal();
   const [activeTab, setActiveTab] = useState<'overview' | 'agents' | 'logs' | 'map' | 'predict'>('overview');
   const [mode, setMode] = useState<'auto' | 'suggest' | 'manual'>('auto');
+  const [history, setHistory] = useState<any[]>([]);
 
   // WebSocket Integration
   const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/agent-feed';
   const { isConnected, telemetry, agentDecisions } = useWebSocket(wsUrl);
+
+  useEffect(() => {
+    const fetchHistory = async () => {
+      try {
+        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+        const response = await axios.get(`${apiUrl}/farms/1/decisions`);
+        setHistory(response.data.map((d: any) => ({
+          time: new Date(d.created_at).toLocaleTimeString(),
+          type: d.action_type === 'yield_forecast' ? 'ml' : 'decision',
+          agent: d.action_type === 'yield_forecast' ? 'XGBoost' : 'Master Coordinator',
+          message: d.decision_summary || d.justification
+        })));
+      } catch (e) {
+        console.error('Failed to fetch history');
+      }
+    };
+    fetchHistory();
+  }, [agentDecisions]);
 
   const agentStatus = [
     { name: 'Agronomist', icon: '🌱', status: isConnected ? 'active' : 'monitoring', lastAction: agentDecisions.find(d => d.agent === 'Agronomist')?.decision || 'Soil moisture analyzed', time: 'live' },
@@ -30,13 +50,16 @@ export default function ConnectScreen() {
   ];
 
   const recentLogs = agentDecisions.length > 0 
-    ? agentDecisions.map(d => ({
-        time: new Date(d.timestamp).toLocaleTimeString(),
-        type: d.action_type,
-        agent: d.agent,
-        message: d.decision
-      }))
-    : MOCK_LOGS;
+    ? [
+        ...agentDecisions.map(d => ({
+          time: new Date(d.timestamp).toLocaleTimeString(),
+          type: d.action_type,
+          agent: d.agent,
+          message: d.decision
+        })),
+        ...history
+      ]
+    : history.length > 0 ? history : MOCK_LOGS;
 
   const farmMetrics = [
     { label: 'Soil Moisture', value: telemetry ? `${telemetry.farm.soil_moisture.toFixed(1)}%` : '32.0%', status: (telemetry?.farm.soil_moisture ?? 32) < 35 ? 'warning' : 'good', icon: '💧' },

@@ -1,8 +1,13 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from './context/AuthContext';
+import ProtectedRoute from './components/ProtectedRoute';
 import CustomCursor from './components/ui/CustomCursor';
 import Chatbot from './components/ui/Chatbot';
 import Home from './pages/Home';
+import Login from './pages/Login';
+import Register from './pages/Register';
 import Architecture from './pages/Architecture';
 import Agents from './pages/Agents';
 import Negotiation from './pages/Negotiation';
@@ -38,6 +43,8 @@ function AnimatedRoutes() {
       >
         <Routes location={location}>
           <Route path="/" element={<Home />} />
+          <Route path="/login" element={<Login />} />
+          <Route path="/register" element={<Register />} />
           <Route path="/architecture" element={<Architecture />} />
           <Route path="/agents" element={<Agents />} />
           <Route path="/negotiation" element={<Negotiation />} />
@@ -45,7 +52,14 @@ function AnimatedRoutes() {
           <Route path="/tech-stack" element={<TechStack />} />
           <Route path="/timeline" element={<Timeline />} />
           <Route path="/dev-book" element={<DevBook />} />
-          <Route path="/demo" element={<Demo />} />
+          <Route 
+            path="/demo" 
+            element={
+              <ProtectedRoute>
+                <Demo />
+              </ProtectedRoute>
+            } 
+          />
         </Routes>
       </motion.div>
     </AnimatePresence>
@@ -54,14 +68,27 @@ function AnimatedRoutes() {
 
 export default function App() {
   return (
-    <Router>
-      <div className="min-h-screen bg-[#030a06]">
-        <CustomCursor />
-        <main>
-          <AnimatedRoutes />
-        </main>
-        <Chatbot />
-      </div>
-    </Router>
+    <AuthProvider>
+      <Router>
+        <div className="min-h-screen bg-[#030a06]">
+          <Toaster 
+            position="top-right"
+            toastOptions={{
+              style: {
+                background: '#0d1321',
+                color: '#fff',
+                border: '1px solid rgba(16, 185, 129, 0.2)',
+                backdropFilter: 'blur(10px)',
+              },
+            }}
+          />
+          <CustomCursor />
+          <main>
+            <AnimatedRoutes />
+          </main>
+          <Chatbot />
+        </div>
+      </Router>
+    </AuthProvider>
   );
 }
