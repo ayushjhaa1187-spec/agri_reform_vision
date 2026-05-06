@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
 import { useAuth } from '../context/AuthContext';
+import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Lock, Mail, ArrowRight, Loader2 } from 'lucide-react';
 import GlassCard from '../components/ui/GlassCard';
@@ -10,45 +11,21 @@ export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login, loginWithGoogle, loginWithToken } = useAuth();
+  const { login } = useAuth();
   const navigate = useNavigate();
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsLoading(true);
     try {
-      await login(email, password);
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await axios.post(`${apiUrl}/users/login`, { email, password });
+      login(response.data.access_token);
       toast.success('Welcome back, Farmer!');
       navigate('/demo'); 
     } catch (error: any) {
       console.error('Login error:', error);
-      toast.error('Login failed. Please check your credentials.');
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleGoogleLogin = async () => {
-    setIsLoading(true);
-    try {
-      await loginWithGoogle();
-      toast.success('Signed in with Google!');
-      navigate('/demo');
-    } catch (error) {
-      console.error('Google login error:', error);
-    } finally {
-      setIsLoading(false);
-    }
-  };
-
-  const handleTokenLogin = async () => {
-    const token = "AdrTqXGZ3zh1bpRTxzKnD1SmQxr8G7F7cuTbgAqN-K3U3Io-q2hd_NXo9zlbAZNOumrzV5ed1kCXoVysxJN-WJ596JQDkwAOKkh7hPZi8rv77ngGN1Jg_zQGPpErxVBtmBuyI_2orjsmhd16TQb4DvI2mw";
-    setIsLoading(true);
-    try {
-      await loginWithToken(token);
-      navigate('/demo');
-    } catch (error) {
-       console.error('Token login error:', error);
+      toast.error(error.response?.data?.detail || 'Login failed. Please check your credentials.');
     } finally {
       setIsLoading(false);
     }
@@ -117,25 +94,6 @@ export default function Login() {
               )}
             </button>
           </form>
-
-          <div className="mt-4 flex flex-col gap-3">
-            <button 
-              onClick={handleGoogleLogin}
-              disabled={isLoading}
-              className="w-full py-3 bg-white/5 border border-white/10 text-white text-sm font-bold rounded-xl hover:bg-white/10 transition-all flex items-center justify-center gap-2"
-            >
-              <img src="https://www.gstatic.com/firebasejs/ui/2.0.0/images/auth/google.svg" alt="Google" className="w-5 h-5" />
-              Continue with Google
-            </button>
-
-            <button 
-              onClick={handleTokenLogin}
-              disabled={isLoading}
-              className="w-full py-2 border border-emerald-500/30 text-emerald-500 text-[10px] font-bold rounded-xl hover:bg-emerald-500/10 transition-all"
-            >
-              Login with Secure Phone Token
-            </button>
-          </div>
 
           <div className="mt-8 pt-6 border-t border-white/5 text-center">
             <p className="text-gray-500 text-sm">

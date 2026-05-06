@@ -1,125 +1,52 @@
-import React, { createContext, useContext, useEffect, useState } from 'react';
-import { 
-  User, 
-  onAuthStateChanged, 
-  signOut,
-  signInWithPopup,
-  GoogleAuthProvider,
-  signInWithEmailAndPassword,
-  createUserWithEmailAndPassword,
-  sendEmailVerification,
-  signInWithCustomToken
-} from 'firebase/auth';
-import { auth } from '../lib/firebase';
-import { toast } from 'react-hot-toast';
+import React, { createContext, useContext, useState, useEffect } from 'react';
+import axios from 'axios';
+
+interface User {
+  email: string;
+  role: string;
+}
 
 interface AuthContextType {
   user: User | null;
-  loading: boolean;
+  token: string | null;
+  login: (token: string) => void;
+  logout: () => void;
   isAuthenticated: boolean;
-  isEmailVerified: boolean;
-  loginWithGoogle: () => Promise<void>;
-  login: (email: string, password: string) => Promise<void>;
-  signup: (email: string, password: string) => Promise<void>;
-  sendVerification: () => Promise<void>;
-  loginWithToken: (token: string) => Promise<void>;
-  logout: () => Promise<void>;
+  loading: boolean;
 }
 
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children }) => {
   const [user, setUser] = useState<User | null>(null);
+  const [token, setToken] = useState<string | null>(localStorage.getItem('agri_token'));
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = onAuthStateChanged(auth, (user) => {
-      setUser(user);
-      setLoading(false);
-    });
-
-    return () => unsubscribe();
-  }, []);
-
-  const loginWithGoogle = async () => {
-    const provider = new GoogleAuthProvider();
-    try {
-      await signInWithPopup(auth, provider);
-    } catch (error) {
-      console.error('Google Login failed:', error);
-      throw error;
+    if (token) {
+      localStorage.setItem('agri_token', token);
+      axios.defaults.headers.common['Authorization'] = `Bearer ${token}`;
+      // In a real app, we'd fetch the user profile from /users/me here
+      // For now, setting a mock user based on the token
+      setUser({ email: 'farmer@example.com', role: 'farmer' });
+    } else {
+      localStorage.removeItem('agri_token');
+      delete axios.defaults.headers.common['Authorization'];
+      setUser(null);
     }
+    setLoading(false);
+  }, [token]);
+
+  const login = (newToken: string) => {
+    setToken(newToken);
   };
 
-  const login = async (email: string, password: string) => {
-    try {
-      const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      if (userCredential.user && !userCredential.user.emailVerified) {
-        toast.error('Please verify your email address.');
-      }
-    } catch (error) {
-      console.error('Email Login failed:', error);
-      throw error;
-    }
-  };
-
-  const signup = async (email: string, password: string) => {
-    try {
-      const userCredential = await createUserWithEmailAndPassword(auth, email, password);
-      if (userCredential.user) {
-        await sendEmailVerification(userCredential.user);
-        toast.success('Verification email sent! Please check your inbox.');
-      }
-    } catch (error) {
-      console.error('Signup failed:', error);
-      throw error;
-    }
-  };
-
-  const sendVerification = async () => {
-    if (user) {
-      try {
-        await sendEmailVerification(user);
-        toast.success('Verification email sent!');
-      } catch (error) {
-        console.error('Verification failed:', error);
-        toast.error('Failed to send verification email.');
-      }
-    }
-  };
-
-  const loginWithToken = async (token: string) => {
-    try {
-      await signInWithCustomToken(auth, token);
-      toast.success('Logged in with secure token.');
-    } catch (error) {
-      console.error('Token login failed:', error);
-      toast.error('Invalid secure token.');
-    }
-  };
-
-  const logout = async () => {
-    try {
-      await signOut(auth);
-    } catch (error) {
-      console.error('Logout failed:', error);
-      throw error;
-    }
+  const logout = () => {
+    setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ 
-      user, 
-      loading, 
-      isAuthenticated: !!user,
-      isEmailVerified: user?.emailVerified || false,
-      loginWithGoogle, 
-      login,
-      signup,
-      sendVerification,
-      loginWithToken,
-      logout 
-    }}>
+    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token, loading }}>
       {children}
     </AuthContext.Provider>
   );

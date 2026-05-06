@@ -27,9 +27,19 @@ class AgroRAG:
             except Exception as e:
                 print(f"Error loading FAISS index: {e}")
         else:
-            print("FAISS index not found. Initializing with default knowledge...")
-            from backend.rag.knowledge import AGRI_KNOWLEDGE
-            self.index_documents(AGRI_KNOWLEDGE)
+            print("FAISS index not found. Will initialize on first query or manual trigger.")
+
+    def _ensure_initialized(self):
+        """Lazy initialization of the knowledge base."""
+        if self.vector_db is None:
+            try:
+                print("Lazy initializing FAISS index with default knowledge...")
+                from backend.rag.knowledge import AGRI_KNOWLEDGE
+                self.index_documents(AGRI_KNOWLEDGE)
+            except Exception as e:
+                print(f"Failed to lazy initialize RAG: {e}")
+                return False
+        return True
 
     def index_documents(self, texts: List[str]):
         """
@@ -51,7 +61,7 @@ class AgroRAG:
         """
         Retrieves top-k relevant chunks for a given question.
         """
-        if not self.vector_db:
+        if not self._ensure_initialized():
             return "Knowledge base not yet initialized."
             
         docs = self.vector_db.similarity_search(question, k=k)
