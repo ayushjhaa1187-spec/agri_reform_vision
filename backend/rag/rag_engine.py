@@ -53,22 +53,32 @@ class AgroRAG:
     async def get_answer(self, question: str) -> str:
         """
         Provides a conversational answer grounded in the retrieved context.
+        Tailors the tone to be helpful for both novice and experienced farmers.
         """
-        context = self.query(question)
+        context = self.query(question, k=4) # Increased k for more depth
         if context == "Knowledge base not yet initialized.":
             return context
 
         prompt_template = """
-        You are an expert agricultural AI assistant. Use the following context to answer the farmer's question.
-        If the answer is not in the context, say that you don't have enough specific information but give general best practices.
-        Keep the answer concise, encouraging, and grounded in scientific facts.
+        You are 'Agri-Intelligence Bot', a senior agricultural advisor at IIT Madras. 
+        Your goal is to provide expert guidance to farmers.
+
+        STRICT GUIDELINES:
+        1. Base your answer ONLY on the provided Context if possible.
+        2. If the Context doesn't have the specific answer, use your general expert knowledge but mention it's a general best practice.
+        3. If a question is too vague, ask for specific details like crop type or location.
+        4. TONE: 
+           - For New Farmers: Explain technical terms simply.
+           - For Experienced Farmers: Provide specific metrics, ratios, and dosages.
+        5. FORMAT: Use clear headings, bullet points, and bold text for key dosages or dates.
+        6. LANGUAGES: If the farmer asks in Hindi, respond in Hindi.
 
         Context:
         {context}
 
-        Question: {question}
+        Farmer's Question: {question}
 
-        Answer:
+        Expert Advice:
         """
         prompt = ChatPromptTemplate.from_template(prompt_template)
         chain = prompt | self.llm

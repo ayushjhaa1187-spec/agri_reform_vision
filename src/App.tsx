@@ -1,6 +1,7 @@
 import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-router-dom';
 import { AnimatePresence, motion } from 'framer-motion';
 import CustomCursor from './components/ui/CustomCursor';
+import Chatbot from './components/ui/Chatbot';
 import Home from './pages/Home';
 import Architecture from './pages/Architecture';
 import Agents from './pages/Agents';
@@ -59,6 +60,7 @@ export default function App() {
         <main>
           <AnimatedRoutes />
         </main>
+        <Chatbot />
       </div>
     </Router>
   );
