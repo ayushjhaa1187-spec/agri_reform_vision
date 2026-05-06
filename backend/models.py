@@ -36,6 +36,7 @@ class Farm(Base):
 
     id = Column(Integer, primary_key=True, index=True)
     owner_id = Column(Integer, ForeignKey("users.id"), nullable=False)
+    farm_identifier = Column(String, unique=True, index=True, nullable=False) # e.g. 'PB-ASR-001'
     name = Column(String, nullable=False)
     location_district = Column(String)
     location_state = Column(String)
