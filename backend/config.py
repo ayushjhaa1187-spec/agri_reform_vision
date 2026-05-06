@@ -12,7 +12,10 @@ if DATABASE_URL.startswith("postgresql://"):
 # Railway provides REDIS_URL or REDISHOST/REDISPORT
 REDIS_URL = os.getenv("REDIS_URL")
 REDIS_HOST = os.getenv("REDISHOST", os.getenv("REDIS_HOST", "redis"))
-REDIS_PORT = int(os.getenv("REDISPORT", os.getenv("REDIS_PORT", 6379)))
+
+raw_port = os.getenv("REDISPORT", os.getenv("REDIS_PORT", "6379"))
+REDIS_PORT = int(raw_port) if raw_port and raw_port.isdigit() else 6379
+
 REDIS_PASSWORD = os.getenv("REDISPASSWORD", os.getenv("REDIS_PASSWORD"))
 REDIS_USER = os.getenv("REDISUSER", "default")
 
