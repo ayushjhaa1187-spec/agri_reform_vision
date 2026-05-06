@@ -19,7 +19,7 @@ export default function FooterSection() {
         </FadeInSection>
 
         <div className="flex justify-center gap-8">
-          <a href="https://github.com" className="text-gray-400 hover:text-white transition-colors">Github</a>
+          <a href="https://github.com/ayushjhaa1187-spec/agri_reform_vision" target="_blank" rel="noopener noreferrer" className="text-gray-400 hover:text-white transition-colors">Github</a>
           <a href="#" className="text-gray-400 hover:text-white transition-colors">License</a>
           <a href="#" className="text-gray-400 hover:text-white transition-colors">Documentation</a>
         </div>

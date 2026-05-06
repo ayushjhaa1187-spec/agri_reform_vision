@@ -5,6 +5,7 @@ import ArchitectureSection from '../components/ArchitectureSection';
 import AgentsSection from '../components/AgentsSection';
 import DemoSection from '../components/DemoSection';
 import TechStackSection from '../components/TechStackSection';
+import YieldPredictor from '../components/YieldPredictor';
 import FooterSection from '../components/FooterSection';
 
 export default function Home() {
@@ -15,6 +16,7 @@ export default function Home() {
       <ProblemSolutionSection />
       <ArchitectureSection />
       <AgentsSection />
+      <YieldPredictor />
       <DemoSection />
       <TechStackSection />
       <FooterSection />

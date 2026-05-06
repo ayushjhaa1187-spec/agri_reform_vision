@@ -18,11 +18,13 @@ async def test_agent_orchestrator():
                 "farm": {
                     "farm_id": "TEST-001",
                     "soil_moisture": 30.0  # Low moisture to trigger negotiation
+                },
+                "weather": {
+                    "rain_probability": 10
                 }
             }
         })
     }
-    
     async def mock_listen_iter():
         yield mock_message
 

@@ -20,7 +20,11 @@ async def agent_orchestrator():
                 payload = json.loads(message["data"])
                 if payload.get("type") == "telemetry":
                     farm_data = payload["data"]["farm"]
+                    weather_data = payload["data"]["weather"]
                     soil_moisture = farm_data.get("soil_moisture", 100)
+                    
+                    # Create full context for agents
+                    negotiation_context = {**farm_data, "weather_forecast": weather_data}
                     
                     # Trigger negotiation if moisture is low OR every 10 messages
                     msg_count += 1
@@ -28,8 +32,8 @@ async def agent_orchestrator():
                     
                     if should_negotiate:
                         print(f"Triggering negotiation cycle for {farm_data['farm_id']}...")
-                        # We use a copy of the farm context for negotiation
-                        negotiation_result = await agri_agents.negotiate(farm_data)
+                        # We use the full context for negotiation
+                        negotiation_result = await agri_agents.negotiate(negotiation_context)
                         
                         # Prepare the decision payload
                         decision_payload = {

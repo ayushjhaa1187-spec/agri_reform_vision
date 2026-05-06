@@ -5,7 +5,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from backend.stream.redis_listener import connected_clients, start_redis_listener
 from backend.stream.sensor_simulator import sensor_simulator
 from backend.stream.agent_orchestrator import agent_orchestrator
-from backend.routers import chatbot
+from backend.routers import chatbot, ml
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -21,6 +21,7 @@ app = FastAPI(title="Agri-Intelligence API", lifespan=lifespan)
 
 # Add Routers
 app.include_router(chatbot.router)
+app.include_router(ml.router)
 
 # Add CORS middleware
 app.add_middleware(

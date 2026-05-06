@@ -17,9 +17,11 @@ def mock_rag():
         rag = AgroRAG(index_path="dummy_path")
         yield rag, MockFAISS
 
-def test_rag_query_uninitialized():
-    rag = AgroRAG(index_path="non_existent")
-    assert rag.query("test") == "Knowledge base not yet initialized."
+def test_rag_query_auto_initializes():
+    # It should not be empty even for a non-existent path because of auto-init
+    rag = AgroRAG(index_path="temp_non_existent")
+    result = rag.query("wheat")
+    assert "Wheat" in result
 
 def test_rag_index_and_query(mock_rag):
     rag, mock_faiss_class = mock_rag

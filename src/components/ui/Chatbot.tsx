@@ -91,9 +91,11 @@ export default function Chatbot() {
                       msg.role === 'user' ? 'bg-emerald-500 text-black font-medium' : 'bg-white/5 text-gray-200'
                     }`}>
                       {msg.role === 'bot' ? (
-                        <ReactMarkdown className="markdown-chat">
-                          {msg.text}
-                        </ReactMarkdown>
+                        <div className="markdown-chat">
+                          <ReactMarkdown>
+                            {msg.text}
+                          </ReactMarkdown>
+                        </div>
                       ) : (
                         msg.text
                       )}

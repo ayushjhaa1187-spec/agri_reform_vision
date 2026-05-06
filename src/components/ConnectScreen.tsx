@@ -2,6 +2,7 @@ import { useState } from 'react';
 import TiltCard from './ui/TiltCard';
 import useScrollReveal from '../hooks/useScrollReveal';
 import { useWebSocket } from '../hooks/useWebSocket';
+import YieldPredictor from './YieldPredictor';
 
 const MOCK_LOGS = [
   { time: '10:32:45', type: 'decision', agent: 'Master Coordinator', message: 'Pump scheduled for 14:01 @ 40% capacity (₹840 saved)' },
@@ -14,7 +15,7 @@ const MOCK_LOGS = [
 
 export default function ConnectScreen() {
   const { ref, isVisible } = useScrollReveal();
-  const [activeTab, setActiveTab] = useState<'overview' | 'agents' | 'logs' | 'map'>('overview');
+  const [activeTab, setActiveTab] = useState<'overview' | 'agents' | 'logs' | 'map' | 'predict'>('overview');
   const [mode, setMode] = useState<'auto' | 'suggest' | 'manual'>('auto');
 
   // WebSocket Integration
@@ -107,7 +108,7 @@ export default function ConnectScreen() {
                     <span className="text-white font-bold tracking-wide">Agri-Intelligence</span>
                   </div>
                   <div className="flex items-center gap-1 bg-black/40 rounded-lg p-1 border border-white/[0.05]">
-                    {(['overview', 'map', 'agents', 'logs'] as const).map((tab) => (
+                    {(['overview', 'map', 'agents', 'predict', 'logs'] as const).map((tab) => (
                       <button
                         key={tab}
                         onClick={() => setActiveTab(tab)}
@@ -117,7 +118,7 @@ export default function ConnectScreen() {
                             : 'text-slate-400 hover:text-white hover:bg-white/[0.05]'
                         }`}
                       >
-                        {tab.charAt(0).toUpperCase() + tab.slice(1)}
+                        {tab === 'predict' ? 'Yield AI' : tab.charAt(0).toUpperCase() + tab.slice(1)}
                       </button>
                     ))}
                   </div>
@@ -136,6 +137,11 @@ export default function ConnectScreen() {
 
             {/* Dashboard Content */}
             <div className="p-6 bg-white/[0.01]">
+              {activeTab === 'predict' && (
+                <div className="animate-fade-in">
+                   <YieldPredictor />
+                </div>
+              )}
               {activeTab === 'overview' && (
                 <div className="space-y-6">
                   {/* Metrics Grid */}
