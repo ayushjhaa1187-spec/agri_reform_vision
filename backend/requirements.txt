@@ -17,6 +17,9 @@ firebase-admin
 websockets
 asyncpg
 httpx
+python-jose
+passlib
+bcrypt
 
 stripe
 
