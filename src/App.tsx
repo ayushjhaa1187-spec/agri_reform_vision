@@ -57,7 +57,7 @@ function AnimatedRoutes() {
             path="/demo" 
             element={
               <ProtectedRoute>
-                <Home />
+                <Demo />
               </ProtectedRoute>
             } 
           />
@@ -65,7 +65,7 @@ function AnimatedRoutes() {
             path="/billing" 
             element={
               <ProtectedRoute>
-                <Home />
+                <Billing />
               </ProtectedRoute>
             } 
           />
