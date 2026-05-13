@@ -17,9 +17,10 @@
 [![Docker](https://img.shields.io/badge/Docker-24.x-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 [🌐 Live Demo](https://agri-intel-demo.vercel.app/) •
-[📋 Proposal](https://github.com/your-org/agri-intelligence/blob/main/proposal.pdf) •
-[🗺️ Implementation Plan](https://github.com/your-org/agri-intelligence/blob/main/implementation_plan.md) •
-[🐛 Report Bug](https://github.com/your-org/agri-intelligence/issues)
+[💎 Double Diamond Framework](DOUBLE_DIAMOND.md) •
+[📋 Project Summary](PROJECT_SUMMARY.md) •
+[🚀 Pilot Checklist](PILOT_READY_CHECKLIST.md) •
+[🐛 Report Bug](https://github.com/ayushjhaa1187-spec/agri_reform_vision/issues)
 
 </div>
 
@@ -342,37 +343,24 @@ agri-intelligence/
 │   ├── main.py
 │   ├── config.py
 │   ├── models.py
+│   ├── auth.py
 │   ├── routers/
 │   │   ├── farms.py
 │   │   ├── actions.py
 │   │   ├── agents.py
-│   │   └── chatbot.py
-│   ├── agents/
-│   │   ├── base.py
-│   │   ├── agronomist.py
-│   │   ├── economist.py
-│   │   ├── logistician.py
-│   │   └── coordinator.py
-│   ├── ml/
-│   │   ├── train_pipeline.py
-│   │   ├── disease_model.pkl
-│   │   └── predict.py
-│   ├── stream/
-│   │   ├── sensor_simulator.py
-│   │   ├── weather_fetcher.py
-│   │   ├── soil_terrain.py
-│   │   └── redis_listener.py
-│   ├── rag/
-│   │   ├── index_documents.py
-│   │   └── retriever.py
-│   └── utils/
-├── frontend/
-│   ├── src/
-│   │   ├── components/
-│   │   ├── pages/
-│   │   ├── hooks/
-│   │   └── styles/
-│   └── public/
+│   │   ├── chatbot.py
+│   │   ├── billing.py
+│   │   └── feedback.py
+│   ├── agentic_ai/ (Multi-Agent Core)
+│   ├── ml_service/ (Intelligence Layer)
+│   ├── stream/ (Data Ingestion & Websockets)
+│   ├── rag/ (Knowledge Retrieval)
+│   └── tests/
+├── src/ (Frontend - React + TypeScript)
+│   ├── components/
+│   ├── pages/
+│   ├── hooks/
+│   └── styles/
 ├── docker-compose.yml
 ├── .env.example
 └── README.md
@@ -392,7 +380,7 @@ agri-intelligence/
 ### 1. Clone the Repository
 
 ```bash
-git clone https://github.com/your-org/agri-intelligence.git
+git clone https://github.com/ayushjhaa1187-spec/agri_reform_vision.git
 cd agri-intelligence
 cp .env.example .env
 ```
@@ -426,7 +414,6 @@ http://localhost:8000/docs
 ### 4. Start Frontend
 
 ```bash
-cd frontend
 npm install
 npm run dev
 ```
@@ -434,7 +421,7 @@ npm run dev
 Frontend will run at:
 
 ```bash
-http://localhost:3000
+http://localhost:5173
 ```
 
 ### 5. Run Sensor Simulator

@@ -1,11 +1,11 @@
 # 🚀 Agri-Intelligence — Pilot Readiness Checklist
 
-Your platform has successfully transitioned from a concept to a **production-ready SaaS application**. Before onboarding your first 50 farmers in Phase 6, complete these final operational steps:
+Your platform has successfully transitioned from a concept to a **production-ready prototype**. Before onboarding your first 50 farmers in Phase 6, complete these final operational steps for the **Asian Hackathon for Green Future 2026**:
 
 ---
 
 ## 🛠 1. Infrastructure (Phase 0)
-- [ ] **Secrets Vault:** Move all variables from the Railway/Vercel dashboard to a dedicated secrets manager (Vault or Doppler) as planned in Task 0.4.
+- [ ] **Secrets Vault:** Move all variables from the deployment dashboard to a dedicated secrets manager.
 - [ ] **Observability:** Connect **Sentry.io** to the backend (`main.py`) to catch edge-case agent errors before farmers report them.
 - [ ] **Database Backup:** Enable automated nightly backups for your PostgreSQL instance.
 

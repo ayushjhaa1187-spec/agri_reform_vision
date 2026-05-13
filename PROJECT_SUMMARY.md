@@ -1,11 +1,11 @@
 # Agri-Intelligence Project Summary
 
 ## Overview
-A comprehensive website showcasing the **Agri-Intelligence: Autonomous Multi-Agent Farming Ecosystem** for transforming the agricultural sector.
+A comprehensive platform showcasing the **Agri-Intelligence: Autonomous Multi-Agent Farming Ecosystem** for transforming the agricultural sector. This project specifically targets **Theme 3: Water Resources and Climate-Resilient Agriculture** for the **Asian Hackathon for Green Future 2026**.
 
 **Prepared By:** Ayush Kumar Jha  
 **Organization:** IIT MADRAS  
-**Date:** May 4, 2026
+**Date:** May 13, 2026
 
 ---
 
@@ -18,9 +18,9 @@ A comprehensive website showcasing the **Agri-Intelligence: Autonomous Multi-Age
 - Organization badge
 
 ### 2. Executive Summary
-- Problem statement (fragmented data, reactive decision-making)
-- Solution overview (autonomous multi-agent AI ecosystem)
-- Three key benefits (Reduced Crop Loss, Increased ROI, Autonomous Decisions)
+- Problem statement (fragmented data, reactive decision-making in the face of climate change)
+- Solution overview (autonomous multi-agent AI ecosystem for precision agriculture)
+- Three key benefits (Reduced Water/Resource Loss, Increased ROI, Autonomous Decisions)
 
 ### 3. System Architecture
 - Four-layer architecture visualization:
