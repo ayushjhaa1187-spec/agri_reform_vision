@@ -15,8 +15,24 @@
   --glow-emerald: #34d399;
   --glow-teal: #2dd4bf;
   --surface-dark: #030712;
-  --surface-card: #080c18;
-  --noise-opacity: 0.02;
+  -surface-card: #080c18;
+  --noise-opacity: 0.02; --bg: #FFFFFF;
+  --surface: #F8FAFC;
+  --border: #E2E8F0;
+  --teal: #0D9488;
+  --teal-dark: #0F766E;
+  --blue: #3B82F6;
+  --blue-dark: #2563EB;
+  --green: #166534;
+  --green-light: #22C55E;
+  --amber: #F59E0B;
+  --coral: #F97316;
+  --text: #1E293B;
+  --text-secondary: #64748B;
+  --radius: 12px;
+  --shadow: 0 4px 12px rgba(0,0,0,0.04);
+  --primary-gradient: linear-gradient(135deg, #0D9488, #3B82F6);
+   
 }
 
 /* Cinematic Background Gradient */
