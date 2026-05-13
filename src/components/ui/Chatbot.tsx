@@ -32,8 +32,8 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      const token = localStorage.getItem('token');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const token = localStorage.getItem('agri_token');
       const response = await fetch(`${apiUrl}/chatbot/query`, {
         method: 'POST',
         headers: { 

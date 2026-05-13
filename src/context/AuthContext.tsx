@@ -1,5 +1,6 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 
 interface User {
   email: string;
@@ -10,6 +11,8 @@ interface AuthContextType {
   user: User | null;
   token: string | null;
   login: (token: string) => void;
+  signup: (email: string, pass: string) => Promise<void>;
+  signInWithGoogle: () => Promise<void>;
   logout: () => void;
   isAuthenticated: boolean;
   loading: boolean;
@@ -41,16 +44,30 @@ export const AuthProvider: React.FC<{ children: React.ReactNode }> = ({ children
     setToken(newToken);
   };
 
+  const signup = async (email: string, pass: string) => {
+    // Mock signup
+    console.log('Signing up:', email, pass);
+    login('mock_signup_token');
+  };
+
+  const signInWithGoogle = async () => {
+    // This would typically use Supabase or Firebase
+    // For now, mocking a successful Google login for the prototype
+    toast.success('Signed in with Google (Mock)');
+    login('mock_google_token');
+  };
+
   const logout = () => {
     setToken(null);
   };
 
   return (
-    <AuthContext.Provider value={{ user, token, login, logout, isAuthenticated: !!token, loading }}>
+    <AuthContext.Provider value={{ user, token, login, signup, logout, isAuthenticated: !!token, loading, signInWithGoogle }}>
       {children}
     </AuthContext.Provider>
   );
 };
+
 
 export const useAuth = () => {
   const context = useContext(AuthContext);

@@ -264,60 +264,9 @@ const FeedbackModal = ({ onClose, telemetry, decision }: any) => {
       </motion.div>
     </div>
   );
-};
+  };
 
-const SchemesView = () => (
-  <motion.div 
-    initial={{ opacity: 0, y: 20 }}
-    animate={{ opacity: 1, y: 0 }}
-    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
-  >
-    <SchemeCard 
-      title="PM-KISAN" 
-      desc="Direct benefit transfer of ₹6,000 per year in three equal installments."
-      status="Eligible"
-      link="https://pmkisan.gov.in/"
-    />
-    <SchemeCard 
-      title="PMFBY (Crop Insurance)" 
-      desc="Yield-based insurance scheme for crops against non-preventable natural risks."
-      status="Active"
-      link="https://pmfby.gov.in/"
-    />
-    <SchemeCard 
-      title="PM-KUSUM" 
-      desc="Installation of solar pumps and grid-connected solar power plants."
-      status="Apply Now"
-      link="https://pmkusum.mnre.gov.in/"
-    />
-  </motion.div>
-);
-
-const SchemeCard = ({ title, desc, status, link }: any) => (
-  <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-emerald-500/50 transition-all group">
-    <div className="flex justify-between items-start mb-4">
-      <h3 className="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">{title}</h3>
-      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
-        status === 'Eligible' ? 'bg-emerald-500/20 text-emerald-400' :
-        status === 'Active' ? 'bg-blue-500/20 text-blue-400' : 'bg-amber-500/20 text-amber-400'
-      }`}>
-        {status}
-      </span>
-    </div>
-    <p className="text-sm text-gray-400 leading-relaxed mb-6">{desc}</p>
-    <a 
-      href={link} 
-      target="_blank" 
-      rel="noreferrer"
-      className="text-xs text-emerald-400 font-bold uppercase tracking-widest hover:underline"
-    >
-      View Details &rarr;
-    </a>
-  </div>
-);
-
-const StatCard = ({ icon, label, value, trend }: any) => (
-  <div className="bg-white/5 p-4 rounded-xl border border-white/10">
+  const StatCard = ({ icon, label, value, trend }: any) => (  <div className="bg-white/5 p-4 rounded-xl border border-white/10">
     <div className="flex items-center gap-3 mb-2">
       {icon}
       <span className="text-xs text-gray-400 font-medium uppercase">{label}</span>

@@ -1,0 +1,12 @@
+backend/
+references/
+scratch/
+e2e/
+playwright-report/
+test-results/
+.coverage
+docker-compose.yml
+Dockerfile.frontend
+Procfile
+railway.json
+render.yaml
