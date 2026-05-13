@@ -3,7 +3,7 @@
 ## Overview
 A comprehensive platform showcasing the **Agri-Intelligence: Autonomous Multi-Agent Farming Ecosystem** for transforming the agricultural sector. This project specifically targets **Theme 3: Water Resources and Climate-Resilient Agriculture** for the **Asian Hackathon for Green Future 2026**.
 
-**Prepared By:** Ayush Kumar Jha  
+**Prepared By:** Ayush Kumar Jha & Jahnvi  
 **Organization:** IIT MADRAS  
 **Date:** May 13, 2026
 

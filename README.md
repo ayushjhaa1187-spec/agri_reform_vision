@@ -17,6 +17,7 @@
 [![Docker](https://img.shields.io/badge/Docker-24.x-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 [🌐 Live Demo](https://agri-intel-demo.vercel.app/) •
+[📋 Hackathon Proposal](PROPOSAL.md) •
 [💎 Double Diamond Framework](DOUBLE_DIAMOND.md) •
 [📋 Project Summary](PROJECT_SUMMARY.md) •
 [🚀 Pilot Checklist](PILOT_READY_CHECKLIST.md) •
@@ -475,6 +476,13 @@ This publishes mock farm data every few seconds for testing.
 - [ ] Marketplace with blockchain traceability
 - [ ] Carbon credit accounting
 - [ ] Pan-India deployment
+
+---
+
+## Contributors
+
+- **Ayush Kumar Jha** - AI & Full-Stack Lead
+- **Jahnvi** - UI/UX & Frontend Developer
 
 ---
 
