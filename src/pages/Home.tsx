@@ -677,7 +677,7 @@ export default function Home() {
 
   const handleLogin = () => {
     setIsAuthenticated(true);
-    navigate('/demo'); // Redirect to existing demo page
+    navigate('/'); // Redirect to existing demo page
   };
 
   const handleLogout = async () => {
