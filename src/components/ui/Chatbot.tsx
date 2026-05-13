@@ -11,7 +11,7 @@ interface Message {
 export default function Chatbot() {
   const [isOpen, setIsOpen] = useState(false);
   const [messages, setMessages] = useState<Message[]>([
-    { role: 'bot', text: 'Namaste! I am your Agri-Intelligence Advisor. How can I help you with your crops today?' }
+    { role: 'bot', text: 'Namaste! I am your Agri-Intelligence Advisor. How can I help you with your crops today?\n\nनमस्ते! मैं आपका कृषि-इंटेलिजेंस सलाहकार हूं। आज मैं आपकी फसलों में आपकी क्या मदद कर सकता हूं?' }
   ]);
   const [input, setInput] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -33,14 +33,22 @@ export default function Chatbot() {
 
     try {
       const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const token = localStorage.getItem('token');
       const response = await fetch(`${apiUrl}/chatbot/query`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
         body: JSON.stringify({ question: userMsg })
       });
       
       const data = await response.json();
-      setMessages(prev => [...prev, { role: 'bot', text: data.answer }]);
+      if (response.status === 402) {
+          setMessages(prev => [...prev, { role: 'bot', text: 'Insufficient AI credits. Please upgrade your plan in the Billing section.' }]);
+      } else {
+          setMessages(prev => [...prev, { role: 'bot', text: data.answer }]);
+      }
     } catch (error) {
       setMessages(prev => [...prev, { role: 'bot', text: 'Sorry, I am having trouble connecting to the intelligence core. Please try again later.' }]);
     } finally {

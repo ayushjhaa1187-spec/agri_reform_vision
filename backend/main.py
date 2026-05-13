@@ -1,11 +1,19 @@
 import asyncio
+import os
+import sentry_sdk
 from contextlib import asynccontextmanager
 from fastapi import FastAPI, WebSocket, WebSocketDisconnect
 from fastapi.middleware.cors import CORSMiddleware
 from backend.stream.redis_listener import connected_clients, start_redis_listener
 from backend.stream.sensor_simulator import sensor_simulator
 from backend.stream.agent_orchestrator import agent_orchestrator
-from backend.routers import chatbot, ml, users, farms, billing
+from backend.routers import chatbot, ml, users, farms, billing, feedback, cv
+
+sentry_sdk.init(
+    dsn=os.getenv("SENTRY_DSN", "https://mock@sentry.io/12345"),
+    traces_sample_rate=1.0,
+    profiles_sample_rate=1.0,
+)
 
 @asynccontextmanager
 async def lifespan(app: FastAPI):
@@ -25,6 +33,8 @@ app.include_router(ml.router)
 app.include_router(users.router)
 app.include_router(farms.router)
 app.include_router(billing.router)
+app.include_router(feedback.router)
+app.include_router(cv.router)
 
 # Add CORS middleware
 app.add_middleware(

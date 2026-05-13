@@ -28,12 +28,12 @@ def test_agronomist_proposal():
           desc: 'Static analysis with flake8/bandit. Identifies unhandled exceptions, missing validation, WebSocket bottlenecks, and hard‑coded credentials.',
           code: `# Security check example
 # ❌ BEFORE
-API_KEY = "sk-abc123hardcoded"
+API_KEY = "your-hardcoded-api-key-here"
 
 # ✅ AFTER
 import os
-API_KEY = os.getenv("OPENAI_API_KEY")
-assert API_KEY, "Missing OPENAI_API_KEY env var"`
+API_KEY = os.getenv("YOUR_API_KEY_ENV_VAR")
+assert API_KEY, "Missing environment variable"`
         }
       ]
     },
@@ -229,7 +229,7 @@ services:
           label: 'Security Audit',
           desc: 'SQL injection checks, API key hardening, JWT token auth, WebSocket origin validation, CORS tightening. Risk‑classified report with .env.example.',
           code: `# .env.example (template only — no real values)
-OPENAI_API_KEY=sk-xxxxxxxx
+GEMINI_API_KEY=your-gemini-api-key
 WEATHER_API_KEY=xxxxxxxx
 JWT_SECRET=random-256-bit-string
 DATABASE_URL=postgresql://user:pass@localhost/agri

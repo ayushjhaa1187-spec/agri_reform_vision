@@ -17,3 +17,7 @@ firebase-admin
 websockets
 asyncpg
 httpx
+
+stripe
+
+sentry-sdk

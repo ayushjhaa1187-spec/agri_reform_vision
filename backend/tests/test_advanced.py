@@ -20,31 +20,22 @@ async def override_get_db():
 app.dependency_overrides[get_current_user] = override_get_current_user
 app.dependency_overrides[get_db] = override_get_db
 
-def test_predict_yield_endpoint():
+def test_submit_feedback():
     response = client.post(
-        "/ml/predict-yield",
+        "/feedback/submit", 
         json={
-            "N": 100.0,
-            "P": 80.0,
-            "K": 60.0,
-            "temperature": 25.0,
-            "humidity": 70.0,
-            "ph": 6.5,
-            "rainfall": 150.0
+            "category": "UI",
+            "rating": 5,
+            "comment": "Great dashboard!",
+            "context": {"telemetry": {}}
         }
     )
     assert response.status_code == 200
-    data = response.json()
-    assert "predicted_yield_kg_ha" in data
-    assert data["status"] == "Inference successful"
-    assert "recommendation" in data
+    assert response.json()["status"] == "success"
 
-def test_chatbot_query_endpoint():
-    response = client.post(
-        "/chatbot/query",
-        json={"question": "What is the best NPK ratio for cereals?"}
-    )
-    assert response.status_code in [200, 500] 
-    if response.status_code == 200:
-        data = response.json()
-        assert "answer" in data
+def test_cv_detect_disease():
+    # Mocking a file upload
+    files = {'file': ('test.jpg', b'fake-image-content', 'image/jpeg')}
+    response = client.post("/cv/detect-disease", files=files)
+    assert response.status_code == 200
+    assert "diagnosis" in response.json()

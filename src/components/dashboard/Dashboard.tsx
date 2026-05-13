@@ -1,5 +1,5 @@
-import React from 'react';
-import { motion } from 'framer-motion';
+import React, { useState } from 'react';
+import { motion, AnimatePresence } from 'framer-motion';
 import { useWebSocket } from '../../hooks/useWebSocket';
 import FarmMap from '../map/FarmMap';
 import { 
@@ -8,12 +8,16 @@ import {
   Thermometer, 
   Wind, 
   TrendingUp, 
-  UserCheck 
+  UserCheck,
+  MessageSquarePlus,
+  X,
+  Star
 } from 'lucide-react';
 
 const Dashboard: React.FC = () => {
   const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/agent-feed';
   const { telemetry, agentDecisions, isConnected } = useWebSocket(wsUrl);
+  const [showFeedback, setShowFeedback] = useState(false);
 
   // Fallback / Initial Data
   const decision = agentDecisions.length > 0 ? {
@@ -31,9 +35,18 @@ const Dashboard: React.FC = () => {
           </h1>
           <p className="text-gray-400"> पंजाब Farm PB-ASR-001 | Real-time Monitoring</p>
         </div>
-        <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
-          <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
-          <span className="text-sm font-medium">{isConnected ? 'System Live' : 'Connecting...'}</span>
+        <div className="flex items-center gap-4">
+          <button 
+            onClick={() => setShowFeedback(true)}
+            className="flex items-center gap-2 bg-white/5 hover:bg-white/10 px-4 py-2 rounded-full border border-white/10 transition-colors"
+          >
+            <MessageSquarePlus className="w-4 h-4 text-emerald-400" />
+            <span className="text-sm font-medium">Feedback</span>
+          </button>
+          <div className="flex items-center gap-3 bg-white/5 px-4 py-2 rounded-full border border-white/10">
+            <div className={`w-2 h-2 rounded-full ${isConnected ? 'bg-green-500 animate-pulse' : 'bg-red-500'}`} />
+            <span className="text-sm font-medium">{isConnected ? 'System Live' : 'Connecting...'}</span>
+          </div>
         </div>
       </header>
 
@@ -112,6 +125,143 @@ const Dashboard: React.FC = () => {
         </div>
 
       </div>
+
+      {/* Feedback Modal */}
+      <AnimatePresence>
+        {showFeedback && (
+          <FeedbackModal 
+            onClose={() => setShowFeedback(false)} 
+            telemetry={telemetry} 
+            decision={decision}
+          />
+        )}
+      </AnimatePresence>
+    </div>
+  );
+};
+
+const FeedbackModal = ({ onClose, telemetry, decision }: any) => {
+  const [rating, setRating] = useState(5);
+  const [category, setCategory] = useState("Agent Decision");
+  const [comment, setComment] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [isSuccess, setIsSuccess] = useState(false);
+
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    setIsSubmitting(true);
+    try {
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const token = localStorage.getItem('token');
+      const response = await fetch(`${apiUrl}/feedback/submit`, {
+        method: 'POST',
+        headers: { 
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`
+        },
+        body: JSON.stringify({
+          category,
+          rating,
+          comment,
+          context: { telemetry, decision }
+        })
+      });
+      if (response.ok) {
+        setIsSuccess(true);
+        setTimeout(onClose, 2000);
+      }
+    } catch (e) {
+      console.error("Feedback failed", e);
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  return (
+    <div className="fixed inset-0 z-[2000] flex items-center justify-center p-4">
+      <motion.div 
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        onClick={onClose}
+        className="absolute inset-0 bg-black/80 backdrop-blur-sm"
+      />
+      <motion.div 
+        initial={{ scale: 0.9, opacity: 0, y: 20 }}
+        animate={{ scale: 1, opacity: 1, y: 0 }}
+        exit={{ scale: 0.9, opacity: 0, y: 20 }}
+        className="relative w-full max-w-md bg-[#0a0a0a] border border-white/10 rounded-2xl overflow-hidden shadow-2xl"
+      >
+        <div className="p-6">
+          <div className="flex justify-between items-center mb-6">
+            <h3 className="text-xl font-bold">Farmer Feedback</h3>
+            <button onClick={onClose} className="text-gray-500 hover:text-white transition-colors">
+              <X className="w-6 h-6" />
+            </button>
+          </div>
+
+          {isSuccess ? (
+            <div className="py-12 text-center space-y-4">
+              <div className="w-16 h-16 bg-green-500/20 rounded-full flex items-center justify-center mx-auto">
+                <Activity className="w-8 h-8 text-green-500" />
+              </div>
+              <h4 className="text-lg font-bold text-green-400">Feedback Submitted!</h4>
+              <p className="text-gray-400 text-sm">Thank you for helping us improve Agri-Intelligence.</p>
+            </div>
+          ) : (
+            <form onSubmit={handleSubmit} className="space-y-4">
+              <div>
+                <label className="text-xs text-gray-400 uppercase tracking-widest block mb-2">Category</label>
+                <select 
+                  value={category}
+                  onChange={(e) => setCategory(e.target.value)}
+                  className="w-full bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 focus:outline-none focus:border-emerald-500/50 transition-all text-sm"
+                >
+                  <option value="Agent Decision">Agent Decision</option>
+                  <option value="ML Prediction">ML Prediction</option>
+                  <option value="UI/Experience">UI/Experience</option>
+                  <option value="Other">Other</option>
+                </select>
+              </div>
+
+              <div>
+                <label className="text-xs text-gray-400 uppercase tracking-widest block mb-2">Rating</label>
+                <div className="flex gap-2">
+                  {[1, 2, 3, 4, 5].map((star) => (
+                    <button
+                      key={star}
+                      type="button"
+                      onClick={() => setRating(star)}
+                      className={`p-2 transition-colors ${rating >= star ? 'text-yellow-400' : 'text-gray-600'}`}
+                    >
+                      <Star className="w-6 h-6 fill-current" />
+                    </button>
+                  ))}
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs text-gray-400 uppercase tracking-widest block mb-2">Comments</label>
+                <textarea 
+                  value={comment}
+                  onChange={(e) => setComment(e.target.value)}
+                  placeholder="Tell us about the accuracy or any issues..."
+                  className="w-full h-24 bg-white/5 border border-white/10 rounded-xl px-4 py-2.5 focus:outline-none focus:border-emerald-500/50 transition-all text-sm resize-none"
+                  required
+                />
+              </div>
+
+              <button
+                type="submit"
+                disabled={isSubmitting}
+                className="w-full bg-emerald-500 hover:bg-emerald-400 text-black font-bold py-3 rounded-xl transition-all disabled:opacity-50 disabled:cursor-not-allowed mt-4"
+              >
+                {isSubmitting ? 'Submitting...' : 'Submit Feedback'}
+              </button>
+            </form>
+          )}
+        </div>
+      </motion.div>
     </div>
   );
 };

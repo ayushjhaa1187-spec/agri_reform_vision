@@ -204,12 +204,12 @@ def test_agronomist_proposal():
     assert "soil_moisture" in proposal["reasoning"]
     assert 0 <= proposal["confidence"] <= 1`},{label:"Code Quality & Bug Hunting",desc:"Static analysis with flake8/bandit. Identifies unhandled exceptions, missing validation, WebSocket bottlenecks, and hard‑coded credentials.",code:`# Security check example
 # ❌ BEFORE
-API_KEY = "sk-abc123hardcoded"
+API_KEY = "your-hardcoded-api-key-here"
 
 # ✅ AFTER
 import os
-API_KEY = os.getenv("OPENAI_API_KEY")
-assert API_KEY, "Missing OPENAI_API_KEY env var"`}]},{num:"02",title:"Predictive Maintenance Agent",icon:"🔧",color:"from-red-500 to-rose-600",promptCount:1,items:[{label:"New Agent Implementation",desc:"PredictiveMaintenanceAgent class, Pydantic equipment model, FastAPI endpoint /equipment/status, WebSocket channel equipment_alerts, React traffic-light component.",code:`class PredictiveMaintenanceAgent(FarmingAgent):
+API_KEY = os.getenv("YOUR_API_KEY_ENV_VAR")
+assert API_KEY, "Missing environment variable"`}]},{num:"02",title:"Predictive Maintenance Agent",icon:"🔧",color:"from-red-500 to-rose-600",promptCount:1,items:[{label:"New Agent Implementation",desc:"PredictiveMaintenanceAgent class, Pydantic equipment model, FastAPI endpoint /equipment/status, WebSocket channel equipment_alerts, React traffic-light component.",code:`class PredictiveMaintenanceAgent(FarmingAgent):
     def propose(self, context):
         hours = context["equipment_hours"]
         moisture = context["soil_moisture"]
@@ -296,7 +296,7 @@ services:
 | FR05 | Market logistics | economist.py | market_prices | MarketView.tsx | test_market |
 | FR06 | Equipment alert | maintenance.py | equip_health | EquipStatus.tsx | test_maint |
 | FR07 | Manual override | farm.py | farm_settings | Dashboard.tsx | test_override |`}]},{num:"07",title:"Security, Privacy & CI/CD",icon:"🛡️",color:"from-slate-500 to-gray-600",promptCount:3,items:[{label:"Security Audit",desc:"SQL injection checks, API key hardening, JWT token auth, WebSocket origin validation, CORS tightening. Risk‑classified report with .env.example.",code:`# .env.example (template only — no real values)
-OPENAI_API_KEY=sk-xxxxxxxx
+GEMINI_API_KEY=your-gemini-api-key
 WEATHER_API_KEY=xxxxxxxx
 JWT_SECRET=random-256-bit-string
 DATABASE_URL=postgresql://user:pass@localhost/agri

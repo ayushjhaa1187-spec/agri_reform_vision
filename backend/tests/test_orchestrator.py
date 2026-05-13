@@ -31,8 +31,17 @@ async def test_agent_orchestrator():
     mock_pubsub.listen.return_value = mock_listen_iter()
     mock_redis.pubsub.return_value = mock_pubsub
     mock_redis.publish = AsyncMock()
+
+    # Create a mock session context manager
+    mock_session = AsyncMock()
+    mock_session_local = MagicMock()
+    mock_session_local.return_value.__aenter__.return_value = mock_session
+    mock_session_local.return_value.__aexit__.return_value = False
     
     with patch("backend.stream.agent_orchestrator.get_redis_client", return_value=mock_redis), \
+         patch("backend.stream.agent_orchestrator.AsyncSessionLocal", new=mock_session_local), \
+         patch("backend.stream.agent_orchestrator.save_sensor_snapshot", return_value=1, new_callable=AsyncMock), \
+         patch("backend.stream.agent_orchestrator.save_agent_decision", new_callable=AsyncMock), \
          patch("backend.stream.agent_orchestrator.agri_agents.negotiate", new_callable=AsyncMock) as mock_negotiate:
         
         mock_negotiate.return_value = {
