@@ -17,7 +17,6 @@
 [![Docker](https://img.shields.io/badge/Docker-24.x-2496ED?style=for-the-badge&logo=docker&logoColor=white)](https://www.docker.com/)
 
 [🌐 Live Demo](https://agri-intel-demo.vercel.app/) •
-[📋 Hackathon Proposal](PROPOSAL.md) •
 [💎 Double Diamond Framework](DOUBLE_DIAMOND.md) •
 [📋 Project Summary](PROJECT_SUMMARY.md) •
 [🚀 Pilot Checklist](PILOT_READY_CHECKLIST.md) •
