@@ -266,6 +266,56 @@ const FeedbackModal = ({ onClose, telemetry, decision }: any) => {
   );
 };
 
+const SchemesView = () => (
+  <motion.div 
+    initial={{ opacity: 0, y: 20 }}
+    animate={{ opacity: 1, y: 0 }}
+    className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
+  >
+    <SchemeCard 
+      title="PM-KISAN" 
+      desc="Direct benefit transfer of ₹6,000 per year in three equal installments."
+      status="Eligible"
+      link="https://pmkisan.gov.in/"
+    />
+    <SchemeCard 
+      title="PMFBY (Crop Insurance)" 
+      desc="Yield-based insurance scheme for crops against non-preventable natural risks."
+      status="Active"
+      link="https://pmfby.gov.in/"
+    />
+    <SchemeCard 
+      title="PM-KUSUM" 
+      desc="Installation of solar pumps and grid-connected solar power plants."
+      status="Apply Now"
+      link="https://pmkusum.mnre.gov.in/"
+    />
+  </motion.div>
+);
+
+const SchemeCard = ({ title, desc, status, link }: any) => (
+  <div className="bg-white/5 border border-white/10 p-6 rounded-2xl hover:border-emerald-500/50 transition-all group">
+    <div className="flex justify-between items-start mb-4">
+      <h3 className="text-lg font-bold text-white group-hover:text-emerald-400 transition-colors">{title}</h3>
+      <span className={`px-2 py-0.5 rounded text-[10px] font-bold uppercase ${
+        status === 'Eligible' ? 'bg-emerald-500/20 text-emerald-400' :
+        status === 'Active' ? 'bg-blue-500/20 text-blue-400' : 'bg-amber-500/20 text-amber-400'
+      }`}>
+        {status}
+      </span>
+    </div>
+    <p className="text-sm text-gray-400 leading-relaxed mb-6">{desc}</p>
+    <a 
+      href={link} 
+      target="_blank" 
+      rel="noreferrer"
+      className="text-xs text-emerald-400 font-bold uppercase tracking-widest hover:underline"
+    >
+      View Details &rarr;
+    </a>
+  </div>
+);
+
 const StatCard = ({ icon, label, value, trend }: any) => (
   <div className="bg-white/5 p-4 rounded-xl border border-white/10">
     <div className="flex items-center gap-3 mb-2">
@@ -277,14 +327,27 @@ const StatCard = ({ icon, label, value, trend }: any) => (
   </div>
 );
 
-const DecisionCard = ({ decision }: any) => (
+const DecisionCard = ({ decision, isAutonomous }: any) => (
   <motion.div 
     initial={{ opacity: 0, scale: 0.95 }}
     animate={{ opacity: 1, scale: 1 }}
     className="space-y-4"
   >
-    <div className="bg-emerald-500/20 border border-emerald-500/40 p-4 rounded-xl">
-      <div className="text-xs text-emerald-400 font-bold uppercase mb-1">Final Decision</div>
+    <div className={`p-4 rounded-xl border transition-all ${
+        isAutonomous 
+        ? 'bg-emerald-500/20 border-emerald-500/40' 
+        : 'bg-amber-500/20 border-amber-500/40 shadow-[0_0_15px_rgba(245,158,11,0.2)]'
+    }`}>
+      <div className="flex justify-between items-center mb-1">
+        <div className={`text-xs font-bold uppercase ${isAutonomous ? 'text-emerald-400' : 'text-amber-400'}`}>
+          {isAutonomous ? 'Autonomous Action Executed' : 'Suggestion Ready'}
+        </div>
+        {!isAutonomous && (
+          <button className="bg-amber-500 text-black text-[10px] font-bold px-2 py-0.5 rounded hover:bg-amber-400">
+            APPROVE
+          </button>
+        )}
+      </div>
       <div className="text-lg font-bold">{decision.decision.final_action}</div>
       <p className="text-sm text-gray-300 mt-2 italic">"{decision.decision.justification}"</p>
     </div>
