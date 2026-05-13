@@ -7,14 +7,18 @@ const ThreeCanvas = lazy(() => import('./three/HeroCanvas'));
 function HeroBg() {
   return (
     <div className="absolute inset-0 overflow-hidden pointer-events-none">
-      {/* Radial gradient center glow */}
-      <div className="absolute inset-0 bg-[radial-gradient(ellipse_80%_60%_at_50%_-10%,rgba(16,185,129,0.18),transparent_70%)]" />
-      {/* Grid overlay */}
-      <div className="absolute inset-0 grid-overlay opacity-60" />
-      {/* Floating orbs */}
-      <div className="absolute -top-40 -right-40 w-96 h-96 bg-emerald-500/10 rounded-full blur-3xl animate-pulse-slow" />
-      <div className="absolute -bottom-40 -left-40 w-96 h-96 bg-teal-500/10 rounded-full blur-3xl animate-pulse-slow" style={{ animationDelay: '1.5s' }} />
-      <div className="absolute top-1/3 left-1/4 w-64 h-64 bg-green-500/5 rounded-full blur-2xl animate-pulse-slow" style={{ animationDelay: '0.75s' }} />
+      {/* Deep Space Background */}
+      <div className="absolute inset-0 bg-[#020617]" />
+      
+      {/* Cinematic Radial Glows */}
+      <div className="absolute top-[-10%] left-[-10%] w-[50%] h-[50%] bg-emerald-500/10 blur-[120px] rounded-full animate-orb" />
+      <div className="absolute bottom-[-10%] right-[-10%] w-[60%] h-[60%] bg-teal-500/10 blur-[150px] rounded-full animate-orb" style={{ animationDelay: '-2s' }} />
+      
+      {/* Precision Grid */}
+      <div className="absolute inset-0 grid-overlay opacity-[0.4]" />
+      
+      {/* Grain/Noise Overlay */}
+      <div className="absolute inset-0 opacity-[0.03] pointer-events-none mix-blend-overlay bg-[url('https://grainy-gradients.vercel.app/noise.svg')]" />
     </div>
   );
 }
@@ -23,121 +27,111 @@ export default function Hero() {
   const navigate = useNavigate();
 
   const stats = [
-    { value: '15 min', label: 'Decision Loop' },
-    { value: '\u226585%', label: 'ML Accuracy' },
+    { value: '15min', label: 'Decision Loop' },
+    { value: '85%', label: 'ML Accuracy' },
     { value: '4', label: 'AI Agents' },
-    { value: '24/7', label: 'Autonomous Ops' },
+    { value: '24/7', label: 'Autonomous' },
   ];
 
   return (
-    <section className="relative min-h-[95vh] flex flex-col items-center justify-center overflow-hidden pt-16">
+    <section className="relative min-h-screen flex flex-col items-center justify-center overflow-hidden selection:bg-emerald-500/30">
       <HeroBg />
 
-      {/* 3D Canvas */}
+      {/* 3D Visual Layer */}
       <div className="absolute inset-0 z-0">
         <Suspense fallback={null}>
           <ThreeCanvas />
         </Suspense>
       </div>
 
-      {/* Gradient overlays for readability */}
-      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-transparent to-[#0a0f1a] z-10" />
-      <div className="absolute inset-0 bg-gradient-to-t from-transparent to-[#0a0f1a]/30 z-10" />
+      {/* Atmospheric Overlays */}
+      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[#030712]/40 to-[#030712] z-10" />
 
-      {/* Content */}
-      <div className="relative z-20 text-center max-w-5xl mx-auto px-6 py-16">
-        {/* Badge */}
+      {/* Content Container */}
+      <div className="relative z-20 container mx-auto px-6 pt-20 pb-12 flex flex-col items-center text-center">
+        
+        {/* Status Badge */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.1 }}
-          className="inline-flex items-center gap-2 px-4 py-2 glass-card rounded-full text-sm font-semibold text-emerald-400 mb-8 border border-emerald-500/20"
+          initial={{ opacity: 0, scale: 0.9 }}
+          animate={{ opacity: 1, scale: 1 }}
+          transition={{ duration: 0.8, ease: [0.16, 1, 0.3, 1] }}
+          className="mb-8 group"
         >
-          <span className="w-2 h-2 bg-emerald-400 rounded-full animate-pulse" />
-          Empowering the Farming Sector with Autonomous AI
+          <div className="inline-flex items-center gap-2.5 px-4 py-2 glass-panel rounded-full border border-white/10 hover:border-emerald-500/40 transition-colors duration-500 cursor-default">
+            <div className="relative flex h-2 w-2">
+              <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+              <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+            </div>
+            <span className="text-[11px] font-bold uppercase tracking-[0.2em] text-emerald-400/90 group-hover:text-emerald-400 transition-colors">
+              Next-Gen Autonomous Agriculture
+            </span>
+          </div>
         </motion.div>
 
-        {/* Main Title */}
-        <motion.h1
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-          className="text-5xl md:text-7xl lg:text-8xl font-black text-white mb-6 leading-[0.9] tracking-tight"
-        >
-          Agri-<span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">Intelligence</span>
-        </motion.h1>
+        {/* Hero Title */}
+        <div className="mb-8 relative">
+          <motion.h1
+            initial={{ opacity: 0, y: 40 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="heading-premium text-6xl md:text-8xl lg:text-[110px] text-white tracking-tighter"
+          >
+            Agri-<span className="neon-text italic font-serif text-emerald-400 drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]">Intelligence</span>
+          </motion.h1>
+          
+          <motion.div
+            initial={{ width: 0 }}
+            animate={{ width: '100%' }}
+            transition={{ duration: 1.5, delay: 1, ease: [0.16, 1, 0.3, 1] }}
+            className="h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent mt-4"
+          />
+        </div>
 
-        {/* Subtitle */}
+        {/* Hero Description */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.35 }}
-          className="text-xl md:text-2xl text-slate-300 mb-4 max-w-3xl mx-auto leading-relaxed"
+          transition={{ duration: 0.8, delay: 0.4 }}
+          className="max-w-2xl text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-12"
         >
-          Autonomous Multi-Agent Farming Ecosystem
+          A cinematic ecosystem of specialized AI agents that <span className="text-white font-medium">perceive, negotiate, and execute</span> optimal farm decisions in real-time.
         </motion.p>
 
-        {/* Tagline */}
-        <motion.p
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.7, delay: 0.45 }}
-          className="text-base md:text-lg text-slate-400 mb-12 max-w-2xl mx-auto leading-relaxed"
-        >
-          Four specialized AI agents perceive,{' '}
-          <span className="text-emerald-400 font-semibold">negotiate</span>, and execute optimal farm actions every 15 minutes — replacing cognitive overload with continuous, explainable autonomy.
-        </motion.p>
-
-        {/* CTA Buttons */}
+        {/* Action Matrix */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.55 }}
-          className="flex flex-wrap gap-4 justify-center mb-16"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="flex flex-col sm:flex-row gap-5 mb-20"
         >
           <button
             onClick={() => navigate('/architecture')}
-            className="group px-8 py-4 bg-gradient-to-r from-emerald-500 to-teal-500 text-white font-bold rounded-full hover:from-emerald-400 hover:to-teal-400 transition-all duration-300 shadow-lg shadow-emerald-500/25 hover:shadow-emerald-500/50 hover:scale-105 text-base"
+            className="magnetic-trigger px-10 py-5 bg-white text-black font-black rounded-full hover:bg-emerald-400 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.15)] text-sm uppercase tracking-widest"
           >
-            <span className="flex items-center gap-2">
-              Explore Architecture
-              <svg className="w-4 h-4 group-hover:translate-x-1 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M17 8l4 4m0 0l-4 4m4-4H3" />
-              </svg>
-            </span>
+            System Core
           </button>
+          
           <button
-            onClick={() => navigate('/agents')}
-            className="px-8 py-4 border border-white/20 text-white font-semibold rounded-full hover:bg-white/10 hover:border-white/40 transition-all duration-300 backdrop-blur-sm text-base hover:scale-105"
+            onClick={() => navigate('/demo')}
+            className="px-10 py-5 glass-panel-interactive rounded-full text-white font-bold border border-white/10 hover:border-white/30 text-sm uppercase tracking-widest backdrop-blur-3xl"
           >
-            See Agent Arena
+            Launch Command
           </button>
-          <a
-            href="https://github.com/ayushjhaa1187-spec/agri_reform_vision"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="px-8 py-4 border border-emerald-500/30 text-emerald-400 font-semibold rounded-full hover:bg-emerald-500/10 hover:border-emerald-500/60 transition-all duration-300 text-base hover:scale-105"
-          >
-            View Source
-          </a>
         </motion.div>
 
-        {/* Stats */}
+        {/* Statistics Bar */}
         <motion.div
-          initial={{ opacity: 0, y: 20 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.6, delay: 0.7 }}
-          className="grid grid-cols-2 md:grid-cols-4 gap-4 max-w-2xl mx-auto"
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 1, delay: 1 }}
+          className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 border border-white/5 rounded-2xl overflow-hidden backdrop-blur-md"
         >
           {stats.map((stat, index) => (
-            <div
-              key={index}
-              className="glass-card rounded-2xl p-4 text-center hover:border-emerald-500/30 transition-all duration-300 group"
-            >
-              <div className="text-2xl font-black text-white group-hover:text-emerald-400 transition-colors duration-300">
+            <div key={index} className="p-8 bg-[#030712]/60 hover:bg-white/[0.02] transition-colors group cursor-default">
+              <div className="text-3xl font-black text-white mb-1 group-hover:text-emerald-400 transition-colors">
                 {stat.value}
               </div>
-              <div className="text-xs text-slate-500 font-medium mt-1 uppercase tracking-wider">
+              <div className="text-[10px] uppercase tracking-[0.15em] text-slate-500 font-bold">
                 {stat.label}
               </div>
             </div>
@@ -145,30 +139,24 @@ export default function Hero() {
         </motion.div>
       </div>
 
-      {/* Scroll indicator */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.2, duration: 0.8 }}
-        className="absolute bottom-8 left-1/2 -translate-x-1/2 z-20 flex flex-col items-center gap-2"
-      >
-        <span className="text-xs text-slate-500 uppercase tracking-widest">Scroll</span>
-        <div className="w-px h-12 bg-gradient-to-b from-slate-500 to-transparent" />
-      </motion.div>
-
-      {/* Author Badge */}
-      <motion.div
-        initial={{ opacity: 0 }}
-        animate={{ opacity: 1 }}
-        transition={{ delay: 1.0 }}
-        className="absolute bottom-8 right-6 z-20 flex items-center gap-2 px-3 py-2 glass-card rounded-full"
-      >
-        <div className="w-6 h-6 bg-emerald-500/20 rounded-full flex items-center justify-center text-xs">🌱</div>
-        <div>
-          <div className="text-xs font-semibold text-white">Ayush Kumar Jha</div>
-          <div className="text-[10px] text-slate-500">IIT MADRAS · 2026</div>
+      {/* Floating Meta Info */}
+      <div className="absolute bottom-10 left-10 hidden lg:block z-30">
+        <div className="text-[10px] text-slate-600 font-mono tracking-widest rotate-[-90deg] origin-left uppercase">
+          Autonomous.Ecosystem.2026
         </div>
-      </motion.div>
+      </div>
+      
+      <div className="absolute bottom-10 right-10 z-30">
+        <div className="flex items-center gap-4 glass-panel px-5 py-3 rounded-2xl border border-white/5">
+          <div className="w-8 h-8 rounded-full bg-gradient-to-br from-emerald-500 to-teal-600 flex items-center justify-center text-xs shadow-lg shadow-emerald-900/20">
+            🌱
+          </div>
+          <div>
+            <div className="text-xs font-bold text-white tracking-tight">Ayush Kumar Jha</div>
+            <div className="text-[9px] uppercase tracking-widest text-slate-500 font-black">Lead Architect</div>
+          </div>
+        </div>
+      </div>
     </section>
   );
 }

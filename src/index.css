@@ -5,100 +5,121 @@
    DESIGN TOKENS — Cinematic Agri-Intelligence
    ═══════════════════════════════════════════ */
 :root {
-  --glass-bg: rgba(255, 255, 255, 0.03);
-  --glass-bg-light: rgba(255, 255, 255, 0.06);
-  --glass-border: rgba(255, 255, 255, 0.08);
-  --glass-border-hover: rgba(255, 255, 255, 0.15);
+  --glass-bg: rgba(255, 255, 255, 0.02);
+  --glass-bg-light: rgba(255, 255, 255, 0.05);
+  --glass-border: rgba(255, 255, 255, 0.06);
+  --glass-border-hover: rgba(255, 255, 255, 0.12);
   --glow-green: #10b981;
-  --glow-green-dim: rgba(16, 185, 129, 0.15);
-  --glow-green-bright: rgba(16, 185, 129, 0.6);
-  --glow-teal: #14b8a6;
-  --glow-purple: #a855f7;
-  --glow-blue: #3b82f6;
-  --glow-yellow: #eab308;
-  --surface-dark: #0a0f1a;
-  --surface-card: #0d1321;
-  --noise-opacity: 0.015;
+  --glow-green-dim: rgba(16, 185, 129, 0.1);
+  --glow-green-bright: rgba(16, 185, 129, 0.5);
+  --glow-emerald: #34d399;
+  --glow-teal: #2dd4bf;
+  --surface-dark: #030712;
+  --surface-card: #080c18;
+  --noise-opacity: 0.02;
 }
 
-/* ═══════════════════════════════════════════
-   GLOBAL BASE
-   ═══════════════════════════════════════════ */
-
-* {
-  margin: 0;
-  padding: 0;
-  box-sizing: border-box;
-}
-
-/* ═══════════════════════════════════════════
-   LAYOUT UTILITIES
-   ═══════════════════════════════════════════ */
-.form-group {
-  margin-bottom: 1.5rem;
-}
-
-.input-container {
-  position: relative;
-  width: 100%;
-}
-
-.input-icon {
-  position: absolute;
-  left: 1.25rem;
-  top: 50%;
-  transform: translateY(-50%);
-  color: #64748b;
-  pointer-events: none;
-  transition: color 0.3s ease;
-}
-
-.input-field {
-  width: 100%;
-  background: rgba(255, 255, 255, 0.05);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 0.75rem;
-  padding: 0.875rem 1rem 0.875rem 3.25rem;
-  color: white;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-  font-size: 0.875rem;
-}
-
-.input-field:focus {
-  outline: none;
-  border-color: rgba(16, 185, 129, 0.5);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 0 4px rgba(16, 185, 129, 0.1);
-}
-
-.input-field:focus + .input-icon {
-  color: #10b981;
-}
-
-.label-sm {
-  display: block;
-  font-size: 0.7rem;
-  font-weight: 700;
-  color: #94a3b8;
-  text-transform: uppercase;
-  letter-spacing: 0.05em;
-  margin-bottom: 0.5rem;
-  margin-left: 0.25rem;
-}
-
-html {
-  scroll-behavior: smooth;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
+/* Cinematic Background Gradient */
 body {
   font-family: 'Inter', system-ui, -apple-system, sans-serif;
-  background: var(--surface-dark);
-  color: #e2e8f0;
+  background: radial-gradient(circle at 50% 0%, #0f172a 0%, #030712 100%);
+  color: #f1f5f9;
   overflow-x: hidden;
   line-height: 1.6;
 }
+
+/* Premium Typography Utilities */
+.heading-premium {
+  letter-spacing: -0.03em;
+  line-height: 0.95;
+  font-weight: 900;
+}
+
+.text-gradient-premium {
+  background: linear-gradient(135deg, #fff 0%, #94a3b8 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+}
+
+/* Professional Glassmorphism Upgrade */
+.glass-panel {
+  background: rgba(255, 255, 255, 0.02);
+  backdrop-filter: blur(24px) saturate(1.8);
+  -webkit-backdrop-filter: blur(24px) saturate(1.8);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  box-shadow: 0 8px 32px 0 rgba(0, 0, 0, 0.8);
+}
+
+.glass-panel-interactive {
+  transition: all 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.glass-panel-interactive:hover {
+  background: rgba(255, 255, 255, 0.04);
+  border-color: rgba(255, 255, 255, 0.12);
+  transform: translateY(-4px);
+  box-shadow: 0 20px 40px -10px rgba(0, 0, 0, 0.5), 
+              0 0 20px -5px var(--glow-green-dim);
+}
+
+/* Animated Border Glow */
+.glow-border {
+  position: relative;
+}
+
+.glow-border::after {
+  content: '';
+  position: absolute;
+  inset: -1px;
+  background: linear-gradient(var(--angle, 45deg), transparent 40%, var(--glow-green) 50%, transparent 60%);
+  border-radius: inherit;
+  z-index: -1;
+  opacity: 0;
+  transition: opacity 0.5s ease;
+}
+
+.glow-border:hover::after {
+  opacity: 0.6;
+}
+
+@property --angle {
+  syntax: '<angle>';
+  initial-value: 0deg;
+  inherits: false;
+}
+
+@keyframes rotate-angle {
+  to { --angle: 360deg; }
+}
+
+.animate-glow-rotate:hover::after {
+  animation: rotate-angle 4s linear infinite;
+}
+
+/* Cinematic Scan-lines */
+.scanlines {
+  position: relative;
+}
+
+.scanlines::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    to bottom,
+    rgba(18, 16, 16, 0) 50%,
+    rgba(0, 0, 0, 0.05) 50%
+  );
+  background-size: 100% 4px;
+  pointer-events: none;
+  z-index: 10;
+  opacity: 0.1;
+}
+
+/* Data-Vis Glow Utilities */
+.glow-text-green { text-shadow: 0 0 15px rgba(16, 185, 129, 0.6); }
+.glow-text-blue { text-shadow: 0 0 15px rgba(59, 130, 246, 0.6); }
+.glow-text-purple { text-shadow: 0 0 15px rgba(168, 85, 247, 0.6); }
 
 .section-separator {
   height: 4rem;
