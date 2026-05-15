@@ -4,6 +4,7 @@ import TiltCard from './ui/TiltCard';
 import useScrollReveal from '../hooks/useScrollReveal';
 import { useWebSocket } from '../hooks/useWebSocket';
 import YieldPredictor from './YieldPredictor';
+import AnimatedNumber from './ui/AnimatedNumber';
 
 const MOCK_LOGS = [
   { time: '10:32:45', type: 'decision', agent: 'Master Coordinator', message: 'Pump scheduled for 14:01 @ 40% capacity (₹840 saved)' },
@@ -14,15 +15,24 @@ const MOCK_LOGS = [
   { time: '10:25:30', type: 'ml', agent: 'XGBoost Model', message: 'Disease risk score: Low (12%)' }
 ];
 
-export default function ConnectScreen() {
+export default function ConnectScreen({ externalStats, onManualUpdate }: { externalStats?: any, onManualUpdate?: () => void }) {
   const { ref, isVisible } = useScrollReveal();
   const [activeTab, setActiveTab] = useState<'overview' | 'agents' | 'logs' | 'map' | 'predict'>('overview');
   const [mode, setMode] = useState<'auto' | 'suggest' | 'manual'>('auto');
   const [history, setHistory] = useState<any[]>([]);
 
+  // Phase 5: Activity tracking
+  const [localMoisture, setLocalMoisture] = useState(32);
+
   // WebSocket Integration
   const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/agent-feed';
   const { isConnected, telemetry, agentDecisions } = useWebSocket(wsUrl);
+
+  useEffect(() => {
+    if (telemetry) {
+        setLocalMoisture(telemetry.farm.soil_moisture);
+    }
+  }, [telemetry]);
 
   useEffect(() => {
     const fetchHistory = async () => {
@@ -62,13 +72,19 @@ export default function ConnectScreen() {
     : history.length > 0 ? history : MOCK_LOGS;
 
   const farmMetrics = [
-    { label: 'Soil Moisture', value: telemetry ? `${telemetry.farm.soil_moisture.toFixed(1)}%` : '32.0%', status: (telemetry?.farm.soil_moisture ?? 32) < 35 ? 'warning' : 'good', icon: '💧' },
+    { label: 'Soil Moisture', value: `${localMoisture.toFixed(1)}%`, status: localMoisture < 35 ? 'warning' : 'good', icon: '💧' },
     { label: 'Crop Health', value: '94%', status: 'good', icon: '🌱' },
-    { label: 'Disease Risk', value: telemetry ? `${(telemetry.farm.current_disease_risk * 100).toFixed(1)}%` : '12.0%', status: 'good', icon: '🛡️' },
+    { label: 'Intelligence Score', value: `${75 + (externalStats?.interactions || 0)}%`, status: 'good', icon: '🧠' },
     { label: 'Yield Forecast', value: telemetry ? `${(4.2 - telemetry.farm.yield_reduction_risk).toFixed(1)} t/ha` : '4.2 t/ha', status: 'good', icon: '📈' },
-    { label: 'Rain Prob (42h)', value: telemetry ? `${telemetry.weather.rain_probability}%` : '65%', status: (telemetry?.weather.rain_probability ?? 65) > 50 ? 'warning' : 'good', icon: '🌧️' },
-    { label: 'Temperature', value: telemetry ? `${telemetry.farm.temperature.toFixed(1)}°C` : '28.5°C', status: 'good', icon: '🌡️' }
+    { label: 'Policy Audits', value: `${externalStats?.schemesChecked || 0}`, status: 'good', icon: '📜' },
+    { label: 'ML Inferences', value: `${externalStats?.analysesPerformed || 0}`, status: 'good', icon: '🔬' }
   ];
+
+  const handleManualMoisture = () => {
+    setLocalMoisture(prev => Math.max(10, Math.min(90, prev + (Math.random() > 0.5 ? 5 : -5))));
+    if (onManualUpdate) onManualUpdate();
+    toast.success('Soil sensor data refreshed');
+  };
 
   const fieldZones = Array.from({ length: 20 }, (_, i) => {
     const moisture = 25 + Math.sin(i * 1.5) * 20 + Math.random() * 10;
@@ -135,6 +151,13 @@ export default function ConnectScreen() {
               </button>
             ))}
           </div>
+
+          <button 
+            onClick={handleManualMoisture}
+            className="px-6 py-2.5 bg-white/5 hover:bg-white/10 text-white rounded-xl text-xs font-bold border border-white/10 transition-all flex items-center gap-2"
+          >
+            <span>🔄</span> Refresh Sensors
+          </button>
         </div>
 
         {/* Dashboard Shell */}
@@ -193,7 +216,7 @@ export default function ConnectScreen() {
                         metric.status === 'good' ? 'text-emerald-400 glow-text-green' :
                         metric.status === 'warning' ? 'text-yellow-400' : 'text-red-400'
                       }`}>
-                        {metric.value}
+                        <AnimatedNumber value={metric.value} />
                       </div>
                     </TiltCard>
                   ))}

@@ -1,6 +1,7 @@
 import { Suspense, lazy } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { motion } from 'framer-motion';
+import AnimatedNumber from './ui/AnimatedNumber';
 
 const ThreeCanvas = lazy(() => import('./three/HeroCanvas'));
 
@@ -129,7 +130,7 @@ export default function Hero() {
           {stats.map((stat, index) => (
             <div key={index} className="p-8 bg-[#030712]/60 hover:bg-white/[0.02] transition-colors group cursor-default">
               <div className="text-3xl font-black text-white mb-1 group-hover:text-emerald-400 transition-colors">
-                {stat.value}
+                <AnimatedNumber value={stat.value} />
               </div>
               <div className="text-[10px] uppercase tracking-[0.15em] text-slate-500 font-bold">
                 {stat.label}

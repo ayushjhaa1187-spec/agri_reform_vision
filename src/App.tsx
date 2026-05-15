@@ -17,6 +17,7 @@ import Timeline from './pages/Timeline';
 import DevBook from './pages/DevBook';
 import Demo from './pages/Demo';
 import Billing from './pages/Billing';
+import Footer from './components/Footer';
 
 const pageVariants = {
   initial: { opacity: 0, y: 12 },
@@ -46,13 +47,62 @@ function AnimatedRoutes() {
           <Route path="/" element={<Home />} />
           <Route path="/login" element={<Login />} />
           <Route path="/register" element={<Register />} />
-          <Route path="/architecture" element={<Architecture />} />
-          <Route path="/agents" element={<Agents />} />
-          <Route path="/negotiation" element={<Negotiation />} />
-          <Route path="/workflows" element={<Workflows />} />
-          <Route path="/tech-stack" element={<TechStack />} />
-          <Route path="/timeline" element={<Timeline />} />
-          <Route path="/dev-book" element={<DevBook />} />
+          <Route 
+            path="/architecture" 
+            element={
+              <ProtectedRoute>
+                <Architecture />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/agents" 
+            element={
+              <ProtectedRoute>
+                <Agents />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/negotiation" 
+            element={
+              <ProtectedRoute>
+                <Negotiation />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/workflows" 
+            element={
+              <ProtectedRoute>
+                <Workflows />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/tech-stack" 
+            element={
+              <ProtectedRoute>
+                <TechStack />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/timeline" 
+            element={
+              <ProtectedRoute>
+                <Timeline />
+              </ProtectedRoute>
+            } 
+          />
+          <Route 
+            path="/dev-book" 
+            element={
+              <ProtectedRoute>
+                <DevBook />
+              </ProtectedRoute>
+            } 
+          />
           <Route 
             path="/demo" 
             element={
@@ -75,11 +125,26 @@ function AnimatedRoutes() {
   );
 }
 
+function LayoutWrapper({ children }: { children: React.ReactNode }) {
+  const location = useLocation();
+  const hideFooterOn = ['/login', '/register', '/demo', '/billing'];
+  const shouldHideFooter = hideFooterOn.includes(location.pathname);
+
+  return (
+    <>
+      <main className="flex-grow">
+        {children}
+      </main>
+      {!shouldHideFooter && <Footer />}
+    </>
+  );
+}
+
 export default function App() {
   return (
     <AuthProvider>
       <Router>
-        <div className="min-h-screen bg-[#030a06]">
+        <div className="min-h-screen flex flex-col bg-[#030a06]">
           <Toaster 
             position="top-right"
             toastOptions={{
@@ -92,9 +157,9 @@ export default function App() {
             }}
           />
           <CustomCursor />
-          <main>
+          <LayoutWrapper>
             <AnimatedRoutes />
-          </main>
+          </LayoutWrapper>
           <Chatbot />
         </div>
       </Router>

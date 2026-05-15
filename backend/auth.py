@@ -38,7 +38,9 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         detail="Could not validate credentials",
         headers={"WWW-Authenticate": "Bearer"},
     )
-    if token == "mock_google_token":
+    
+    allow_mock = os.getenv("ALLOW_MOCK_AUTH", "true").lower() == "true"
+    if token == "mock_google_token" and allow_mock:
         return {"email": "farmer@example.com", "role": "farmer"}
 
     try:

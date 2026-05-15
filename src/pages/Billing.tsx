@@ -1,9 +1,18 @@
 import { useState, useEffect } from 'react';
+import { useNavigate } from 'react-router-dom';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { Zap, Check, ArrowRight, Loader2, Sparkles } from 'lucide-react';
 import GlassCard from '../components/ui/GlassCard';
 import Navbar from '../components/Navbar';
+import { useAuth } from '../context/AuthContext';
+
+// Target to achieve: Use explicit environment value, fallback to empty string for relative paths in production
+const API_URL = import.meta.env.VITE_API_URL || '';
+
+if (!import.meta.env.VITE_API_URL && !import.meta.env.DEV) {
+  console.error('CRITICAL: VITE_API_URL is not defined. Production billing features will fail.');
+}
 
 interface Plan {
   id: string;
@@ -25,56 +34,74 @@ export default function Billing() {
   const [profile, setProfile] = useState<UserProfile | null>(null);
   const [isLoading, setIsLoading] = useState(true);
   const [isProcessing, setIsProcessing] = useState<string | null>(null);
+  const { logout } = useAuth();
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-        
-        // Fetch plans
-        const plansRes = await axios.get(`${apiUrl}/billing/plans`);
-        setPlans(plansRes.data);
+        if (API_URL === '' && import.meta.env.DEV) {
+          console.warn('VITE_API_URL is missing in development. Defaulting to proxy or relative paths.');
+        }
 
-        // Fetch user profile
-        const profileRes = await axios.get(`${apiUrl}/users/me`);
+        // Target to achieve: Synchronized data fetching
+        const [plansRes, profileRes] = await Promise.all([
+          axios.get(`${API_URL}/billing/plans`),
+          axios.get(`${API_URL}/users/me`)
+        ]);
+
+        setPlans(plansRes.data);
         setProfile(profileRes.data);
-      } catch (error) {
+      } catch (error: any) {
         console.error('Failed to fetch billing data', error);
-        toast.error('Failed to load billing information.');
+        if (error.response?.status === 401) {
+          toast.error('Session expired. Please log in again.');
+          logout();
+          navigate('/login');
+        } else {
+          toast.error('Failed to load billing information.');
+        }
       } finally {
         setIsLoading(false);
       }
     };
     fetchData();
-  }, []);
+  }, [logout, navigate]);
 
   const handleCheckout = async (planId: string) => {
     setIsProcessing(planId);
+    const toastId = toast.loading('Preparing checkout...');
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-      await axios.post(`${apiUrl}/billing/checkout`, { plan_id: planId });
+      const response = await axios.post(`${API_URL}/billing/checkout`, { plan_id: planId });
+      const { checkout_url } = response.data;
       
-      toast.loading('Redirecting to secure checkout...');
+      // Target to achieve: Branching between external URLs and mock paths
+      if (checkout_url && checkout_url.startsWith('http')) {
+        toast.loading('Redirecting to secure checkout...', { id: toastId });
+        window.location.href = checkout_url;
+        return;
+      }
+
+      // Internal mock or relative redirect simulation
+      toast.loading('Processing secure payment simulation...', { id: toastId });
       
       setTimeout(async () => {
         try {
-            await axios.post(`${apiUrl}/billing/simulate-success?plan_id=${planId}`);
-            toast.dismiss();
-            toast.success(`Successfully upgraded to ${planId}!`);
+            await axios.post(`${API_URL}/billing/simulate-success?plan_id=${planId}`);
+            toast.success(`Successfully upgraded to ${planId}!`, { id: toastId });
             
-            // Refresh profile
-            const profileRes = await axios.get(`${apiUrl}/users/me`);
+            // Target to achieve: Profile refresh after purchase
+            const profileRes = await axios.get(`${API_URL}/users/me`);
             setProfile(profileRes.data);
         } catch (e) {
-            toast.dismiss();
-            toast.error('Payment simulation failed.');
+            toast.error('Payment simulation failed.', { id: toastId });
         } finally {
              setIsProcessing(null);
         }
       }, 1500);
 
-    } catch (error) {
-      toast.error('Checkout failed. Please try again.');
+    } catch (error: any) {
+      toast.error(error.response?.data?.detail || 'Checkout failed. Please try again.', { id: toastId });
       setIsProcessing(null);
     }
   };

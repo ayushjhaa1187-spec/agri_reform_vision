@@ -1,7 +1,8 @@
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigate, Link } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 export default function Register() {
   const [step, setStep] = useState(0);
@@ -13,22 +14,60 @@ export default function Register() {
     area: 5.2,
     location: ''
   });
-  const { signup } = useAuth();
+  const { signup, isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
 
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      navigate('/demo');
+    }
+  }, [isAuthenticated, loading, navigate]);
+
+  const validateStep = () => {
+    if (step === 0) {
+      if (!formData.name.trim()) return 'Name is required';
+      if (!formData.phone.trim()) return 'Phone number is required';
+      if (formData.password.length < 6) return 'Password must be at least 6 characters';
+    } else if (step === 1) {
+      if (!formData.location.trim()) return 'Location is required';
+      if (formData.area <= 0) return 'Area must be greater than 0';
+    }
+    return null;
+  };
+
   const handleNext = async () => {
+    const error = validateStep();
+    if (error) {
+      toast.error(error);
+      return;
+    }
+
     if (step < 2) {
       setStep(step + 1);
     } else {
+      setIsSubmitting(true);
       try {
-        await signup(`${formData.name.replace(/\s+/g, '')}@example.com`, formData.password);
+        // Appending timestamp to avoid collisions
+        const uniqueEmail = `${formData.name.replace(/\s+/g, '').toLowerCase()}${Date.now()}@example.com`;
+        await signup(uniqueEmail, formData.password, formData.name);
         toast.success('Account created! Welcome.');
-        navigate('/demo');
       } catch (err: any) {
-        toast.error('Registration failed.');
+        toast.error(err.response?.data?.detail || 'Registration failed.');
+      } finally {
+        setIsSubmitting(false);
       }
     }
   };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center p-5">
@@ -128,10 +167,11 @@ export default function Register() {
         )}
 
         <button 
-          className="btn btn-primary w-full py-4 mt-8 shadow-lg shadow-teal-500/20"
+          className="btn btn-primary w-full py-4 mt-8 shadow-lg shadow-teal-500/20 disabled:opacity-50"
           onClick={handleNext}
+          disabled={isSubmitting}
         >
-          {step === 2 ? 'Go to Dashboard' : 'Continue'}
+          {isSubmitting ? 'Creating Account...' : (step === 2 ? 'Go to Dashboard' : 'Continue')}
         </button>
 
         <p className="text-center mt-8 text-sm text-[var(--text-secondary)]">

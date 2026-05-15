@@ -1,26 +1,56 @@
-import { useState } from 'react';
-import { useNavigate, Link } from 'react-router-dom';
+import { useState, useEffect } from 'react';
+import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
+import axios from 'axios';
 
 export default function Login() {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [isLoading, setIsLoading] = useState(false);
-  const { login, signInWithGoogle } = useAuth();
+  const { login, signInWithGoogle, isAuthenticated, loading } = useAuth();
   const navigate = useNavigate();
+  const location = useLocation();
+
+  useEffect(() => {
+    if (!loading && isAuthenticated) {
+      navigate(location.state?.from?.pathname || '/demo');
+    }
+  }, [isAuthenticated, loading, navigate, location]);
+
+  if (loading) {
+    return (
+      <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center">
+        <div className="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
+      </div>
+    );
+  }
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
+    if (!email || !password) {
+      toast.error('Please enter both email and password');
+      return;
+    }
     setIsLoading(true);
     try {
-      // For the prototype, we simulate a successful login
-      // In a real app, you'd call an API here
-      await login('mock_token');
+      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const response = await axios.post(`${apiUrl}/users/login`, { email, password });
+      login(response.data.access_token);
       toast.success('Welcome back!');
-      navigate('/demo'); 
     } catch (error: any) {
-      toast.error('Login failed. Please check your credentials.');
+      toast.error(error.response?.data?.detail || 'Login failed. Please check your credentials.');
+    } finally {
+      setIsLoading(false);
+    }
+  };
+
+  const handleGoogleLogin = async () => {
+    setIsLoading(true);
+    try {
+      await signInWithGoogle();
+    } catch (error) {
+      toast.error('Google sign-in failed');
     } finally {
       setIsLoading(false);
     }
@@ -76,10 +106,11 @@ export default function Login() {
 
         <button 
           type="button"
-          onClick={() => signInWithGoogle()}
-          className="btn btn-outline w-full py-3"
+          onClick={handleGoogleLogin}
+          className="btn btn-outline w-full py-3 disabled:opacity-50"
+          disabled={isLoading}
         >
-          Continue with Google
+          {isLoading ? 'Connecting...' : 'Continue with Google'}
         </button>
 
         <p className="text-center mt-8 text-sm text-[var(--text-secondary)]">

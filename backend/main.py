@@ -37,9 +37,11 @@ app.include_router(feedback.router)
 app.include_router(cv.router)
 
 # Add CORS middleware
+cors_origins = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173;http://localhost:3000").split(";")
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # Adjust in production
+    allow_origins=cors_origins,
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
@@ -48,6 +50,10 @@ app.add_middleware(
 @app.get("/")
 async def root():
     return {"status": "Agri-Intelligence Online", "layer": 4}
+
+@app.get("/health")
+async def health_check():
+    return {"status": "healthy", "timestamp": asyncio.get_event_loop().time()}
 
 @app.websocket("/ws/agent-feed")
 async def agent_feed(websocket: WebSocket):

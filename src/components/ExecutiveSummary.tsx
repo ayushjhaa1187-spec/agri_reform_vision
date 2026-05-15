@@ -30,7 +30,7 @@ export default function ExecutiveSummary() {
   ];
 
   return (
-    <section className="py-24 md:py-32 px-6 max-w-7xl mx-auto relative overflow-hidden">
+    <section id="problem" className="py-24 md:py-32 px-6 max-w-7xl mx-auto relative overflow-hidden">
       {/* Section Header */}
       <FadeInSection>
         <div className="text-center mb-16">

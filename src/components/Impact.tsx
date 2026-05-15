@@ -1,5 +1,6 @@
 import FadeInSection from './ui/FadeInSection';
 import GlassCard from './ui/GlassCard';
+import AnimatedNumber from './ui/AnimatedNumber';
 
 export default function Impact() {
   const metrics = [
@@ -52,7 +53,7 @@ export default function Impact() {
                     className="text-3xl md:text-4xl font-black mb-2"
                     style={{ color: metric.color }}
                   >
-                    {metric.value}
+                    <AnimatedNumber value={metric.value} />
                   </div>
                   <div className="text-xs md:text-sm text-slate-400 font-medium leading-snug">{metric.label}</div>
                 </div>

@@ -3,7 +3,7 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { Calculator, TrendingUp, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import GlassCard from './ui/GlassCard';
 
-export default function YieldPredictor() {
+export default function YieldPredictor({ onPredict }: { onPredict?: () => void }) {
   const [formData, setInputData] = useState({
     N: 70, P: 45, K: 35,
     temperature: 25, humidity: 70, ph: 6.5, rainfall: 100
@@ -25,6 +25,7 @@ export default function YieldPredictor() {
       if (!response.ok) throw new Error('Prediction service unavailable');
       const data = await response.json();
       setResult(data);
+      if (onPredict) onPredict();
     } catch (err: any) {
       setError(err.message);
     } finally {
