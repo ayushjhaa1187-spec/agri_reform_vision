@@ -1,6 +1,7 @@
-import { useState } from 'react';
+import { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-hot-toast';
 import ConnectScreen from '../components/ConnectScreen';
 import YieldPredictor from '../components/YieldPredictor';
 import MultiAgentSystem from '../components/MultiAgentSystem';
@@ -260,7 +261,7 @@ function AdminContent({ stats }: { stats: any }) {
             <h3 className="font-bold mb-6">Inject Environmental Scenarios</h3>
             <div className="flex gap-4">
               <button className="btn btn-outline" onClick={() => toast.error('Drought injected! Agents calculating response...')}>Drought</button>
-              <button className="btn btn-outline" onClick={() => toast.info('Heavy rain alert sent to field sensors.')}>Heavy Rain</button>
+              <button className="btn btn-outline" onClick={() => toast('Heavy rain alert sent to field sensors.')}>Heavy Rain</button>
               <button className="btn btn-outline" onClick={() => toast.error('Pest alert! Logistician agent preparing transport.')}>Pest Outbreak</button>
             </div>
           </div>

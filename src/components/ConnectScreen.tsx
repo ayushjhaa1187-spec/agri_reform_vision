@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import { toast } from 'react-hot-toast';
 import TiltCard from './ui/TiltCard';
 import useScrollReveal from '../hooks/useScrollReveal';
 import { useWebSocket } from '../hooks/useWebSocket';
