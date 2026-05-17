@@ -33,7 +33,7 @@
       "destination": "https://agri-backend.onrender.com/cv/:path*"
     },
     {
-      "source": "/((?!assets|favicon.ico|noise.svg).*)" ,
+      "source": "/(.*)",
       "destination": "/index.html"
     }
   ]
