@@ -18,6 +18,9 @@ sentry_sdk.init(
 @asynccontextmanager
 async def lifespan(app: FastAPI):
     # Startup logic
+    from backend.database import check_and_init_db
+    await check_and_init_db()
+    
     await start_redis_listener()
     # Start the simulator and orchestrator in the background
     asyncio.create_task(sensor_simulator())

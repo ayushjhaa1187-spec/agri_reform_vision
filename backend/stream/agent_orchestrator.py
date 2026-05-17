@@ -3,7 +3,7 @@ import json
 from sqlalchemy import select
 from backend.config import get_redis_client
 from backend.agentic_ai.coordinator import agri_agents
-from backend.database import AsyncSessionLocal
+from backend import database
 from backend.models import Farm, SensorData, AgentDecision
 
 async def save_sensor_snapshot(session, farm_data):
@@ -68,7 +68,7 @@ async def agent_orchestrator():
                         soil_moisture = farm_data.get("soil_moisture", 100)
                         
                         # Database Persistence
-                        async with AsyncSessionLocal() as session:
+                        async with database.AsyncSessionLocal() as session:
                             farm_db_id = await save_sensor_snapshot(session, farm_data)
                             
                             # Create full context for agents

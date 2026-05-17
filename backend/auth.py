@@ -7,7 +7,7 @@ from fastapi import Depends, HTTPException, status
 from fastapi.security import OAuth2PasswordBearer
 from sqlalchemy import select
 from backend.config import SECRET_KEY
-from backend.database import AsyncSessionLocal
+from backend import database
 from backend.models import User
 
 ALGORITHM = "HS256"
@@ -52,7 +52,7 @@ async def get_current_user(token: str = Depends(oauth2_scheme)):
         raise credentials_exception
 
 
-    async with AsyncSessionLocal() as session:
+    async with database.AsyncSessionLocal() as session:
         result = await session.execute(select(User).where(User.email == email))
         user = result.scalar_one_or_none()
         if not user:

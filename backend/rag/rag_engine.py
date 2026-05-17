@@ -102,7 +102,17 @@ class AgroRAG:
         chain = prompt | self.llm
         
         response = await chain.ainvoke({"context": context, "question": question})
-        return response.content
+        content = response.content
+        
+        if isinstance(content, list):
+            text_blocks = []
+            for block in content:
+                if isinstance(block, dict) and block.get("type") == "text":
+                    text_blocks.append(block.get("text", ""))
+                elif isinstance(block, str):
+                    text_blocks.append(block)
+            return "".join(text_blocks)
+        return str(content)
 
 # Global instance
 agro_rag = AgroRAG()
