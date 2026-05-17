@@ -40,11 +40,12 @@ app.include_router(feedback.router)
 app.include_router(cv.router)
 
 # Add CORS middleware
-cors_origins = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173;http://localhost:3000").split(";")
+cors_origins = os.getenv("CORS_ALLOWED_ORIGINS", "http://localhost:5173;http://localhost:3000;https://agrireformvision.vercel.app").split(";")
 
 app.add_middleware(
     CORSMiddleware,
     allow_origins=cors_origins,
+    allow_origin_regex="https://agrireformvision.*\\.vercel\\.app",
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],
