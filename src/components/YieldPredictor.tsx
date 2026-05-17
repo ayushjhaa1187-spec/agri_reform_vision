@@ -16,7 +16,10 @@ export default function YieldPredictor({ onPredict }: { onPredict?: () => void }
     setIsLoading(true);
     setError(null);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '');
+      if (!apiUrl && !import.meta.env.DEV) {
+        throw new Error('ML Predictor API URL is not configured.');
+      }
       const response = await fetch(`${apiUrl}/ml/predict-yield`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

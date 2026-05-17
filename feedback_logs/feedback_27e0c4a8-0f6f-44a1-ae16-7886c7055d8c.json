@@ -1,0 +1,11 @@
+{
+  "id": "27e0c4a8-0f6f-44a1-ae16-7886c7055d8c",
+  "email": "test@example.com",
+  "category": "UI",
+  "rating": 5,
+  "comment": "Great dashboard!",
+  "context": {
+    "telemetry": {}
+  },
+  "timestamp": "e7eae20ddd3b4214a90e55b6face2628"
+}
