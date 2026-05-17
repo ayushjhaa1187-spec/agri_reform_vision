@@ -3,6 +3,7 @@ import { useNavigate, Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import toast from 'react-hot-toast';
 import axios from 'axios';
+import { API_URL } from '../utils/api';
 
 export default function Login() {
   const [email, setEmail] = useState('');
@@ -34,7 +35,7 @@ export default function Login() {
     }
     setIsLoading(true);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = API_URL;
       const response = await axios.post(`${apiUrl}/users/login`, { email, password });
       login(response.data.access_token);
       toast.success('Welcome back!');

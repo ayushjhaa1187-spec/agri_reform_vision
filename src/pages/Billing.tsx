@@ -7,12 +7,7 @@ import GlassCard from '../components/ui/GlassCard';
 import Navbar from '../components/Navbar';
 import { useAuth } from '../context/AuthContext';
 
-// Target to achieve: Use explicit environment value, fallback to empty string for relative paths in production
-const API_URL = import.meta.env.VITE_API_URL || '';
-
-if (!import.meta.env.VITE_API_URL && !import.meta.env.DEV) {
-  console.error('CRITICAL: VITE_API_URL is not defined. Production billing features will fail.');
-}
+import { API_URL } from '../utils/api';
 
 interface Plan {
   id: string;

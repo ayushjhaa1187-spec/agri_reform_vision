@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Calculator, TrendingUp, AlertCircle, CheckCircle2, Loader2 } from 'lucide-react';
 import GlassCard from './ui/GlassCard';
+import { API_URL } from '../utils/api';
 
 export default function YieldPredictor({ onPredict }: { onPredict?: () => void }) {
   const [formData, setInputData] = useState({
@@ -16,10 +17,7 @@ export default function YieldPredictor({ onPredict }: { onPredict?: () => void }
     setIsLoading(true);
     setError(null);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '');
-      if (!apiUrl && !import.meta.env.DEV) {
-        throw new Error('ML Predictor API URL is not configured.');
-      }
+      const apiUrl = API_URL;
       const response = await fetch(`${apiUrl}/ml/predict-yield`, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },

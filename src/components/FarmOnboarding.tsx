@@ -4,6 +4,7 @@ import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import { MapPin, Crop, Ruler, Loader2, ArrowRight } from 'lucide-react';
 import GlassCard from './ui/GlassCard';
+import { API_URL } from '../utils/api';
 
 interface OnboardingProps {
   onComplete: () => void;
@@ -23,7 +24,7 @@ export default function FarmOnboarding({ onComplete }: OnboardingProps) {
     e.preventDefault();
     setIsLoading(true);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = API_URL;
       await axios.post(`${apiUrl}/farms/`, formData);
       toast.success('Farm registered successfully!');
       onComplete();

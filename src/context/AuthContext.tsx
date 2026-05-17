@@ -27,15 +27,12 @@ interface AuthContextType {
   loading: boolean;
 }
 
+import { API_URL } from '../utils/api';
+
 const AuthContext = createContext<AuthContextType | undefined>(undefined);
 
 // Environment-based gating for mock features
 const ALLOW_MOCK = import.meta.env.VITE_ALLOW_MOCK_AUTH === 'true' || import.meta.env.DEV;
-const API_URL = import.meta.env.VITE_API_URL || 'http://localhost:8000';
-
-if (!import.meta.env.VITE_API_URL && !import.meta.env.DEV) {
-  console.error('CRITICAL: VITE_API_URL is not defined in the production environment.');
-}
 
 const isTokenValid = (token: string | null): boolean => {
   if (!token) return false;

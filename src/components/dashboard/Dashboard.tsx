@@ -13,9 +13,10 @@ import {
   X,
   Star
 } from 'lucide-react';
+import { API_URL, WS_URL } from '../../utils/api';
 
 const Dashboard: React.FC = () => {
-  const wsUrl = import.meta.env.VITE_WS_URL || 'ws://localhost:8000/ws/agent-feed';
+  const wsUrl = WS_URL;
   const { telemetry, agentDecisions, isConnected } = useWebSocket(wsUrl);
   const [showFeedback, setShowFeedback] = useState(false);
 
@@ -151,7 +152,7 @@ const FeedbackModal = ({ onClose, telemetry, decision }: any) => {
     e.preventDefault();
     setIsSubmitting(true);
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://localhost:8000';
+      const apiUrl = API_URL;
       const token = localStorage.getItem('token');
       const response = await fetch(`${apiUrl}/feedback/submit`, {
         method: 'POST',

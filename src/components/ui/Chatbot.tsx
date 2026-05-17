@@ -2,6 +2,7 @@ import { useState, useRef, useEffect } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { Send, Bot, X, MessageSquare, User } from 'lucide-react';
 import ReactMarkdown from 'react-markdown';
+import { API_URL } from '../../utils/api';
 
 interface Message {
   role: 'bot' | 'user';
@@ -32,7 +33,7 @@ export default function Chatbot() {
     setIsLoading(true);
 
     try {
-      const apiUrl = import.meta.env.VITE_API_URL || 'http://127.0.0.1:8000';
+      const apiUrl = API_URL;
       const token = localStorage.getItem('agri_token');
       const response = await fetch(`${apiUrl}/chatbot/query`, {
         method: 'POST',

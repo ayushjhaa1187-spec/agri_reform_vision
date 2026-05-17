@@ -6,6 +6,7 @@ import useScrollReveal from '../hooks/useScrollReveal';
 import { useWebSocket } from '../hooks/useWebSocket';
 import YieldPredictor from './YieldPredictor';
 import AnimatedNumber from './ui/AnimatedNumber';
+import { API_URL, WS_URL } from '../utils/api';
 
 const MOCK_LOGS = [
   { time: '10:32:45', type: 'decision', agent: 'Master Coordinator', message: 'Pump scheduled for 14:01 @ 40% capacity (₹840 saved)' },
@@ -26,12 +27,8 @@ export default function ConnectScreen({ externalStats, onManualUpdate }: { exter
   const [localMoisture, setLocalMoisture] = useState(32);
 
   // WebSocket Integration
-  const wsUrl = import.meta.env.VITE_WS_URL || (import.meta.env.DEV ? 'ws://localhost:8000/ws/agent-feed' : '');
+  const wsUrl = WS_URL;
   const { isConnected, telemetry, agentDecisions } = useWebSocket(wsUrl);
-
-  if (!wsUrl && !import.meta.env.DEV) {
-    console.error('CRITICAL: VITE_WS_URL is missing in production.');
-  }
 
   useEffect(() => {
     if (telemetry) {
@@ -42,8 +39,7 @@ export default function ConnectScreen({ externalStats, onManualUpdate }: { exter
   useEffect(() => {
     const fetchHistory = async () => {
       try {
-        const apiUrl = import.meta.env.VITE_API_URL || (import.meta.env.DEV ? 'http://localhost:8000' : '');
-        if (!apiUrl) return;
+        const apiUrl = API_URL;
         const response = await axios.get(`${apiUrl}/farms/1/decisions`);
         setHistory(response.data.map((d: any) => ({
           time: new Date(d.created_at).toLocaleTimeString(),
