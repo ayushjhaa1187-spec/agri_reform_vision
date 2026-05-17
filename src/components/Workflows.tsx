@@ -1,5 +1,8 @@
 import TiltCard from './ui/TiltCard';
 import useScrollReveal from '../hooks/useScrollReveal';
+import AnimIrrigation from './ui/AnimIrrigation';
+import AnimDisease from './ui/AnimDisease';
+import AnimHarvest from './ui/AnimHarvest';
 
 export default function Workflows() {
   const { ref, isVisible } = useScrollReveal();
@@ -10,6 +13,7 @@ export default function Workflows() {
       icon: '💧',
       color: '#3b82f6', // blue
       gradient: 'from-blue-500/20 to-blue-600/10',
+      Animation: AnimIrrigation,
       steps: [
         { num: 1, title: 'Monitor Soil', desc: 'IoT sensors report moisture at 32%' },
         { num: 2, title: 'Check Weather', desc: 'OpenWeather API: 15% rain probability' },
@@ -23,6 +27,7 @@ export default function Workflows() {
       icon: '🛡️',
       color: '#ef4444', // red
       gradient: 'from-red-500/20 to-red-600/10',
+      Animation: AnimDisease,
       steps: [
         { num: 1, title: 'Environmental Scan', desc: 'Humidity 85%, Temp 28°C' },
         { num: 2, title: 'ML Risk Assessment', desc: 'XGBoost predicts 78% fungal risk' },
@@ -36,6 +41,7 @@ export default function Workflows() {
       icon: '🌾',
       color: '#eab308', // yellow
       gradient: 'from-yellow-500/20 to-yellow-600/10',
+      Animation: AnimHarvest,
       steps: [
         { num: 1, title: 'Maturity Detection', desc: 'Crop sensors indicate 95% maturity' },
         { num: 2, title: 'Market Analysis', desc: 'Prices trending up 12% this week' },
@@ -47,32 +53,35 @@ export default function Workflows() {
   ];
 
   return (
-    <section id="workflows" className="py-24 section-dark border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto px-6" ref={ref}>
-        {/* Section Header */}
-        <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-blue-400 mb-4">
-            Workflows
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Autonomous <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Decision-Making</span> in Action
-          </h2>
-          <p className="text-lg text-slate-400 max-w-3xl mx-auto">
-            See how our multi-agent system processes real-world farming scenarios from data ingestion to autonomous action.
-          </p>
-        </div>
+    <>
+      <div className="section-separator"></div>
+      <section id="workflows" className="py-24 md:py-32 bg-[var(--bg-primary)]">
+        <div className="max-w-7xl mx-auto px-6" ref={ref}>
+          {/* Section Header */}
+          <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-blue-500/30 text-blue-400 bg-blue-500/10 mb-6">
+              Workflows
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6">
+              Autonomous <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Decision-Making</span> in Action
+            </h2>
+            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto">
+              See how our multi-agent system processes real-world farming scenarios from data ingestion to autonomous action.
+            </p>
+          </div>
 
-        {/* Workflow Cards */}
-        <div className={`grid md:grid-cols-3 gap-8 mb-16 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {workflows.map((workflow, index) => (
-            <TiltCard key={index} className="overflow-hidden rounded-2xl p-0">
-              {/* Header */}
-              <div className={`bg-gradient-to-r ${workflow.gradient} border-b border-white/[0.05] p-6`}>
-                <div className="flex items-center gap-3">
-                  <span className="text-3xl">{workflow.icon}</span>
-                  <h3 className="text-xl font-bold text-white">{workflow.title}</h3>
+          {/* Workflow Cards */}
+          <div className={`grid md:grid-cols-3 gap-8 mb-16 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            {workflows.map((workflow, index) => (
+              <TiltCard key={index} className="overflow-hidden rounded-2xl p-0 glass-card">
+                {/* Header */}
+                <div className={`bg-gradient-to-r ${workflow.gradient} border-b border-[var(--border-subtle)] p-6`}>
+                  <div className="flex items-center gap-3 mb-4">
+                    <span className="text-3xl">{workflow.icon}</span>
+                    <h3 className="text-xl font-bold text-[var(--text-primary)]">{workflow.title}</h3>
+                  </div>
+                  <workflow.Animation />
                 </div>
-              </div>
 
               {/* Steps */}
               <div className="p-6 bg-white/[0.02]">
@@ -150,5 +159,6 @@ export default function Workflows() {
         </div>
       </div>
     </section>
+  </>
   );
 }
