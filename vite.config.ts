@@ -16,11 +16,13 @@ export default defineConfig({
   },
   server: {
     proxy: {
-      '/api': {
-        target: 'http://localhost:8000',
-        changeOrigin: true,
-        rewrite: (path) => path.replace(/^\/api/, '')
-      }
+      '/users': { target: 'http://localhost:8000', changeOrigin: true },
+      '/chatbot': { target: 'http://localhost:8000', changeOrigin: true },
+      '/ml': { target: 'http://localhost:8000', changeOrigin: true },
+      '/farms': { target: 'http://localhost:8000', changeOrigin: true },
+      '/billing': { target: 'http://localhost:8000', changeOrigin: true },
+      '/feedback': { target: 'http://localhost:8000', changeOrigin: true },
+      '/cv': { target: 'http://localhost:8000', changeOrigin: true }
     }
   },
   build: {

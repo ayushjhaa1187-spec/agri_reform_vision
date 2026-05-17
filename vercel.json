@@ -5,8 +5,32 @@
   "cleanUrls": true,
   "rewrites": [
     {
-      "source": "/api/:path*",
-      "destination": "https://agri-backend.onrender.com/:path*"
+      "source": "/users/:path*",
+      "destination": "https://agri-backend.onrender.com/users/:path*"
+    },
+    {
+      "source": "/chatbot/:path*",
+      "destination": "https://agri-backend.onrender.com/chatbot/:path*"
+    },
+    {
+      "source": "/ml/:path*",
+      "destination": "https://agri-backend.onrender.com/ml/:path*"
+    },
+    {
+      "source": "/farms/:path*",
+      "destination": "https://agri-backend.onrender.com/farms/:path*"
+    },
+    {
+      "source": "/billing/:path*",
+      "destination": "https://agri-backend.onrender.com/billing/:path*"
+    },
+    {
+      "source": "/feedback/:path*",
+      "destination": "https://agri-backend.onrender.com/feedback/:path*"
+    },
+    {
+      "source": "/cv/:path*",
+      "destination": "https://agri-backend.onrender.com/cv/:path*"
     },
     {
       "source": "/((?!assets|favicon.ico|noise.svg).*)" ,
