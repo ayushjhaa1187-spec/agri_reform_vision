@@ -57,39 +57,42 @@ export default function TechStack() {
   ];
 
   return (
-    <section id="tech-stack" className="py-24 section-dark border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto px-6" ref={ref}>
-        <div className={`text-center mb-14 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-cyan-400 mb-4">
-            Technology Stack
-          </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-4">
-            Built with <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Production-Grade</span> Tools
-          </h2>
-          <p className="text-lg text-slate-400 max-w-3xl mx-auto">
-            Every layer uses industry-standard, scalable technologies that translate seamlessly from prototype to enterprise-scale deployment.
-          </p>
-        </div>
+    <>
+      <div className="section-separator"></div>
+      <section id="tech" className="py-24 md:py-32 bg-[var(--bg-primary)] border-t border-white/[0.04]">
+        <div className="max-w-7xl mx-auto px-6" ref={ref}>
+          <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-cyan-500/30 text-cyan-400 bg-cyan-500/10 mb-6">
+              Technology Stack
+            </span>
+            <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] mb-6">
+              Built with <span className="text-transparent bg-clip-text bg-gradient-to-r from-cyan-400 to-blue-400">Production-Grade</span> Tools
+            </h2>
+            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed">
+              Every layer uses industry-standard, scalable technologies that translate seamlessly from prototype to enterprise-scale deployment.
+            </p>
+          </div>
 
-        <div className={`grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          {stack.map((s, i) => (
-            <TiltCard key={i} className={`p-6 rounded-2xl border ${s.borderColor}`}>
-              <div className={`w-12 h-12 bg-gradient-to-br ${s.color} rounded-xl flex items-center justify-center text-2xl mb-4 border border-white/[0.05]`}>
-                {s.icon}
-              </div>
-              <h3 className="text-lg font-bold text-white mb-3">{s.category}</h3>
-              <ul className="space-y-2">
-                {s.items.map((item, j) => (
-                  <li key={j} className="flex items-center gap-2 text-slate-300 text-sm">
-                    <span className="w-1.5 h-1.5 bg-emerald-400/80 rounded-full shadow-[0_0_8px_rgba(52,211,153,0.5)]"></span>
-                    {item}
-                  </li>
-                ))}
-              </ul>
-            </TiltCard>
-          ))}
+          <div className={`grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            {stack.map((s, i) => (
+              <TiltCard key={i} className={`p-6 rounded-2xl border ${s.borderColor} bg-[var(--bg-elevated)]/50 group hover:border-[var(--accent-green)] transition-all`}>
+                <div className={`w-14 h-14 bg-gradient-to-br ${s.color} rounded-xl flex items-center justify-center text-3xl mb-6 border border-white/[0.05] shadow-inner group-hover:scale-110 transition-transform duration-300`}>
+                  {s.icon}
+                </div>
+                <h3 className="text-sm font-black text-[var(--text-primary)] mb-4 uppercase tracking-wider">{s.category}</h3>
+                <ul className="space-y-3">
+                  {s.items.map((item, j) => (
+                    <li key={j} className="flex items-center gap-3 text-[var(--text-secondary)] text-sm font-medium">
+                      <span className="w-1.5 h-1.5 bg-[var(--accent-green)] rounded-full shadow-[0_0_8px_rgba(16,185,129,0.5)]"></span>
+                      {item}
+                    </li>
+                  ))}
+                </ul>
+              </TiltCard>
+            ))}
+          </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

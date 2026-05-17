@@ -60,105 +60,108 @@ export default function Workflows() {
           {/* Section Header */}
           <div className={`text-center mb-16 transition-all duration-700 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-blue-500/30 text-blue-400 bg-blue-500/10 mb-6">
-              Workflows
+              Core Workflows
             </span>
-            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6">
-              Autonomous <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Decision-Making</span> in Action
+            <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] mb-6 uppercase tracking-tight">
+              Autonomous <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">Decision-Making</span>
             </h2>
-            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto">
+            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed">
               See how our multi-agent system processes real-world farming scenarios from data ingestion to autonomous action.
             </p>
           </div>
 
           {/* Workflow Cards */}
-          <div className={`grid md:grid-cols-3 gap-8 mb-16 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+          <div className={`grid md:grid-cols-3 gap-8 mb-20 transition-all duration-700 delay-200 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
             {workflows.map((workflow, index) => (
-              <TiltCard key={index} className="overflow-hidden rounded-2xl p-0 glass-card">
+              <TiltCard key={index} className="overflow-hidden rounded-[32px] p-0 glass-card border-[var(--border-subtle)] bg-[var(--bg-surface)]">
                 {/* Header */}
-                <div className={`bg-gradient-to-r ${workflow.gradient} border-b border-[var(--border-subtle)] p-6`}>
-                  <div className="flex items-center gap-3 mb-4">
-                    <span className="text-3xl">{workflow.icon}</span>
-                    <h3 className="text-xl font-bold text-[var(--text-primary)]">{workflow.title}</h3>
+                <div className={`bg-gradient-to-r ${workflow.gradient} border-b border-white/[0.05] p-8`}>
+                  <div className="flex items-center gap-4 mb-6">
+                    <div className="w-12 h-12 rounded-xl bg-white/10 flex items-center justify-center text-2xl shadow-inner border border-white/10">
+                      {workflow.icon}
+                    </div>
+                    <h3 className="text-lg font-black text-[var(--text-primary)] uppercase tracking-tight">{workflow.title}</h3>
                   </div>
                   <workflow.Animation />
                 </div>
 
-              {/* Steps */}
-              <div className="p-6 bg-white/[0.02]">
-                <div className="space-y-4">
-                  {workflow.steps.map((step, i) => (
-                    <div key={i} className="flex gap-4">
-                      <div 
-                        className="flex-shrink-0 w-8 h-8 rounded-full flex items-center justify-center font-bold text-sm border border-white/[0.05]"
-                        style={{ backgroundColor: `${workflow.color}20`, color: workflow.color }}
-                      >
-                        {step.num}
+                {/* Steps */}
+                <div className="p-8 bg-[var(--bg-elevated)]/50">
+                  <div className="space-y-6">
+                    {workflow.steps.map((step, i) => (
+                      <div key={i} className="flex gap-5 group">
+                        <div 
+                          className="flex-shrink-0 w-7 h-7 rounded-lg flex items-center justify-center font-black text-xs border transition-transform duration-300 group-hover:scale-110 shadow-inner"
+                          style={{ backgroundColor: `${workflow.color}15`, color: workflow.color, borderColor: `${workflow.color}30` }}
+                        >
+                          {step.num}
+                        </div>
+                        <div>
+                          <div className="font-black text-[var(--text-primary)] text-sm uppercase tracking-wide mb-1">{step.title}</div>
+                          <div className="text-[var(--text-secondary)] text-xs leading-relaxed font-medium">{step.desc}</div>
+                        </div>
                       </div>
-                      <div>
-                        <div className="font-semibold text-slate-300">{step.title}</div>
-                        <div className="text-slate-500 text-sm leading-relaxed">{step.desc}</div>
+                    ))}
+                  </div>
+                </div>
+              </TiltCard>
+            ))}
+          </div>
+
+          {/* Detailed Flow Diagram */}
+          <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
+            <div className="glass-card rounded-[40px] p-8 md:p-16 border-[var(--border-default)] relative overflow-hidden bg-[var(--bg-surface)]">
+              <div className="absolute inset-0 bg-gradient-to-br from-emerald-500/5 to-transparent pointer-events-none opacity-20"></div>
+              <div className="text-center mb-16 relative z-10">
+                <h3 className="text-3xl font-black text-[var(--text-primary)] mb-4 uppercase tracking-tighter">Full Autonomy Loop</h3>
+                <p className="text-[var(--text-secondary)] font-medium">The end-to-end intelligence cycle powered by decentralized agents.</p>
+              </div>
+
+              <div className="relative">
+                {/* Circular Flow */}
+                <div className="flex flex-wrap justify-center items-center gap-6 md:gap-10 relative z-10">
+                  {[
+                    { icon: '📡', label: 'Ingestion', desc: 'IoT Streams' },
+                    { icon: '🧠', label: 'ML Logic', desc: 'XGBoost Risk' },
+                    { icon: '🤖', label: 'Agents', desc: 'Expert Review' },
+                    { icon: '🤝', label: 'Protocol', desc: 'Consensus' },
+                    { icon: '✅', label: 'Decision', desc: 'Final Vector' },
+                    { icon: '⚡', label: 'Action', desc: 'Execution' },
+                    { icon: '📊', label: 'Audit', desc: 'Log Archive' }
+                  ].map((step, index) => (
+                    <div key={index} className="flex flex-col items-center text-center group">
+                      <div className="w-16 h-16 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl flex items-center justify-center shadow-xl mb-4 group-hover:bg-[var(--bg-surface)] group-hover:border-[var(--accent-green)] transition-all duration-500 group-hover:scale-110 shadow-inner">
+                        <span className="text-2xl group-hover:rotate-6 transition-transform">{step.icon}</span>
                       </div>
+                      <div className="text-[var(--text-primary)] font-black text-[10px] uppercase tracking-widest mb-1">{step.label}</div>
+                      <div className="text-[var(--text-muted)] text-[9px] font-bold uppercase tracking-tighter">{step.desc}</div>
                     </div>
                   ))}
                 </div>
+
+                {/* Connection Lines (Desktop) */}
+                <div className="hidden md:block absolute top-8 left-10 right-10 h-px bg-gradient-to-r from-transparent via-[var(--accent-green)]/20 to-transparent z-0"></div>
               </div>
-            </TiltCard>
-          ))}
-        </div>
 
-        {/* Detailed Flow Diagram */}
-        <div className={`transition-all duration-700 delay-300 ${isVisible ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-8'}`}>
-          <div className="glass-card rounded-3xl p-8 md:p-12">
-            <div className="text-center mb-10">
-              <h3 className="text-2xl font-bold text-white mb-3">Complete Decision Loop</h3>
-              <p className="text-slate-400">End-to-end autonomous farming decision cycle</p>
-            </div>
-
-            <div className="relative">
-              {/* Circular Flow */}
-              <div className="flex flex-wrap justify-center items-center gap-4 md:gap-8">
+              {/* Key Metrics */}
+              <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-20 relative z-10">
                 {[
-                  { icon: '📡', label: 'Data Collection', desc: 'Sensors + APIs' },
-                  { icon: '🧠', label: 'ML Processing', desc: 'Risk Predictions' },
-                  { icon: '🤖', label: 'Agent Analysis', desc: 'Multi-Agent Review' },
-                  { icon: '🤝', label: 'Negotiation', desc: 'Conflict Resolution' },
-                  { icon: '✅', label: 'Decision', desc: 'Consensus Reached' },
-                  { icon: '⚡', label: 'Action', desc: 'Autonomous Execution' },
-                  { icon: '📊', label: 'Logging', desc: 'Audit Trail' }
-                ].map((step, index) => (
-                  <div key={index} className="flex flex-col items-center text-center z-10">
-                    <div className="w-16 h-16 bg-white/[0.05] border border-white/[0.1] rounded-2xl flex items-center justify-center shadow-lg shadow-black/50 mb-3 hover:bg-white/[0.1] transition-colors">
-                      <span className="text-2xl">{step.icon}</span>
-                    </div>
-                    <div className="text-slate-200 font-semibold text-sm">{step.label}</div>
-                    <div className="text-slate-500 text-xs">{step.desc}</div>
+                  { value: '< 5 sec', label: 'Inference Speed', icon: '⏱️' },
+                  { value: '24/7', label: 'System Uptime', icon: '🔄' },
+                  { value: '85%+', label: 'Model Confidence', icon: '📈' },
+                  { value: 'Verified', label: 'Network Integrity', icon: '🛡️' }
+                ].map((metric, index) => (
+                  <div key={index} className="bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl p-6 text-center hover:bg-[var(--bg-surface)] hover:border-[var(--accent-green)] transition-all group shadow-inner">
+                    <div className="text-2xl mb-3 group-hover:scale-110 transition-transform">{metric.icon}</div>
+                    <div className="text-xl font-black text-[var(--accent-green)] tracking-tight">{metric.value}</div>
+                    <div className="text-[9px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mt-2">{metric.label}</div>
                   </div>
                 ))}
               </div>
-
-              {/* Connection Lines (Desktop) */}
-              <div className="hidden md:block absolute top-8 left-0 right-0 h-px bg-gradient-to-r from-emerald-500/0 via-emerald-500/30 to-emerald-500/0 z-0"></div>
-            </div>
-
-            {/* Key Metrics */}
-            <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mt-12">
-              {[
-                { value: '< 5 sec', label: 'Decision Time', icon: '⏱️' },
-                { value: '24/7', label: 'Monitoring', icon: '🔄' },
-                { value: '85%+', label: 'ML Accuracy', icon: '📈' },
-                { value: '95%', label: 'System Uptime', icon: '✅' }
-              ].map((metric, index) => (
-                <div key={index} className="bg-white/[0.02] border border-white/[0.05] rounded-xl p-4 text-center hover:bg-white/[0.04] transition-colors">
-                  <div className="text-2xl mb-2">{metric.icon}</div>
-                  <div className="text-2xl font-bold text-emerald-400">{metric.value}</div>
-                  <div className="text-slate-400 text-sm mt-1">{metric.label}</div>
-                </div>
-              ))}
             </div>
           </div>
         </div>
-      </div>
-    </section>
-  </>
+      </section>
+    </>
   );
 }

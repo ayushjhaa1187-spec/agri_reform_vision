@@ -293,10 +293,10 @@ function AdminContent({ stats }: { stats: any }) {
         </button>
       </div>
 
-      <div className="glass-card p-0 overflow-hidden">
+      <div className="glass-card p-0 overflow-hidden border-[var(--border-subtle)]">
         {tab === 'users' ? (
           <table className="w-full text-left">
-            <thead className="bg-[#F1F5F9] text-[10px] font-black uppercase tracking-widest text-[var(--text-secondary)]">
+            <thead className="bg-[var(--bg-elevated)] text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">
               <tr>
                 <th className="p-4">Name</th>
                 <th className="p-4">Plan</th>
@@ -304,23 +304,23 @@ function AdminContent({ stats }: { stats: any }) {
                 <th className="p-4">Status</th>
               </tr>
             </thead>
-            <tbody className="text-sm">
-              <tr className="border-t border-[var(--border)]">
-                <td className="p-4 font-bold">{user?.email?.split('@')[0] || 'Ramesh Kumar'}</td>
-                <td className="p-4"><span className="bg-[#E0F2F1] text-[var(--teal)] px-2 py-0.5 rounded text-[10px] font-bold uppercase">{user?.subscription_tier || 'PRO'}</span></td>
+            <tbody className="text-sm text-[var(--text-secondary)]">
+              <tr className="border-t border-[var(--border-subtle)]">
+                <td className="p-4 font-bold text-[var(--text-primary)]">{user?.email?.split('@')[0] || 'Ramesh Kumar'}</td>
+                <td className="p-4"><span className="bg-[var(--accent-green-glow)] text-[var(--text-accent)] px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-[var(--border-accent)]">{user?.subscription_tier || 'PRO'}</span></td>
                 <td className="p-4 font-mono">{user?.ai_credits || 120 + stats.interactions}</td>
-                <td className="p-4 text-[var(--green)] font-bold">Active</td>
+                <td className="p-4 text-[var(--accent-green)] font-bold">Active</td>
               </tr>
-              <tr className="border-t border-[var(--border)]">
-                <td className="p-4 font-bold">Sunita Devi</td>
-                <td className="p-4"><span className="bg-gray-100 text-gray-500 px-2 py-0.5 rounded text-[10px] font-bold">FREE</span></td>
+              <tr className="border-t border-[var(--border-subtle)]">
+                <td className="p-4 font-bold text-[var(--text-primary)]">Sunita Devi</td>
+                <td className="p-4"><span className="bg-white/5 text-[var(--text-muted)] px-2 py-0.5 rounded text-[10px] font-bold uppercase border border-white/10">FREE</span></td>
                 <td className="p-4 font-mono">5</td>
-                <td className="p-4 text-[var(--green)] font-bold">Active</td>
+                <td className="p-4 text-[var(--accent-green)] font-bold opacity-80">Active</td>
               </tr>
             </tbody>
           </table>
         ) : (
-          <div className="p-8">
+          <div className="p-8 bg-[var(--bg-primary)]/20">
             <h3 className="font-bold mb-6">Inject Environmental Scenarios</h3>
             <div className="flex gap-4">
               <button className="btn btn-outline" onClick={() => toast.error('Drought injected! Agents calculating response...')}>Drought</button>

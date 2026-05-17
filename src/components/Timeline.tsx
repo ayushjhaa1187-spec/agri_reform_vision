@@ -1,5 +1,6 @@
 import TiltCard from './ui/TiltCard';
 import useScrollReveal from '../hooks/useScrollReveal';
+import { motion } from 'framer-motion';
 
 export default function Timeline() {
   const { ref, isVisible } = useScrollReveal();

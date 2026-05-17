@@ -124,18 +124,18 @@ export default function Billing() {
         {/* Current Usage Overview */}
         {profile && (
           <div className="mb-16">
-            <GlassCard className="p-8 border-emerald-500/20 bg-emerald-500/5">
+            <GlassCard className="p-8 border-[var(--border-accent)] bg-[var(--accent-green-glow)]">
               <div className="flex flex-col md:flex-row items-center justify-between gap-6">
                 <div>
-                  <h2 className="text-2xl font-bold mb-2">Current Plan: <span className="text-emerald-400 capitalize">{profile.subscription_tier}</span></h2>
-                  <p className="text-slate-400">Account: {profile.email}</p>
+                  <h2 className="text-2xl font-bold mb-2 text-[var(--text-primary)]">Current Plan: <span className="text-[var(--accent-green)] capitalize">{profile.subscription_tier}</span></h2>
+                  <p className="text-[var(--text-secondary)]">Account: {profile.email}</p>
                 </div>
                 <div className="text-center md:text-right">
                   <div className="flex items-center justify-center md:justify-end gap-2 mb-1">
-                    <Sparkles className="text-yellow-400" size={24} />
-                    <span className="text-4xl font-black text-white">{profile.ai_credits}</span>
+                    <Sparkles className="text-[var(--accent-gold)]" size={24} />
+                    <span className="text-4xl font-black text-[var(--text-primary)]">{profile.ai_credits}</span>
                   </div>
-                  <div className="text-sm font-bold text-gray-500 uppercase tracking-widest">Available AI Credits</div>
+                  <div className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-widest">Available AI Credits</div>
                 </div>
               </div>
             </GlassCard>
@@ -150,37 +150,37 @@ export default function Billing() {
             return (
               <GlassCard 
                 key={plan.id} 
-                className={`p-8 relative flex flex-col ${
-                  plan.id === 'pro' ? 'border-emerald-500/50 shadow-[0_0_30px_rgba(16,185,129,0.15)] transform md:-translate-y-4' : 'border-white/10'
+                className={`p-8 relative flex flex-col transition-all duration-500 ${
+                  plan.id === 'pro' ? 'border-[var(--border-accent)] bg-[var(--bg-surface)] shadow-[0_0_30px_rgba(16,185,129,0.1)] transform md:-translate-y-4' : 'border-[var(--border-subtle)] bg-[var(--bg-elevated)]/50'
                 }`}
               >
                 {plan.id === 'pro' && (
-                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-emerald-500 text-black text-xs font-bold px-3 py-1 rounded-full uppercase tracking-widest">
+                  <div className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 bg-[var(--accent-green)] text-black text-[10px] font-black px-3 py-1.5 rounded-full uppercase tracking-widest shadow-lg">
                     Most Popular
                   </div>
                 )}
                 
-                <h3 className="text-2xl font-bold mb-2">{plan.name}</h3>
+                <h3 className="text-2xl font-black text-[var(--text-primary)] mb-2 uppercase tracking-tight">{plan.name}</h3>
                 <div className="flex items-baseline gap-1 mb-6">
-                  <span className="text-4xl font-black text-white">₹{plan.price_inr}</span>
-                  <span className="text-slate-500">/mo</span>
+                  <span className="text-4xl font-black text-[var(--text-primary)]">₹{plan.price_inr}</span>
+                  <span className="text-[var(--text-muted)] text-sm font-bold">/mo</span>
                 </div>
                 
-                <div className="mb-8 p-4 bg-white/5 rounded-xl border border-white/5 flex items-center justify-between">
+                <div className="mb-8 p-4 bg-[var(--bg-elevated)] rounded-xl border border-[var(--border-subtle)] flex items-center justify-between shadow-inner">
                   <div className="flex items-center gap-2">
-                    <Zap size={18} className="text-yellow-400" />
-                    <span className="font-bold text-sm text-gray-300">Credits Included</span>
+                    <Zap size={18} className="text-[var(--accent-gold)]" />
+                    <span className="font-black text-[10px] text-[var(--text-muted)] uppercase tracking-widest">Credits Included</span>
                   </div>
-                  <span className="font-black text-white">{plan.monthly_credits}</span>
+                  <span className="font-black text-[var(--text-primary)] text-xl">{plan.monthly_credits}</span>
                 </div>
 
                 <div className="flex-grow space-y-4 mb-8">
                   {plan.features.map((feature, i) => (
                     <div key={i} className="flex items-start gap-3">
-                      <div className="mt-1 bg-emerald-500/20 rounded-full p-0.5">
-                        <Check size={12} className="text-emerald-400" />
+                      <div className="mt-1 bg-[var(--accent-green-glow)] rounded-full p-0.5 border border-[var(--border-accent)]">
+                        <Check size={12} className="text-[var(--accent-green)]" />
                       </div>
-                      <span className="text-sm text-slate-300">{feature}</span>
+                      <span className="text-sm text-[var(--text-secondary)] font-medium">{feature}</span>
                     </div>
                   ))}
                 </div>
@@ -188,22 +188,22 @@ export default function Billing() {
                 <button
                   onClick={() => handleCheckout(plan.id)}
                   disabled={isCurrent || isProcessing !== null}
-                  className={`w-full py-4 font-bold rounded-xl transition-all flex items-center justify-center gap-2 ${
+                  className={`btn w-full py-4 shadow-lg transition-all ${
                     isCurrent 
-                      ? 'bg-white/10 text-white/50 cursor-not-allowed border border-white/5'
+                      ? 'bg-white/5 text-white/20 cursor-not-allowed border border-white/5'
                       : plan.id === 'pro'
-                        ? 'bg-emerald-500 hover:bg-emerald-400 text-black shadow-lg shadow-emerald-500/20'
-                        : 'bg-white/5 hover:bg-white/10 text-white border border-white/10'
+                        ? 'btn-primary shadow-emerald-950/40'
+                        : 'btn-outline border-[var(--border-default)] text-[var(--text-primary)] hover:border-[var(--accent-green)]'
                   }`}
                 >
                   {isProcessing === plan.id ? (
                     <Loader2 className="animate-spin" size={20} />
                   ) : isCurrent ? (
-                    'Current Plan'
+                    'Active Plan'
                   ) : (
                     <>
                       {plan.price_inr > 0 ? 'Upgrade Now' : 'Downgrade'}
-                      <ArrowRight size={18} />
+                      <ArrowRight size={18} className="ml-2" />
                     </>
                   )}
                 </button>

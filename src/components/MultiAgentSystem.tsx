@@ -78,12 +78,12 @@ const coordinator = {
 };
 
 const MOCK_FEED = [
-  { time: '08:14:03', agent: 'SYSTEM', agentColor: 'text-blue-400', message: 'Sensor snapshot complete — Zone A, B, C' },
-  { time: '08:14:04', agent: 'AGRONOMIST', agentColor: 'text-emerald-400', message: 'Soil moisture: 30% ↓ Critical threshold' },
-  { time: '08:14:05', agent: 'ECONOMIST', agentColor: 'text-yellow-400', message: 'Energy rate: ₹8.2/kWh (off-peak in 6h)' },
-  { time: '08:14:06', agent: 'LOGISTICIAN', agentColor: 'text-orange-400', message: 'Harvester access: OK (soil 48%)' },
-  { time: '08:14:07', agent: 'AGRONOMIST', agentColor: 'text-emerald-400', message: 'Disease risk: HIGH. Leaf wetness 6h+' },
-  { time: '08:14:08', agent: 'ECONOMIST', agentColor: 'text-yellow-400', message: 'Off-peak window: 02:00–04:00 AM optimal' },
+  { time: '08:14:03', agent: 'SYSTEM', agentColor: 'text-[var(--accent-blue)]', message: 'Sensor snapshot complete — Zone A, B, C' },
+  { time: '08:14:04', agent: 'AGRONOMIST', agentColor: 'text-[var(--accent-green)]', message: 'Soil moisture: 30% ↓ Critical threshold' },
+  { time: '08:14:05', agent: 'ECONOMIST', agentColor: 'text-[var(--accent-gold)]', message: 'Energy rate: ₹8.2/kWh (off-peak in 6h)' },
+  { time: '08:14:06', agent: 'LOGISTICIAN', agentColor: 'text-[#f97316]', message: 'Harvester access: OK (soil 48%)' },
+  { time: '08:14:07', agent: 'AGRONOMIST', agentColor: 'text-[var(--accent-green)]', message: 'Disease risk: HIGH. Leaf wetness 6h+' },
+  { time: '08:14:08', agent: 'ECONOMIST', agentColor: 'text-[var(--accent-gold)]', message: 'Off-peak window: 02:00–04:00 AM optimal' },
   { time: '08:14:09', agent: 'COORDINATOR', agentColor: 'text-purple-400', message: 'Negotiation round 1 initiated...' },
   { time: '08:14:10', agent: 'COORDINATOR', agentColor: 'text-purple-400', message: 'Consensus: Irrigate 02:00 AM + NPK Zone B-4' },
 ];
@@ -168,11 +168,11 @@ export default function MultiAgentSystem() {
           strokeLinecap="round"
           style={{ transition: 'stroke-dasharray 0.8s ease', filter: `drop-shadow(0 0 6px ${agent.color})` }}
         />
-        <text x="60" y="55" textAnchor="middle" fill="white" fontSize="11" fontWeight="600">Priority</text>
-        <text x="60" y="72" textAnchor="middle" fill={agent.color} fontSize="16" fontWeight="700">
+        <text x="60" y="55" textAnchor="middle" fill="var(--text-primary)" fontSize="11" fontWeight="800" className="uppercase tracking-widest">Weight</text>
+        <text x="60" y="72" textAnchor="middle" fill={agent.color} fontSize="18" fontWeight="900">
           {Math.round(agent.weight * 100)}%
         </text>
-        <text x="60" y="88" textAnchor="middle" fill="rgba(255,255,255,0.4)" fontSize="9">{agent.name}</text>
+        <text x="60" y="88" textAnchor="middle" fill="var(--text-muted)" fontSize="8" fontWeight="bold" className="uppercase tracking-widest">{agent.name}</text>
       </svg>
     );
   }, [activeAgent]);
