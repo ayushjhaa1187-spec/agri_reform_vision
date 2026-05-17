@@ -1,7 +1,9 @@
 import { useState, useEffect, useCallback, useRef } from 'react';
+import { motion } from 'framer-motion';
 import GlassCard from './ui/GlassCard';
 import FadeInSection from './ui/FadeInSection';
 import { useWebSocket } from '../hooks/useWebSocket';
+import AnimAgentFarmer from './ui/AnimAgentFarmer';
 
 const agents = [
   {
@@ -187,47 +189,50 @@ export default function MultiAgentSystem() {
   const visibleFeedLines = liveFeed.slice(-5);
 
   return (
-    <section id="agents" className="py-28 md:py-36 section-darker border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto px-6 md:px-8">
+    <section id="agents" className="py-24 md:py-32 bg-[var(--bg-primary)] border-t border-white/[0.04] relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
         <FadeInSection className="text-center mb-20">
-          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-purple-400 mb-6 border border-purple-500/20">
+          <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-purple-500/30 text-purple-400 bg-purple-500/10 mb-6">
             Multi-Agent System
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6">
             The Agent{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-purple-400 to-pink-400">
               Arena
             </span>
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed mb-10">
             Watch specialized AI agents negotiate in real-time. Each has a unique objective function &mdash; they debate, compromise, and reach consensus autonomously.
           </p>
+          <AnimAgentFarmer activeAgent={activeAgent} />
         </FadeInSection>
 
         {/* Live Feed */}
         <FadeInSection delay={0.1} className="mb-12">
-          <GlassCard className="p-5 rounded-2xl">
-            <div className="flex items-center gap-3 mb-4">
+          <GlassCard className="p-6 rounded-2xl border-[var(--border-default)]" glow>
+            <div className="flex items-center gap-3 mb-6">
               <span className={`w-2 h-2 rounded-full animate-pulse ${isConnected ? 'bg-emerald-400' : 'bg-red-400'}`} />
-              <span className={`text-xs font-semibold uppercase tracking-wider ${isConnected ? 'text-emerald-400' : 'text-red-400'}`}>
+              <span className={`text-xs font-black uppercase tracking-widest ${isConnected ? 'text-emerald-400' : 'text-red-400'}`}>
                 {isConnected ? 'Live Agent Feed' : 'Offline Mode (Simulator)'}
               </span>
-              <span className="ml-auto text-xs text-slate-500 font-mono">
+              <span className="ml-auto text-[10px] text-[var(--text-muted)] font-black uppercase tracking-widest">
                 WebSocket: {isConnected ? 'Connected' : 'Connecting...'}
               </span>
             </div>
-            <div className="font-mono text-xs space-y-1.5 h-36 overflow-hidden">
+            <div className="font-mono text-xs space-y-2 h-36 overflow-hidden bg-black/40 rounded-xl p-4 border border-white/5">
               {visibleFeedLines.map((line, i) => (
-                <div key={i} className="flex gap-3">
-                  <span className="text-slate-500 flex-shrink-0">{line.time}</span>
-                  <span className={`${line.agentColor} font-semibold flex-shrink-0 w-20`}>{line.agent}</span>
-                  <span className="text-slate-300">{line.message}</span>
+                <div key={i} className="flex gap-4 animate-slide-in">
+                  <span className="text-[var(--text-muted)] opacity-50 flex-shrink-0">[{line.time}]</span>
+                  <span className={`${line.agentColor} font-bold flex-shrink-0 w-24 uppercase tracking-tighter`}>{line.agent}</span>
+                  <span className="text-[var(--text-secondary)]">{line.message}</span>
                 </div>
               ))}
               <div className="flex gap-3">
-                <span className="text-slate-500 flex-shrink-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
-                <span className="text-emerald-400 animate-pulse">&#9646;</span>
+                <span className="text-[var(--text-muted)] flex-shrink-0">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</span>
+                <span className="text-[var(--accent-green)] animate-pulse">&#9646;</span>
               </div>
             </div>
           </GlassCard>
@@ -235,15 +240,15 @@ export default function MultiAgentSystem() {
 
         {/* Holographic Arena */}
         <FadeInSection delay={0.15}>
-          <div className="grid md:grid-cols-3 gap-6 mb-8">
+          <div className="grid md:grid-cols-3 gap-6 mb-12">
             {agents.map((agent, i) => {
               const isSpeaking = speakingAgent === i;
               const isActive = activeAgent === i;
               return (
                 <GlassCard
                   key={agent.name}
-                  className={`relative p-5 rounded-2xl cursor-pointer transition-all duration-500 ${
-                    isActive ? `bg-gradient-to-b ${agent.bgClass}` : ''
+                  className={`relative p-6 rounded-2xl cursor-pointer transition-all duration-500 border-2 ${
+                    isActive ? `bg-gradient-to-b ${agent.bgClass} ${agent.borderClass}` : 'bg-[var(--bg-elevated)] border-transparent opacity-60'
                   }`}
                   onClick={() => {
                     setActiveAgent(i);
@@ -252,49 +257,51 @@ export default function MultiAgentSystem() {
                   style={isActive ? { boxShadow: `0 0 40px -15px ${agent.bgGlow}` } : {}}
                 >
                   {isActive && (
-                    <div
-                      className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden"
-                    >
-                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-emerald-400/10 to-transparent h-1/2 w-full animate-scan" />
-                      <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,transparent_0%,rgba(0,0,0,0.4)_100%)]" />
+                    <div className="absolute inset-0 rounded-2xl pointer-events-none overflow-hidden">
+                      <div className="absolute inset-0 bg-gradient-to-b from-transparent via-[var(--accent-green)]/5 to-transparent h-1/2 w-full animate-scan" />
                       <div className="absolute inset-0" style={{ boxShadow: `inset 0 0 30px ${agent.bgGlow}` }} />
                     </div>
                   )}
                   {/* Agent Header */}
-                  <div className="flex items-center gap-3 mb-3">
-                    <div className={`w-10 h-10 rounded-xl flex items-center justify-center text-xl border transition-all duration-500 ${
-                      isActive ? `${agent.labelBg} ${agent.borderClass} scale-110` : 'bg-white/5 border-white/10 scale-100'
+                  <div className="flex items-center gap-4 mb-5 relative z-10">
+                    <div className={`w-12 h-12 rounded-xl flex items-center justify-center text-2xl border transition-all duration-500 ${
+                      isActive ? `${agent.labelBg} ${agent.borderClass} scale-110 shadow-lg` : 'bg-[var(--bg-surface)] border-[var(--border-subtle)] scale-100'
                     }`}>
                       {agent.icon}
                     </div>
                     <div className="flex-1 min-w-0">
-                      <h3 className={`font-bold text-sm ${ isActive ? agent.colorClass : 'text-white'}`}>
+                      <h3 className={`font-black text-sm uppercase tracking-tight ${ isActive ? agent.colorClass : 'text-[var(--text-primary)]'}`}>
                         {agent.name}
                       </h3>
-                      <p className="text-xs text-slate-500 truncate">{agent.role}</p>
+                      <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest truncate">{agent.role}</p>
                     </div>
                     {isSpeaking && (
-                      <span className={`text-xs font-semibold px-2 py-0.5 rounded-full ${agent.labelBg} ${agent.colorClass} border ${agent.borderClass}`}>
+                      <span className={`text-[9px] font-black px-3 py-1 rounded-full flex items-center gap-2 ${agent.labelBg} ${agent.colorClass} border ${agent.borderClass} uppercase tracking-widest`}>
+                        <div className="flex items-center gap-0.5 h-3">
+                          <motion.span animate={{ height: ['40%', '100%', '40%'] }} transition={{ duration: 0.8, repeat: Infinity, ease: 'easeInOut' }} className="w-1 bg-current rounded-full" />
+                          <motion.span animate={{ height: ['60%', '30%', '80%', '60%'] }} transition={{ duration: 0.6, repeat: Infinity, ease: 'easeInOut', delay: 0.2 }} className="w-1 bg-current rounded-full" />
+                          <motion.span animate={{ height: ['30%', '100%', '30%'] }} transition={{ duration: 1.0, repeat: Infinity, ease: 'easeInOut', delay: 0.4 }} className="w-1 bg-current rounded-full" />
+                        </div>
                         Speaking
                       </span>
                     )}
                   </div>
 
                   {/* Dialogue */}
-                  <div className="min-h-[60px] mb-3">
+                  <div className="min-h-[70px] mb-5 relative z-10">
                     {isSpeaking ? (
-                      <p className={`text-xs leading-relaxed ${agent.colorClass}`}>
+                      <p className={`text-sm leading-relaxed font-medium ${agent.colorClass}`}>
                         &ldquo;{agent.dialogues[dialogueIndex % agent.dialogues.length]}&rdquo;
                       </p>
                     ) : (
-                      <p className="text-xs text-slate-600 italic">Awaiting turn...</p>
+                      <p className="text-xs text-[var(--text-muted)] italic">Awaiting turn...</p>
                     )}
                   </div>
 
                   {/* Weight */}
-                  <div className="flex items-center justify-between">
-                    <span className="text-xs text-slate-500">Priority Weight</span>
-                    <span className={`text-xs font-bold px-2 py-0.5 rounded-full ${agent.labelBg} ${agent.colorClass}`}>
+                  <div className="flex items-center justify-between relative z-10">
+                    <span className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)]">Priority Weight</span>
+                    <span className={`text-[10px] font-black px-2 py-1 rounded-lg ${agent.labelBg} ${agent.colorClass} border ${agent.borderClass}`}>
                       {Math.round(agent.weight * 100)}%
                     </span>
                   </div>
@@ -305,51 +312,54 @@ export default function MultiAgentSystem() {
         </FadeInSection>
 
         {/* Center: Priority Matrix Gauge + Coordinator Decision */}
-        <div className="grid md:grid-cols-2 gap-6">
+        <div className="grid md:grid-cols-2 gap-8 relative z-10">
           {/* SVG Gauge */}
-          <GlassCard className="p-6 rounded-2xl">
-            <h4 className="text-sm font-semibold text-slate-400 text-center mb-4">Priority Matrix</h4>
-            <div className="w-40 h-40 mx-auto">{renderGauge()}</div>
-            <div className="flex justify-center gap-4 mt-4">
+          <GlassCard className="p-8 rounded-3xl border-[var(--border-default)]">
+            <h4 className="text-[10px] font-black uppercase tracking-[0.2em] text-[var(--text-muted)] text-center mb-8">Consensus Priority Distribution</h4>
+            <div className="w-44 h-44 mx-auto">{renderGauge()}</div>
+            <div className="flex justify-center gap-6 mt-8">
               {agents.map((a, i) => (
-                <span key={i} className="flex items-center gap-1.5 text-xs">
-                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: a.color }} />
-                  <span className={i === activeAgent ? 'text-white font-semibold' : 'text-slate-500'}>{a.name}</span>
+                <span key={i} className="flex items-center gap-2 text-[10px] font-black uppercase tracking-widest">
+                  <span className="w-2 h-2 rounded-full flex-shrink-0" style={{ backgroundColor: a.color, boxShadow: `0 0 10px ${a.color}` }} />
+                  <span className={i === activeAgent ? 'text-[var(--text-primary)]' : 'text-[var(--text-muted)]'}>{a.name}</span>
                 </span>
               ))}
             </div>
           </GlassCard>
 
           {/* Coordinator Decision */}
-          <div className="relative p-6 rounded-2xl bg-gradient-to-b from-purple-950/40 to-purple-900/10 border border-purple-500/30">
-            <div className="flex items-center gap-3 mb-4">
-              <div className="w-10 h-10 rounded-full bg-purple-500/10 border border-purple-500/30 flex items-center justify-center text-xl">
+          <div className="relative p-8 rounded-3xl bg-[var(--bg-elevated)] border border-purple-500/20 overflow-hidden shadow-2xl">
+            <div className="absolute inset-0 bg-gradient-to-br from-purple-500/5 to-transparent pointer-events-none" />
+            <div className="flex items-center gap-4 mb-8 relative z-10">
+              <div className="w-12 h-12 rounded-xl bg-purple-500/10 border border-purple-500/20 flex items-center justify-center text-2xl shadow-inner">
                 {coordinator.icon}
               </div>
               <div>
-                <h3 className="font-bold text-sm text-purple-400">{coordinator.name}</h3>
-                <p className="text-xs text-slate-500">Final Arbitrator</p>
+                <h3 className="font-black text-sm text-purple-400 uppercase tracking-tight">{coordinator.name}</h3>
+                <p className="text-[10px] font-bold text-[var(--text-muted)] uppercase tracking-widest">Final Arbitrator</p>
               </div>
             </div>
-            <p className="text-xs text-slate-400 font-semibold uppercase tracking-wider mb-3">Decision Output</p>
-            <div className={`text-sm text-purple-300/80 leading-relaxed transition-all duration-500 ${
+            <p className="text-[10px] font-black text-[var(--text-muted)] uppercase tracking-[0.2em] mb-4 relative z-10">System Synthesis Output</p>
+            <div className={`text-base text-purple-100 font-medium leading-relaxed transition-all duration-500 relative z-10 ${
               showDecision ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-2'
             }`}>
               {showDecision && (
-                <span>&ldquo;{typewriterText}{isTyping && <span className="animate-pulse text-purple-400">|</span>}&rdquo;</span>
+                <span className="italic">&ldquo;{typewriterText}{isTyping && <span className="animate-pulse text-purple-400">|</span>}&rdquo;</span>
               )}
               {!showDecision && (
-                <p className="text-xs text-slate-500 italic animate-pulse">Analyzing agent proposals...</p>
+                <p className="text-xs text-[var(--text-muted)] italic animate-pulse">Analyzing agent proposals and computing environmental delta...</p>
               )}
             </div>
           </div>
         </div>
 
         {/* Cycle counter */}
-        <div className="mt-6 flex justify-end">
-          <span className="text-xs text-slate-600 font-mono">
-            Cycle {Math.floor(feedIndex / liveFeed.length) + 1} &middot; Round {(dialogueIndex % 3) + 1}/3
+        <div className="mt-12 flex justify-center items-center gap-4">
+          <div className="h-px w-16 bg-[var(--border-subtle)]"></div>
+          <span className="text-[10px] font-black text-[var(--text-muted)] font-mono uppercase tracking-[0.3em]">
+            Protocol Engine v4.2 &middot; Cycle {Math.floor(feedIndex / liveFeed.length) + 1}
           </span>
+          <div className="h-px w-16 bg-[var(--border-subtle)]"></div>
         </div>
 
       </div>

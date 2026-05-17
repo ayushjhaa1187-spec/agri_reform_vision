@@ -2,6 +2,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { LogOut, User as UserIcon } from 'lucide-react';
+import { motion } from 'framer-motion';
 
 export default function Navbar() {
   const [scrolled, setScrolled] = useState(false);
@@ -32,6 +33,13 @@ export default function Navbar() {
     }
   };
 
+  const getIsActive = (href: string) => {
+    if (location.pathname !== '/') return false;
+    if (location.hash === href) return true;
+    if (location.hash === '' && href === '#problem') return true;
+    return false;
+  };
+
   return (
     <nav className={`fixed top-0 left-0 right-0 z-[100] transition-all duration-500 ${
       scrolled ? 'bg-black/20 backdrop-blur-2xl border-b border-white/10 py-4' : 'bg-transparent py-6'
@@ -39,33 +47,44 @@ export default function Navbar() {
       <div className="max-w-7xl mx-auto px-6 flex items-center justify-between">
         <Link to="/" className="flex items-center gap-2 group">
           <span className="text-2xl group-hover:scale-110 transition-transform">🌾</span>
-          <span className="text-emerald-400 font-bold text-lg tracking-widest uppercase">AGRI-INTELLIGENCE</span>
+          <span className="text-[var(--accent-green)] font-bold text-lg tracking-widest uppercase">AGRI-INTELLIGENCE</span>
         </Link>
         
         <div className="hidden md:flex items-center gap-8">
-          {navItems.map((item) => (
-            <Link
-              key={item.name}
-              to={location.pathname === '/' ? item.href : `/${item.href}`}
-              onClick={(e: any) => handleNavClick(e, item.href)}
-              className="text-sm font-medium text-gray-400 hover:text-white transition-colors"
-            >
-              {item.name}
-            </Link>
-          ))}
+          {navItems.map((item) => {
+            const isActive = getIsActive(item.href);
+            return (
+              <Link
+                key={item.name}
+                to={location.pathname === '/' ? item.href : `/${item.href}`}
+                onClick={(e: any) => handleNavClick(e, item.href)}
+                className={`relative text-sm font-medium py-1 transition-colors ${isActive ? 'text-[var(--text-primary)]' : 'text-gray-400 hover:text-white'}`}
+              >
+                {item.name}
+                {isActive && (
+                  <motion.div
+                    initial={{ width: 0 }}
+                    animate={{ width: '100%' }}
+                    transition={{ duration: 1.5, ease: 'easeOut' }}
+                    className="absolute bottom-0 left-0 h-0.5 bg-[var(--accent-green)] rounded-full"
+                  />
+                )}
+              </Link>
+            );
+          })}
           
           <div className="flex items-center gap-4 ml-4 pl-4 border-l border-white/10">
             {isAuthenticated ? (
               <div className="flex items-center gap-4">
-                <Link to="/billing" className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-emerald-500/10 rounded-full border border-white/10 transition-colors group">
-                  <UserIcon size={14} className="text-emerald-400" />
-                  <span className="text-[10px] font-bold text-gray-300 uppercase tracking-tighter group-hover:text-emerald-300">
+                <Link to="/billing" className="flex items-center gap-2 px-3 py-1.5 bg-white/5 hover:bg-[var(--accent-green-glow)] rounded-full border border-white/10 transition-colors group">
+                  <UserIcon size={14} className="text-[var(--accent-green)]" />
+                  <span className="text-[10px] font-bold text-[var(--text-primary)] uppercase tracking-tighter group-hover:text-[var(--accent-green)]">
                     {user?.email?.split('@')[0]}
                   </span>
                 </Link>
                 <button 
                   onClick={logout}
-                  className="p-2 hover:bg-red-500/10 text-gray-400 hover:text-red-400 rounded-full transition-all"
+                  className="p-2 hover:bg-red-500/10 text-[var(--text-secondary)] hover:text-red-400 rounded-full transition-all"
                   title="Logout"
                 >
                   <LogOut size={18} />
@@ -74,7 +93,7 @@ export default function Navbar() {
             ) : (
               <Link
                 to="/login"
-                className="px-5 py-2 bg-emerald-500 hover:bg-emerald-400 text-black font-bold rounded-full transition-all text-sm hover:scale-105"
+                className="btn btn-primary"
               >
                 Sign In
               </Link>

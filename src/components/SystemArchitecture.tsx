@@ -94,24 +94,24 @@ export default function SystemArchitecture() {
   const colors = colorMap[active.color];
 
   return (
-    <section id="architecture" className="py-28 md:py-36 section-dark border-t border-white/[0.04]">
-      <div className="max-w-7xl mx-auto px-6 md:px-8">
+    <section id="architecture" className="py-24 md:py-32 bg-[var(--bg-primary)] border-t border-white/[0.04]">
+      <div className="max-w-7xl mx-auto px-6">
         {/* Section Header */}
-        <FadeInSection className="text-center mb-20">
-          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-emerald-400 mb-6 border border-emerald-500/20">
+        <div className="text-center mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-[var(--border-accent)] text-[var(--text-accent)] bg-[var(--accent-green-glow)] mb-6">
             4-Layer Autonomous Loop
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6">
             System Architecture
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
             A closed-loop pipeline:{' '}
-            <span className="text-transparent bg-clip-text bg-gradient-to-r from-emerald-400 to-teal-300">
+            <span className="text-[var(--text-accent)] font-medium">
               sensor snapshot → AI negotiation → decision → actuator → new sensor reading
             </span>
             , enabling continuous learning every 15 minutes.
           </p>
-        </FadeInSection>
+        </div>
 
         {/* Interactive Layer Selector */}
         <FadeInSection delay={0.1}>
@@ -124,10 +124,10 @@ export default function SystemArchitecture() {
                 <button
                   key={i}
                   onClick={() => setActiveLayer(i)}
-                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-sm font-semibold transition-all duration-300 border ${
+                  className={`flex items-center gap-2 px-4 py-2.5 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-300 border ${
                     isActive
-                      ? `${c.bg} ${c.border} ${c.text} scale-105`
-                      : 'bg-white/5 border-white/10 text-slate-400 hover:text-white hover:bg-white/10'
+                      ? `${c.bg} ${c.border} ${c.text} scale-105 shadow-lg`
+                      : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-surface)]'
                   }`}
                 >
                   <span>{layer.icon}</span>
@@ -138,23 +138,23 @@ export default function SystemArchitecture() {
           </div>
 
           {/* Active layer detail */}
-          <GlassCard className="p-8 md:p-10 rounded-2xl" glow>
-            <div className="grid md:grid-cols-2 gap-8 items-start">
+          <GlassCard className="p-8 md:p-12 rounded-[32px] border-[var(--border-default)]" glow>
+            <div className="grid md:grid-cols-2 gap-12 items-start">
               {/* Left: Info */}
               <div>
-                <div className="flex items-center gap-4 mb-6">
-                  <div className={`w-14 h-14 rounded-2xl ${colors.bg} border ${colors.border} flex items-center justify-center text-2xl`}>
+                <div className="flex items-center gap-4 mb-8">
+                  <div className={`w-16 h-16 rounded-2xl ${colors.bg} border ${colors.border} flex items-center justify-center text-3xl shadow-inner`}>
                     {active.icon}
                   </div>
                   <div>
-                    <p className={`text-xs font-bold uppercase tracking-widest ${colors.text} mb-1`}>Layer {active.id}</p>
-                    <h3 className="text-2xl font-bold text-white">{active.label}</h3>
+                    <p className={`text-[10px] font-black uppercase tracking-widest ${colors.text} mb-1`}>Layer {active.id}</p>
+                    <h3 className="text-3xl font-black text-[var(--text-primary)]">{active.label}</h3>
                   </div>
                 </div>
-                <p className="text-base text-slate-400 leading-relaxed mb-6">{active.desc}</p>
-                <div className={`inline-flex flex-wrap gap-2 px-4 py-2 rounded-xl ${colors.bg} border ${colors.border}`}>
+                <p className="text-lg text-[var(--text-secondary)] leading-relaxed mb-8">{active.desc}</p>
+                <div className={`inline-flex flex-wrap gap-2 px-5 py-3 rounded-2xl ${colors.bg} border ${colors.border}`}>
                   {active.tech.split(' \u00b7 ').map((t, i) => (
-                    <span key={i} className={`text-xs font-mono ${colors.text}`}>{t}</span>
+                    <span key={i} className={`text-xs font-mono font-bold ${colors.text}`}>{t}</span>
                   ))}
                 </div>
               </div>
@@ -164,11 +164,11 @@ export default function SystemArchitecture() {
                 {active.components.map((comp, i) => (
                   <div
                     key={i}
-                    className={`p-4 rounded-xl border ${colors.border} ${colors.bg} hover:scale-[1.03] transition-transform duration-200`}
+                    className={`p-5 rounded-2xl border border-[var(--border-subtle)] bg-[var(--bg-elevated)] hover:border-[var(--accent-green)] transition-all duration-300 group`}
                   >
-                    <div className="text-2xl mb-2">{comp.icon}</div>
-                    <div className={`text-sm font-semibold ${colors.text} mb-1`}>{comp.name}</div>
-                    <div className="text-xs text-slate-500">{comp.desc}</div>
+                    <div className="text-3xl mb-3 group-hover:scale-110 transition-transform">{comp.icon}</div>
+                    <div className={`text-sm font-black text-[var(--text-primary)] mb-1 uppercase tracking-tight`}>{comp.name}</div>
+                    <div className="text-[11px] text-[var(--text-muted)] font-medium leading-snug">{comp.desc}</div>
                   </div>
                 ))}
               </div>
@@ -176,34 +176,36 @@ export default function SystemArchitecture() {
           </GlassCard>
         </FadeInSection>
 
-        {/* Architecture Vertical Stack (simplified) */}
+        {/* Architecture Vertical Stack */}
         <FadeInSection delay={0.2} className="mt-12">
           <div className="flex flex-col gap-2 max-w-lg mx-auto">
             {[...layers].reverse().map((layer, i) => {
               const c = colorMap[layer.color];
+              const idx = layers.indexOf(layer);
+              const isActive = idx === activeLayer;
               return (
                 <div
                   key={i}
-                  onClick={() => setActiveLayer(layers.indexOf(layer))}
-                  className={`flex items-center gap-4 px-5 py-4 rounded-xl border cursor-pointer transition-all duration-300 hover:scale-[1.01] ${
-                    layers.indexOf(layer) === activeLayer
+                  onClick={() => setActiveLayer(idx)}
+                  className={`flex items-center gap-4 px-6 py-5 rounded-2xl border cursor-pointer transition-all duration-300 hover:scale-[1.02] ${
+                    isActive
                       ? `${c.bg} ${c.border}`
-                      : 'bg-white/[0.02] border-white/[0.05] hover:bg-white/5'
+                      : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] hover:bg-[var(--bg-surface)]'
                   }`}
                 >
-                  <span className="text-xl">{layer.icon}</span>
+                  <span className="text-2xl">{layer.icon}</span>
                   <div className="flex-1">
-                    <span className={`text-xs font-bold uppercase tracking-widest ${c.text}`}>
+                    <span className={`text-[10px] font-black uppercase tracking-widest ${isActive ? c.text : 'text-[var(--text-muted)]'}`}>
                       Layer {layer.id}
                     </span>
-                    <span className="ml-2 text-sm text-white font-medium">{layer.label}</span>
+                    <span className={`ml-3 text-sm font-bold ${isActive ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>{layer.label}</span>
                   </div>
-                  <span className="text-xs text-slate-500 font-mono hidden md:block">{layer.tech.split(' \u00b7 ')[0]}</span>
+                  <span className={`text-[10px] font-mono font-bold hidden md:block ${isActive ? c.text : 'text-[var(--text-muted)]'}`}>{layer.tech.split(' \u00b7 ')[0]}</span>
                 </div>
               );
             })}
           </div>
-          <p className="text-xs text-slate-600 text-center mt-4">Click any layer to explore details above</p>
+          <p className="text-[10px] font-black uppercase tracking-widest text-[var(--text-muted)] text-center mt-6">Click any layer to explore architecture details</p>
         </FadeInSection>
       </div>
     </section>

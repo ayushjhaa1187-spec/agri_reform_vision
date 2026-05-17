@@ -1,6 +1,7 @@
 import FadeInSection from './ui/FadeInSection';
 import GlassCard from './ui/GlassCard';
 import AnimatedNumber from './ui/AnimatedNumber';
+import ImpactBanner from './ui/ImpactBanner';
 
 export default function Impact() {
   const metrics = [
@@ -21,20 +22,22 @@ export default function Impact() {
     <section id="impact" className="py-28 md:py-36 section-dark border-t border-white/[0.04]">
       <div className="max-w-7xl mx-auto px-6 md:px-8">
         {/* Section Header */}
-        <FadeInSection className="text-center mb-20">
-          <span className="inline-block px-4 py-1.5 glass-card rounded-full text-sm font-semibold text-blue-400 mb-6 border border-blue-500/20">
+        <FadeInSection className="text-center mb-16">
+          <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-blue-500/30 text-blue-400 bg-blue-500/10 mb-6">
             Expected Impact
           </span>
-          <h2 className="text-4xl md:text-5xl font-bold text-white mb-6">
+          <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6">
             Transforming Agriculture Through{' '}
             <span className="text-transparent bg-clip-text bg-gradient-to-r from-blue-400 to-indigo-400">
               AI
             </span>
           </h2>
-          <p className="text-lg md:text-xl text-slate-400 max-w-2xl mx-auto leading-relaxed">
+          <p className="text-lg md:text-xl text-[var(--text-secondary)] max-w-2xl mx-auto leading-relaxed">
             Agri-Intelligence delivers measurable benefits across efficiency, cost savings, and scalability.
           </p>
         </FadeInSection>
+
+        <ImpactBanner />
 
         {/* Impact Metrics */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-6 mb-20">

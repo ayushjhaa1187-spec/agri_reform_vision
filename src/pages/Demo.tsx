@@ -2,14 +2,17 @@ import { useState, useRef } from 'react';
 import { useAuth } from '../context/AuthContext';
 import { useNavigate } from 'react-router-dom';
 import { toast } from 'react-hot-toast';
+import { motion, AnimatePresence } from 'framer-motion';
 import ConnectScreen from '../components/ConnectScreen';
 import YieldPredictor from '../components/YieldPredictor';
 import MultiAgentSystem from '../components/MultiAgentSystem';
 import Workflows from '../components/Workflows';
 import TechStack from '../components/TechStack';
+import AnimSidebarTruck from '../components/ui/AnimSidebarTruck';
 
 export default function DemoPage() {
   const [activePage, setActivePage] = useState('dashboard');
+  const [isMobileSidebarOpen, setIsMobileSidebarOpen] = useState(false);
   const { user, logout } = useAuth();
   const navigate = useNavigate();
 
@@ -42,54 +45,114 @@ export default function DemoPage() {
 
   const SidebarItem = ({ id, label, icon }: { id: string; label: string; icon: string }) => (
     <div 
-      onClick={() => setActivePage(id)} 
+      onClick={() => { setActivePage(id); setIsMobileSidebarOpen(false); }} 
       className={`sidebar-item ${activePage === id ? 'active' : ''}`}
     >
       <span>{icon}</span> {label}
     </div>
   );
 
-  return (
-    <div className="flex h-screen bg-[var(--bg)] overflow-hidden">
-      {/* Sidebar */}
-      <div className="w-[240px] bg-white/90 backdrop-blur-xl border-r border-[var(--border)] p-6 flex flex-col flex-shrink-0 animate-slide-in">
-        <div className="flex items-center gap-2 mb-8 group cursor-pointer" onClick={() => navigate('/')}>
-          <span className="text-xl group-hover:scale-110 transition-transform">🌾</span>
-          <span className="text-[var(--teal)] font-black text-lg tracking-widest uppercase">AGRI</span>
-        </div>
-        
-        <div className="flex-1 space-y-1">
-          <SidebarItem id="dashboard" label="Dashboard" icon="📊" />
-          <SidebarItem id="agents" label="Agent Arena" icon="🤖" />
-          <SidebarItem id="predictor" label="Yield Predictor" icon="🔬" />
-          <SidebarItem id="workflows" label="Workflows" icon="⚙️" />
-          <SidebarItem id="tech" label="Tech Stack" icon="💻" />
-          <SidebarItem id="chatbot" label="AI Assistant" icon="💬" />
-          <SidebarItem id="schemes" label="Schemes" icon="📜" />
-          <SidebarItem id="settings" label="Profile" icon="👤" />
+  const SidebarContent = () => (
+    <>
+      <div className="flex items-center gap-2 mb-8 group cursor-pointer" onClick={() => navigate('/')}>
+        <span className="text-xl group-hover:scale-110 transition-transform">🌾</span>
+        <span className="text-[var(--accent-green)] font-black text-lg tracking-widest uppercase">AGRI</span>
+      </div>
+      
+      <div className="flex-1 overflow-y-auto scrollbar-none">
+        <div className="mb-6">
+          <div className="text-[var(--text-muted)] uppercase text-[9px] font-black tracking-widest mb-2 px-2">Core</div>
+          <div className="space-y-1">
+            <SidebarItem id="dashboard" label="Dashboard" icon="📊" />
+            <SidebarItem id="agents" label="Agent Arena" icon="🤖" />
+            <SidebarItem id="predictor" label="Yield Predictor" icon="🔬" />
+          </div>
         </div>
 
-        <div className="mt-auto pt-6 border-t border-[var(--border)]">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-full bg-gradient-to-br from-[#0D9488] to-[#3B82F6] text-white flex items-center justify-center font-bold text-sm shadow-md">
-              {user?.email?.charAt(0).toUpperCase() || 'R'}
-            </div>
-            <div>
-              <div className="font-semibold text-sm text-[var(--text)]">{user?.email?.split('@')[0] || 'Ramesh'}</div>
-              <div className="bg-[#E0F2F1] text-[var(--teal)] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter inline-block">Pro</div>
-            </div>
+        <div className="mb-6">
+          <div className="text-[var(--text-muted)] uppercase text-[9px] font-black tracking-widest mb-2 px-2">Intelligence</div>
+          <div className="space-y-1">
+            <SidebarItem id="chatbot" label="AI Assistant" icon="💬" />
+            <SidebarItem id="schemes" label="Schemes" icon="📜" />
           </div>
-          <div 
-            onClick={() => { logout(); navigate('/'); }} 
-            className="text-xs font-bold text-[var(--text-secondary)] mt-4 cursor-pointer hover:text-red-500 transition-colors flex items-center gap-2"
-          >
-            🚪 Logout
+        </div>
+
+        <div className="mb-6">
+          <div className="text-[var(--text-muted)] uppercase text-[9px] font-black tracking-widest mb-2 px-2">System</div>
+          <div className="space-y-1">
+            <SidebarItem id="workflows" label="Workflows" icon="⚙️" />
+            <SidebarItem id="tech" label="Tech Stack" icon="💻" />
+            <SidebarItem id="settings" label="Profile" icon="👤" />
+            <SidebarItem id="admin" label="Admin" icon="🛠️" />
           </div>
         </div>
       </div>
 
+      <AnimSidebarTruck isActive={activePage === 'dashboard' || activePage === 'schemes'} />
+
+      <div className="mt-auto pt-6 border-t border-[var(--border-subtle)]">
+        <div className="flex items-center gap-3">
+          <div className="w-9 h-9 rounded-full bg-[var(--bg-elevated)] text-[var(--text-primary)] border border-[var(--border-default)] flex items-center justify-center font-bold text-sm shadow-md">
+            {user?.email?.charAt(0).toUpperCase() || 'R'}
+          </div>
+          <div>
+            <div className="font-semibold text-sm text-[var(--text-primary)]">{user?.email?.split('@')[0] || 'Ramesh'}</div>
+            <div className="bg-[var(--accent-green-glow)] text-[var(--text-accent)] text-[10px] font-bold px-2 py-0.5 rounded-full uppercase tracking-tighter inline-block">Pro</div>
+          </div>
+        </div>
+        <div 
+          onClick={() => { logout(); navigate('/'); }} 
+          className="text-xs font-bold text-[var(--text-muted)] mt-4 cursor-pointer hover:text-red-400 transition-colors flex items-center gap-2"
+        >
+          🚪 Logout
+        </div>
+      </div>
+    </>
+  );
+
+  return (
+    <div className="flex h-screen bg-[var(--bg-primary)] overflow-hidden">
+      {/* Desktop Sidebar */}
+      <div className="hidden md:flex w-[240px] bg-[var(--bg-surface)] border-r border-[var(--border-subtle)] p-6 flex-col flex-shrink-0 animate-slide-in">
+        <SidebarContent />
+      </div>
+
+      {/* Mobile Sidebar FAB */}
+      <div className="md:hidden fixed bottom-6 left-6 z-50">
+        <button 
+          onClick={() => setIsMobileSidebarOpen(true)}
+          className="w-14 h-14 bg-[var(--accent-green)] text-black rounded-full shadow-[0_0_20px_rgba(16,185,129,0.4)] flex items-center justify-center text-2xl"
+        >
+          🧭
+        </button>
+      </div>
+
+      {/* Mobile Sidebar Drawer */}
+      <AnimatePresence>
+        {isMobileSidebarOpen && (
+          <>
+            <motion.div 
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              className="fixed inset-0 bg-black/60 backdrop-blur-sm z-40 md:hidden"
+              onClick={() => setIsMobileSidebarOpen(false)}
+            />
+            <motion.div 
+              initial={{ x: '-100%' }}
+              animate={{ x: 0 }}
+              exit={{ x: '-100%' }}
+              transition={{ type: 'spring', damping: 25, stiffness: 200 }}
+              className="fixed inset-y-0 left-0 w-[280px] bg-[var(--bg-surface)] border-r border-[var(--border-subtle)] p-6 z-50 flex flex-col md:hidden"
+            >
+              <SidebarContent />
+            </motion.div>
+          </>
+        )}
+      </AnimatePresence>
+
       {/* Main Content */}
-      <div className="flex-1 overflow-y-auto p-8 relative">
+      <div className="flex-1 overflow-y-auto p-4 md:p-8 relative">
         <div className="max-w-6xl mx-auto">
           {renderContent()}
         </div>

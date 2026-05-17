@@ -267,21 +267,23 @@ deploy:
   ];
 
   return (
-    <section id="command-book" className="py-20 bg-gradient-to-b from-slate-900 to-slate-950">
-      <div className="max-w-7xl mx-auto px-6">
+    <section id="command-book" className="py-24 md:py-32 bg-[var(--bg-primary)] border-t border-white/[0.04] relative overflow-hidden">
+      <div className="absolute inset-0 bg-[url('https://grainy-gradients.vercel.app/noise.svg')] opacity-[0.02] mix-blend-overlay pointer-events-none"></div>
+      
+      <div className="max-w-7xl mx-auto px-6 relative z-10">
         {/* Header */}
-        <div className="text-center mb-14">
-          <div className="inline-flex items-center gap-2 px-4 py-2 bg-emerald-500/10 backdrop-blur-sm rounded-full border border-emerald-500/30 mb-6">
-            <svg className="w-4 h-4 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+        <div className="text-center mb-16">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-[var(--border-accent)] text-[var(--text-accent)] bg-[var(--accent-green-glow)] mb-6 shadow-lg shadow-emerald-950/20">
+            <svg className="w-4 h-4 text-[var(--accent-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 20l4-16m4 4l4 4-4 4M6 16l-4-4 4-4" />
             </svg>
-            <span className="text-emerald-300 text-sm font-semibold">Developer Command Book</span>
+            <span>Developer Command Book</span>
           </div>
-          <h2 className="text-4xl font-bold text-white mb-4">
+          <h2 className="text-4xl md:text-5xl font-black text-[var(--text-primary)] mb-6">
             Build the Future of Farming
           </h2>
-          <p className="text-lg text-slate-400 max-w-3xl mx-auto">
-            Complete prompt library for every phase — testing, feature development, data simulation, UI generation, backend setup, security, and deployment. All tested with free AI tools.
+          <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto leading-relaxed">
+            Complete prompt library for testing, feature development, data simulation, UI generation, and security. Optimized for <span className="text-[var(--text-accent)] font-bold italic">High-Fidelity Engineering</span>.
           </p>
         </div>
 
@@ -293,25 +295,25 @@ deploy:
               <button
                 key={idx}
                 onClick={() => setActiveChapter(idx)}
-                className={`w-full text-left p-4 rounded-xl transition-all duration-300 border ${
+                className={`w-full text-left p-5 rounded-2xl transition-all duration-500 border ${
                   activeChapter === idx
-                    ? 'bg-slate-800/80 border-emerald-500/50 shadow-lg shadow-emerald-500/10'
-                    : 'bg-slate-800/30 border-slate-700/50 hover:bg-slate-800/50'
+                    ? 'bg-[var(--bg-surface)] border-[var(--accent-green)] shadow-xl shadow-emerald-950/40 translate-x-2'
+                    : 'bg-[var(--bg-elevated)] border-[var(--border-subtle)] text-[var(--text-muted)] hover:border-[var(--border-default)] hover:bg-[var(--bg-surface)]'
                 }`}
               >
-                <div className="flex items-center gap-3">
-                  <span className="text-xl">{chapter.icon}</span>
+                <div className="flex items-center gap-4">
+                  <span className="text-2xl">{chapter.icon}</span>
                   <div className="flex-1 min-w-0">
                     <div className="flex items-center gap-2">
-                      <span className="text-slate-500 text-xs font-mono">{chapter.num}</span>
-                      <span className={`text-sm font-semibold ${activeChapter === idx ? 'text-white' : 'text-slate-300'}`}>
+                      <span className="text-[10px] font-black font-mono text-[var(--text-muted)]">{chapter.num}</span>
+                      <span className={`text-sm font-black uppercase tracking-tight ${activeChapter === idx ? 'text-[var(--text-primary)]' : 'text-[var(--text-secondary)]'}`}>
                         {chapter.title}
                       </span>
                     </div>
-                    <div className="text-slate-500 text-xs mt-0.5">{chapter.promptCount} prompt{chapter.promptCount > 1 ? 's' : ''}</div>
+                    <div className="text-[9px] font-bold text-[var(--text-muted)] uppercase tracking-widest mt-1">{chapter.promptCount} curated prompts</div>
                   </div>
                   {activeChapter === idx && (
-                    <svg className="w-4 h-4 text-emerald-400 flex-shrink-0" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <svg className="w-4 h-4 text-[var(--accent-green)] flex-shrink-0 animate-pulse" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                       <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
                     </svg>
                   )}
@@ -322,49 +324,56 @@ deploy:
 
           {/* Chapter Detail */}
           <div className="lg:col-span-2 space-y-6">
-            <div className={`bg-gradient-to-r ${chapters[activeChapter].color} rounded-2xl p-8`}>
-              <div className="flex items-center gap-4 mb-3">
-                <span className="text-4xl">{chapters[activeChapter].icon}</span>
-                <div>
-                  <div className="text-white/70 text-xs font-semibold uppercase tracking-wider">
-                    Chapter {chapters[activeChapter].num}
+            <div className={`bg-gradient-to-r ${chapters[activeChapter].color} rounded-3xl p-10 relative overflow-hidden shadow-2xl group`}>
+              <div className="absolute inset-0 bg-black/20 opacity-0 group-hover:opacity-100 transition-opacity duration-700" />
+              <div className="relative z-10">
+                <div className="flex items-center gap-5 mb-4">
+                  <div className="w-16 h-16 rounded-2xl bg-white/10 backdrop-blur-md border border-white/20 flex items-center justify-center text-4xl shadow-inner">
+                    {chapters[activeChapter].icon}
                   </div>
-                  <h3 className="text-2xl font-bold text-white">{chapters[activeChapter].title}</h3>
+                  <div>
+                    <div className="text-white/70 text-[10px] font-black uppercase tracking-[0.2em]">
+                      Chapter {chapters[activeChapter].num}
+                    </div>
+                    <h3 className="text-3xl font-black text-white uppercase tracking-tight">{chapters[activeChapter].title}</h3>
+                  </div>
                 </div>
-              </div>
-              <div className="text-white/80 text-sm">
-                {chapters[activeChapter].promptCount} curated prompt{chapters[activeChapter].promptCount > 1 ? 's' : ''} —
-                copy, paste, and build in seconds
+                <div className="text-white/80 text-sm font-medium">
+                  {chapters[activeChapter].promptCount} engineering prompts &mdash; copy, paste, and build the ecosystem in seconds.
+                </div>
               </div>
             </div>
 
             {/* Prompt Cards */}
             <div className="space-y-6">
               {chapters[activeChapter].items.map((item, idx) => (
-                <div key={idx} className="bg-slate-800/60 backdrop-blur-sm rounded-2xl border border-slate-700 overflow-hidden">
+                <div key={idx} className="bg-[var(--bg-surface)] rounded-3xl border border-[var(--border-subtle)] overflow-hidden shadow-lg group hover:border-[var(--border-default)] transition-all">
                   {/* Card Header */}
-                  <div className="p-6 border-b border-slate-700">
-                    <div className="flex items-start gap-3">
-                      <div className="flex-shrink-0 w-8 h-8 bg-emerald-500/20 rounded-lg flex items-center justify-center text-emerald-400 text-sm font-bold">
+                  <div className="p-6 border-b border-[var(--border-subtle)] bg-[var(--bg-elevated)]/50">
+                    <div className="flex items-start gap-4">
+                      <div className="flex-shrink-0 w-8 h-8 bg-[var(--accent-green-glow)] rounded-xl flex items-center justify-center text-[var(--accent-green)] text-xs font-black border border-[var(--border-accent)]">
                         {idx + 1}
                       </div>
                       <div>
-                        <h4 className="text-white font-semibold mb-1">{item.label}</h4>
-                        <p className="text-slate-400 text-sm">{item.desc}</p>
+                        <h4 className="text-[var(--text-primary)] font-black text-sm uppercase tracking-tight mb-1">{item.label}</h4>
+                        <p className="text-[var(--text-secondary)] text-sm leading-relaxed">{item.desc}</p>
                       </div>
                     </div>
                   </div>
 
                   {/* Code Snippet */}
                   <div className="relative">
-                    <div className="bg-slate-950 p-6 overflow-x-auto">
-                      <pre className="text-sm text-slate-300 font-mono leading-relaxed"><code>{item.code}</code></pre>
+                    <div className="bg-black/40 p-6 overflow-x-auto border-b border-[var(--border-subtle)]">
+                      <pre className="text-xs text-emerald-400/90 font-mono leading-relaxed"><code>{item.code}</code></pre>
                     </div>
                     <button
-                      onClick={() => navigator.clipboard?.writeText(item.code)}
-                      className="absolute top-3 right-3 px-3 py-1.5 bg-slate-700 hover:bg-slate-600 text-slate-300 hover:text-white rounded-lg text-xs transition-colors flex items-center gap-1.5"
+                      onClick={() => {
+                        navigator.clipboard?.writeText(item.code);
+                        toast.success('Prompt copied to clipboard!');
+                      }}
+                      className="absolute top-4 right-4 px-4 py-2 bg-[var(--bg-elevated)] hover:bg-[var(--bg-surface)] text-[var(--text-primary)] rounded-xl text-[10px] font-black uppercase tracking-widest transition-all border border-[var(--border-subtle)] hover:border-[var(--accent-green)] flex items-center gap-2 shadow-lg"
                     >
-                      <svg className="w-3.5 h-3.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <svg className="w-3.5 h-3.5 text-[var(--accent-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                         <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M8 16H6a2 2 0 01-2-2V6a2 2 0 012-2h8a2 2 0 012 2v2m-6 12h8a2 2 0 002-2v-8a2 2 0 00-2-2h-8a2 2 0 00-2 2v8a2 2 0 002 2z" />
                       </svg>
                       Copy
@@ -375,28 +384,31 @@ deploy:
             </div>
 
             {/* Prompt Count Summary */}
-            <div className="bg-slate-800/30 rounded-2xl border border-slate-700/50 p-6 flex items-center justify-between">
-              <div className="text-slate-400 text-sm">
-                Total prompts in this chapter: <span className="text-white font-semibold">{chapters[activeChapter].promptCount}</span>
+            <div className="bg-[var(--bg-elevated)] rounded-2xl border border-[var(--border-subtle)] p-6 flex items-center justify-between shadow-inner">
+              <div className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-widest">
+                Total Prompts: <span className="text-[var(--text-primary)]">{chapters[activeChapter].promptCount}</span>
               </div>
-              <div className="text-slate-400 text-sm">
-                All compatible with: <span className="text-emerald-400 font-semibold">Claude 3 · Gemini · ChatGPT · Cursor IDE</span>
+              <div className="text-[var(--text-muted)] text-[10px] font-black uppercase tracking-widest">
+                Stack: <span className="text-[var(--accent-green)]">FastAPI · React · RAG · XGBoost</span>
               </div>
             </div>
           </div>
         </div>
 
         {/* Bottom Note */}
-        <div className="mt-12 p-6 bg-emerald-500/5 border border-emerald-500/20 rounded-2xl text-center">
-          <div className="flex items-center justify-center gap-2 mb-2">
-            <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M13 16h-1v-4h-1m1-4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z" />
-            </svg>
-            <span className="text-emerald-300 font-semibold text-sm">Pro Tip</span>
+        <div className="mt-16 p-8 bg-[var(--accent-green-glow)] border border-[var(--border-accent)] rounded-[32px] text-center relative overflow-hidden group">
+          <div className="absolute inset-0 bg-gradient-to-r from-emerald-500/5 to-transparent pointer-events-none" />
+          <div className="relative z-10">
+            <div className="flex items-center justify-center gap-3 mb-4">
+              <div className="w-10 h-10 rounded-full bg-[var(--accent-green)] text-black flex items-center justify-center text-xl shadow-lg shadow-emerald-500/40">
+                💡
+              </div>
+              <span className="text-[var(--text-primary)] font-black uppercase tracking-[0.2em] text-sm">Industrial Insight</span>
+            </div>
+            <p className="text-[var(--text-secondary)] text-sm max-w-2xl mx-auto leading-relaxed font-medium">
+              Each prompt above is architected to produce production-grade components. The AI models are instructed to maintain strictly typed interfaces, secure API handling, and optimized data structures.
+            </p>
           </div>
-          <p className="text-slate-400 text-sm max-w-2xl mx-auto">
-            Each prompt above is designed to be pasted directly into your AI tool of choice. The AI will generate complete, runnable code that integrates seamlessly with the Agri-Intelligence tech stack.
-          </p>
         </div>
       </div>
     </section>

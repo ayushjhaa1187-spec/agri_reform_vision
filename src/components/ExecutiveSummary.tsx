@@ -1,5 +1,6 @@
 import GlassCard from './ui/GlassCard';
 import FadeInSection from './ui/FadeInSection';
+import AnimOverwhelmedFarmer from './ui/AnimOverwhelmedFarmer';
 
 export default function ExecutiveSummary() {
   const benefits = [
@@ -84,56 +85,16 @@ export default function ExecutiveSummary() {
 
         {/* Right Visual */}
         <FadeInSection delay={0.3}>
-          <div className="relative space-y-6">
-            <div className="text-center space-y-3 mb-8">
-              <p className="text-2xl font-bold bg-gradient-to-r from-red-400 to-orange-400 bg-clip-text text-transparent">
-                Reactive Farming
-              </p>
-              <svg className="w-8 h-8 mx-auto text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-              </svg>
-              <p className="text-2xl font-bold bg-gradient-to-r from-emerald-400 to-green-400 bg-clip-text text-transparent">
-                Autonomous Intelligence
+          <div className="relative flex flex-col items-center justify-center">
+            <AnimOverwhelmedFarmer />
+            <div className="mt-8 text-center">
+              <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-red-500/30 text-red-400 bg-red-500/10 mb-4">
+                Current State: Reactive Farming
+              </span>
+              <p className="text-[var(--text-secondary)] text-sm max-w-sm mx-auto">
+                Farmers are overwhelmed by fragmented data, leading to delayed decisions, resource waste, and crop stress.
               </p>
             </div>
-            {[
-              ['Before', [
-                { text: 'Manual data review', color: 'bg-red-400' },
-                { text: 'Reactive decisions', color: 'bg-red-400' },
-                { text: 'Resource waste', color: 'bg-red-400' },
-                { text: 'Lower yields', color: 'bg-red-400' },
-              ], 'red'],
-              ['After', [
-                { text: 'Autonomous AI analysis', color: 'bg-emerald-400' },
-                { text: 'Proactive action', color: 'bg-emerald-400' },
-                { text: 'Optimized resources', color: 'bg-emerald-400' },
-                { text: 'Maximum yields', color: 'bg-emerald-400' },
-              ], 'emerald']
-            ].map((entry: any) => {
-              const label = entry[0] as string;
-              const items = entry[1] as { text: string; color: string }[];
-              return (
-              <div
-                key={label}
-                className={`p-6 rounded-2xl border-2 transition-transform duration-300 hover:scale-[1.02] ${
-                  label === 'Before'
-                    ? 'border-red-500/30 bg-red-500/5'
-                    : 'border-emerald-500/30 bg-emerald-500/10'
-                }`}
-              >
-                <div className={`text-xl font-bold mb-4 ${label === 'Before' ? 'text-red-400' : 'text-emerald-400'}`}>
-                  {label}
-                </div>
-                <div className="space-y-3">
-                  {items.map((item, idx) => (
-                    <div key={idx} className="flex items-center space-x-3">
-                      <div className={`w-2.5 h-2.5 rounded-full ${item.color} animate-pulse`} />
-                      <span className="text-gray-200">{item.text}</span>
-                    </div>
-                  ))}
-                </div>
-              </div>
-            )})}
           </div>
         </FadeInSection>
       </div>

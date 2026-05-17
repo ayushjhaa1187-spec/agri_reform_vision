@@ -1,5 +1,6 @@
 import GlassCard from './ui/GlassCard';
 import FadeInSection from './ui/FadeInSection';
+import AnimRelievedFarmer from './ui/AnimRelievedFarmer';
 
 export default function Solution() {
   const currentState = [
@@ -71,14 +72,17 @@ export default function Solution() {
           </FadeInSection>
 
           <FadeInSection direction="right" delay={0.15}>
-            <GlassCard className="p-8 rounded-2xl h-full border-emerald-500/20" glow>
+            <GlassCard className="p-8 rounded-2xl h-full border-[var(--border-accent)]" glow>
               <div className="flex items-center gap-3 mb-6">
-                <div className="w-10 h-10 rounded-xl bg-emerald-500/10 flex items-center justify-center border border-emerald-500/20">
-                  <svg className="w-5 h-5 text-emerald-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <div className="w-10 h-10 rounded-xl bg-[var(--accent-green-glow)] flex items-center justify-center border border-[var(--border-accent)]">
+                  <svg className="w-5 h-5 text-[var(--accent-green)]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                     <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 12l2 2 4-4m6 2a9 9 0 11-18 0 9 9 0 0118 0z" />
                   </svg>
                 </div>
-                <h3 className="text-xl font-bold text-white">With Agri-Intelligence</h3>
+                <h3 className="text-xl font-bold text-[var(--text-primary)]">With Agri-Intelligence</h3>
+              </div>
+              <div className="mb-8 flex justify-center">
+                <AnimRelievedFarmer />
               </div>
               <ul className="space-y-4">
                 {futureState.map((item, i) => (

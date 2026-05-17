@@ -1,8 +1,8 @@
 import { useRef, useMemo } from 'react';
-import { useFrame, useThree } from '@react-three/fiber';
+import { useFrame } from '@react-three/fiber';
 import * as THREE from 'three';
 
-const STALK_COUNT = window.innerWidth < 768 ? 400 : 800;
+const STALK_COUNT = window.innerWidth < 768 ? 300 : 800;
 const STALK_BASE_HEIGHT = 2.5;
 const STALK_WIDTH = 0.015;
 const FIELD_WIDTH = 18;
@@ -13,7 +13,6 @@ const tempObject = new THREE.Object3D();
 export default function WavingField() {
   const meshRef = useRef<THREE.InstancedMesh>(null);
   const mouseRef = useRef({ x: 0, y: 0 });
-  const { viewport } = useThree();
 
   // Create Stalk Data
   const stalks = useMemo(() => {

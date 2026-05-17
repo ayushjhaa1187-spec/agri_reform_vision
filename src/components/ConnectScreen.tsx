@@ -1,4 +1,5 @@
 import { useState, useEffect } from 'react';
+import { motion } from 'framer-motion';
 import axios from 'axios';
 import { toast } from 'react-hot-toast';
 import TiltCard from './ui/TiltCard';
@@ -174,15 +175,15 @@ export default function ConnectScreen({ externalStats, onManualUpdate }: { exter
                 <span className="text-lg font-black tracking-tighter text-white">COMMAND<span className="text-emerald-500">_v2</span></span>
               </div>
               
-              <nav className="flex items-center gap-1">
+              <nav className="flex items-center gap-1 overflow-x-auto scrollbar-none pb-2 md:pb-0 w-[calc(100vw-80px)] md:w-auto">
                 {(['overview', 'map', 'agents', 'predict', 'logs'] as const).map((tab) => (
                   <button
                     key={tab}
                     onClick={() => setActiveTab(tab)}
-                    className={`px-4 py-2 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-500 ${
+                    className={`px-4 py-2 flex-shrink-0 rounded-xl text-xs font-black uppercase tracking-widest transition-all duration-300 ${
                       activeTab === tab 
-                        ? 'bg-white/10 text-white shadow-[0_0_20px_rgba(255,255,255,0.05)]' 
-                        : 'text-slate-500 hover:text-slate-300 hover:bg-white/5'
+                        ? 'bg-[var(--accent-green)] text-black shadow-[0_0_20px_rgba(16,185,129,0.4)]' 
+                        : 'text-[var(--text-muted)] hover:text-[var(--text-primary)] hover:bg-[var(--bg-elevated)]'
                     }`}
                   >
                     {tab}
@@ -211,14 +212,23 @@ export default function ConnectScreen({ externalStats, onManualUpdate }: { exter
                 {/* Visual Telemetry Grid */}
                 <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-6 gap-5">
                   {farmMetrics.map((metric, index) => (
-                    <TiltCard key={index} className="glass-panel-interactive bg-white/[0.02] rounded-2xl p-5 border border-white/5">
-                      <div className="text-2xl mb-4 bg-white/5 w-10 h-10 flex items-center justify-center rounded-xl">{metric.icon}</div>
-                      <div className="text-[10px] font-black uppercase tracking-widest text-slate-500 mb-1">{metric.label}</div>
-                      <div className={`text-2xl font-black ${
-                        metric.status === 'good' ? 'text-emerald-400 glow-text-green' :
-                        metric.status === 'warning' ? 'text-yellow-400' : 'text-red-400'
-                      }`}>
-                        <AnimatedNumber value={metric.value} />
+                    <TiltCard key={index} className="glass-panel-interactive bg-[var(--bg-surface)] rounded-2xl p-5 border border-[var(--border-subtle)] relative overflow-hidden group">
+                      <motion.div
+                        key={metric.value}
+                        initial={{ backgroundColor: 'var(--accent-green-glow)' }}
+                        animate={{ backgroundColor: 'transparent' }}
+                        transition={{ duration: 0.6, ease: "easeOut" }}
+                        className="absolute inset-0 z-0 pointer-events-none"
+                      />
+                      <div className="relative z-10">
+                        <div className="text-2xl mb-4 bg-[var(--bg-elevated)] w-10 h-10 flex items-center justify-center rounded-xl border border-[var(--border-subtle)]">{metric.icon}</div>
+                        <div className="text-[10px] font-black uppercase tracking-widest text-[var(--text-secondary)] mb-1">{metric.label}</div>
+                        <div className={`text-2xl font-black ${
+                          metric.status === 'good' ? 'text-[var(--accent-green)] glow-text-green' :
+                          metric.status === 'warning' ? 'text-[var(--accent-gold)]' : 'text-red-400'
+                        }`}>
+                          <AnimatedNumber value={metric.value} />
+                        </div>
                       </div>
                     </TiltCard>
                   ))}
@@ -267,8 +277,14 @@ export default function ConnectScreen({ externalStats, onManualUpdate }: { exter
                         </div>
                       </div>
                       <div className="space-y-4">
-                        {recentLogs.slice(0, 6).map((log, index) => (
-                          <div key={index} className="animate-slide-in flex items-start gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.03] group hover:border-white/10 transition-colors">
+                        {recentLogs.slice(0, 6).map((log) => (
+                          <motion.div 
+                            key={`${log.time}-${log.message}`}
+                            initial={{ x: -20, opacity: 0 }}
+                            animate={{ x: 0, opacity: 1 }}
+                            transition={{ duration: 0.3 }}
+                            className="flex items-start gap-4 p-4 rounded-2xl bg-white/[0.02] border border-white/[0.03] group hover:border-white/10 transition-colors"
+                          >
                             <div className={`w-2 h-2 rounded-full mt-2 flex-shrink-0 ${
                                log.type === 'decision' ? 'bg-emerald-500 shadow-[0_0_8px_#10b981]' :
                                log.type === 'negotiation' ? 'bg-blue-500 shadow-[0_0_8px_#3b82f6]' :
@@ -283,7 +299,7 @@ export default function ConnectScreen({ externalStats, onManualUpdate }: { exter
                                 <span className="text-[9px] font-mono text-slate-600">{log.time}</span>
                               </div>
                             </div>
-                          </div>
+                          </motion.div>
                         ))}
                       </div>
                     </div>

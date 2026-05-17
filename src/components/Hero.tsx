@@ -75,16 +75,17 @@ export default function Hero() {
             initial={{ opacity: 0, y: 40 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 1.2, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="heading-premium text-6xl md:text-8xl lg:text-[110px] text-white tracking-tighter"
+            className="heading-premium text-white tracking-tighter"
+            style={{ fontSize: 'clamp(2.5rem, 8vw, 7rem)' }}
           >
-            Agri-<span className="neon-text italic font-serif text-emerald-400 drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]">Intelligence</span>
+            Agri-<span className="neon-text italic font-serif text-[var(--accent-green)] drop-shadow-[0_0_30px_rgba(16,185,129,0.3)]">Intelligence</span>
           </motion.h1>
           
           <motion.div
             initial={{ width: 0 }}
             animate={{ width: '100%' }}
             transition={{ duration: 1.5, delay: 1, ease: [0.16, 1, 0.3, 1] }}
-            className="h-px bg-gradient-to-r from-transparent via-emerald-500/50 to-transparent mt-4"
+            className="h-px bg-gradient-to-r from-transparent via-[var(--accent-green)]/50 to-transparent mt-4"
           />
         </div>
 
@@ -93,7 +94,7 @@ export default function Hero() {
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
           transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-2xl text-lg md:text-xl text-slate-400 font-light leading-relaxed mb-12"
+          className="max-w-2xl text-lg md:text-xl text-[var(--text-secondary)] font-light leading-relaxed mb-12"
         >
           A cinematic ecosystem of specialized AI agents that <span className="text-white font-medium">perceive, negotiate, and execute</span> optimal farm decisions in real-time.
         </motion.p>
@@ -107,7 +108,7 @@ export default function Hero() {
         >
           <button
             onClick={() => navigate('/architecture')}
-            className="magnetic-trigger px-10 py-5 bg-white text-black font-black rounded-full hover:bg-emerald-400 transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.15)] text-sm uppercase tracking-widest"
+            className="magnetic-trigger px-10 py-5 bg-white text-black font-black rounded-full hover:bg-[var(--accent-green)] transition-all duration-500 hover:scale-[1.02] active:scale-[0.98] shadow-[0_0_40px_rgba(255,255,255,0.15)] text-sm uppercase tracking-widest"
           >
             System Core
           </button>
@@ -125,18 +126,29 @@ export default function Hero() {
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ duration: 1, delay: 1 }}
-          className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-px bg-white/5 border border-white/5 rounded-2xl overflow-hidden backdrop-blur-md"
+          className="w-full max-w-4xl grid grid-cols-2 md:grid-cols-4 gap-[1px] bg-[var(--border-subtle)] border border-[var(--border-subtle)] rounded-2xl overflow-hidden backdrop-blur-md"
         >
-          {stats.map((stat, index) => (
-            <div key={index} className="p-8 bg-[#030712]/60 hover:bg-white/[0.02] transition-colors group cursor-default">
-              <div className="text-3xl font-black text-white mb-1 group-hover:text-emerald-400 transition-colors">
-                <AnimatedNumber value={stat.value} />
+          {stats.map((stat, index) => {
+            const isPercent = stat.value.includes('%');
+            const numValue = parseFloat(stat.value.replace(/[^\d.-]/g, ''));
+            const progress = isPercent ? numValue : 100;
+            return (
+              <div key={index} className="p-8 bg-[var(--bg-primary)] hover:bg-[var(--bg-elevated)] transition-colors group cursor-default relative overflow-hidden">
+                <div className="relative z-10 text-3xl font-black text-[var(--text-primary)] mb-1 group-hover:text-[var(--accent-green)] transition-colors">
+                  <AnimatedNumber value={stat.value} />
+                </div>
+                <div className="relative z-10 text-[10px] uppercase tracking-[0.15em] text-[var(--text-secondary)] font-bold">
+                  {stat.label}
+                </div>
+                <motion.div
+                  initial={{ width: 0 }}
+                  animate={{ width: `${progress}%` }}
+                  transition={{ duration: 2, ease: 'easeOut', delay: 1 }}
+                  className="absolute bottom-0 left-0 h-1 bg-[var(--accent-green)] opacity-50"
+                />
               </div>
-              <div className="text-[10px] uppercase tracking-[0.15em] text-slate-500 font-bold">
-                {stat.label}
-              </div>
-            </div>
-          ))}
+            );
+          })}
         </motion.div>
       </div>
 

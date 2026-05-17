@@ -21,7 +21,7 @@ export default function Login() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
       </div>
     );
@@ -58,7 +58,7 @@ export default function Login() {
   };
 
   return (
-    <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center p-5">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-5">
       <div className="auth-container mt-0 w-full animate-fadeIn">
         <div className="flex justify-center mb-6">
           <span className="text-4xl">🌾</span>

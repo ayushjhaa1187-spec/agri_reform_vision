@@ -62,14 +62,14 @@ export default function Register() {
 
   if (loading) {
     return (
-      <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center">
+      <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center">
         <div className="w-8 h-8 border-4 border-emerald-500/20 border-t-emerald-500 rounded-full animate-spin" />
       </div>
     );
   }
 
   return (
-    <div className="min-h-screen bg-[var(--surface)] flex items-center justify-center p-5">
+    <div className="min-h-screen bg-[var(--bg-primary)] flex items-center justify-center p-5">
       <div className="auth-container mt-0 w-full max-w-[500px] animate-fadeIn">
         <div className="flex justify-center mb-6">
           <span className="text-4xl">🌾</span>
@@ -155,7 +155,7 @@ export default function Register() {
         {step === 2 && (
           <div className="text-center space-y-4 animate-fadeIn">
             <h3 className="font-bold text-xl">Confirm & Start</h3>
-            <div className="bg-[var(--surface)] p-6 rounded-xl border border-[var(--border)] text-left space-y-2">
+            <div className="bg-[var(--bg-primary)] p-6 rounded-xl border border-[var(--border)] text-left space-y-2">
               <p><span className="text-[var(--text-secondary)]">Name:</span> <b>{formData.name}</b></p>
               <p><span className="text-[var(--text-secondary)]">Phone:</span> <b>{formData.phone}</b></p>
               <p><span className="text-[var(--text-secondary)]">Crop:</span> <b>{formData.crop}</b></p>

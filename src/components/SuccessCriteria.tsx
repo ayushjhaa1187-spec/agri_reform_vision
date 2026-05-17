@@ -45,81 +45,84 @@ export default function SuccessCriteria() {
   ];
 
   return (
-    <section id="success" className="py-20 bg-gradient-to-b from-slate-50 to-white">
-      <div className="max-w-7xl mx-auto px-6">
-        {/* Header */}
-        <div className="text-center mb-14">
-          <span className="inline-block px-4 py-1 bg-emerald-100 text-emerald-700 rounded-full text-sm font-semibold mb-4">
-            System Success Metrics
-          </span>
-          <h2 className="text-4xl font-bold text-slate-900 mb-4">
-            Operational Success Criteria
-          </h2>
-          <p className="text-lg text-slate-600 max-w-3xl mx-auto">
-            Concrete, observable outcomes that prove the system works end-to-end in real-world farming environments.
-          </p>
-        </div>
+    <>
+      <div className="section-separator"></div>
+      <section id="success" className="py-24 md:py-32 bg-[var(--bg-primary)]">
+        <div className="max-w-7xl mx-auto px-6">
+          {/* Header */}
+          <div className="text-center mb-14">
+            <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-[var(--border-accent)] text-[var(--text-accent)] bg-[var(--accent-green-glow)] mb-6">
+              System Success Metrics
+            </span>
+            <h2 className="text-4xl md:text-5xl font-bold text-[var(--text-primary)] mb-6">
+              Operational Success Criteria
+            </h2>
+            <p className="text-lg text-[var(--text-secondary)] max-w-3xl mx-auto">
+              Concrete, observable outcomes that prove the system works end-to-end in real-world farming environments.
+            </p>
+          </div>
 
-        {/* Criteria Grid */}
-        <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
-          {criteria.map((c, i) => (
-            <div key={i} className="group bg-white rounded-2xl p-6 shadow-md border border-slate-100 hover:shadow-xl hover:border-emerald-200 transition-all duration-300">
-              <div className="flex items-start justify-between mb-4">
-                <div className="w-14 h-14 bg-gradient-to-br from-emerald-100 to-teal-100 rounded-2xl flex items-center justify-center text-3xl">
-                  {c.icon}
-                </div>
-                <span className="px-3 py-1 bg-emerald-50 text-emerald-700 text-xs font-semibold rounded-full">
-                  {c.metric}
-                </span>
-              </div>
-              <h3 className="text-lg font-bold text-slate-900 mb-2 flex items-center gap-2">
-                <svg className="w-5 h-5 text-emerald-600 flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
-                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                </svg>
-                {c.title}
-              </h3>
-              <p className="text-slate-600 text-sm leading-relaxed">{c.description}</p>
-            </div>
-          ))}
-        </div>
-
-        {/* Budget Card */}
-        <div className="bg-gradient-to-br from-slate-900 to-slate-800 rounded-3xl p-8 md:p-12">
-          <div className="grid md:grid-cols-2 gap-10 items-center">
-            <div>
-              <span className="inline-block px-3 py-1 bg-emerald-500/20 text-emerald-300 rounded-full text-xs font-semibold mb-4">
-                Operational Budget
-              </span>
-              <h3 className="text-3xl font-bold text-white mb-4">Scalable Operational Budget</h3>
-              <p className="text-slate-300 mb-6">
-                The entire system is engineered to run on free tiers and optimized pay-as-you-go API models. Total operational cost stays minimal while delivering a production-grade infrastructure.
-              </p>
-              <div className="flex items-baseline gap-3">
-                <span className="text-5xl font-bold text-emerald-400">$100</span>
-                <span className="text-slate-400">–</span>
-                <span className="text-5xl font-bold text-emerald-400">$200</span>
-              </div>
-              <div className="text-slate-400 text-sm mt-2">Total estimated cost</div>
-            </div>
-
-            <div className="space-y-3">
-              {budget.map((b, i) => (
-                <div key={i} className="bg-slate-800/60 backdrop-blur-sm rounded-xl p-4 border border-slate-700 flex items-center justify-between">
-                  <div>
-                    <div className="text-white font-semibold">{b.item}</div>
-                    <div className="text-slate-400 text-xs">{b.detail}</div>
+          {/* Criteria Grid */}
+          <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-6 mb-16">
+            {criteria.map((c, i) => (
+              <div key={i} className="group glass-card hover:border-[var(--accent-green)] transition-all duration-300">
+                <div className="flex items-start justify-between mb-6">
+                  <div className="w-14 h-14 bg-[var(--bg-elevated)] border border-[var(--border-subtle)] rounded-2xl flex items-center justify-center text-3xl group-hover:scale-110 transition-transform duration-300">
+                    {c.icon}
                   </div>
-                  <div className="text-2xl font-bold text-emerald-400">{b.cost}</div>
+                  <span className="px-3 py-1 bg-[var(--accent-green-glow)] text-[var(--text-accent)] text-xs font-bold uppercase tracking-widest rounded-full border border-[var(--border-accent)]">
+                    {c.metric}
+                  </span>
                 </div>
-              ))}
-              <div className="bg-gradient-to-r from-emerald-600 to-teal-600 rounded-xl p-4 flex items-center justify-between">
-                <div className="text-white font-bold">Total</div>
-                <div className="text-2xl font-bold text-white">~$100–200</div>
+                <h3 className="text-lg font-bold text-[var(--text-primary)] mb-3 flex items-center gap-2">
+                  <svg className="w-5 h-5 text-[var(--accent-green)] flex-shrink-0" fill="currentColor" viewBox="0 0 20 20">
+                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                  </svg>
+                  {c.title}
+                </h3>
+                <p className="text-[var(--text-secondary)] text-sm leading-relaxed">{c.description}</p>
+              </div>
+            ))}
+          </div>
+
+          <div className="glass-card bg-[var(--bg-surface)] p-8 md:p-12 relative overflow-hidden">
+            <div className="absolute inset-0 bg-gradient-to-br from-[var(--accent-green-glow)] to-transparent pointer-events-none opacity-20"></div>
+            <div className="grid md:grid-cols-2 gap-10 items-center relative z-10">
+              <div>
+                <span className="inline-block px-4 py-1.5 rounded-full text-[11px] font-black uppercase tracking-[0.15em] border border-[var(--border-subtle)] text-[var(--text-muted)] bg-[var(--bg-elevated)] mb-6">
+                  Operational Budget
+                </span>
+                <h3 className="text-3xl font-bold text-[var(--text-primary)] mb-6">Scalable Operational Budget</h3>
+                <p className="text-[var(--text-secondary)] mb-8 leading-relaxed">
+                  The entire system is engineered to run on free tiers and optimized pay-as-you-go API models. Total operational cost stays minimal while delivering a production-grade infrastructure.
+                </p>
+                <div className="flex items-baseline gap-3">
+                  <span className="text-5xl font-black text-[var(--accent-green)]">$100</span>
+                  <span className="text-[var(--text-muted)]">–</span>
+                  <span className="text-5xl font-black text-[var(--accent-green)]">$200</span>
+                </div>
+                <div className="text-[var(--text-muted)] text-sm mt-3 uppercase tracking-widest font-bold">Total estimated cost</div>
+              </div>
+
+              <div className="space-y-3">
+                {budget.map((b, i) => (
+                  <div key={i} className="bg-[var(--bg-elevated)] rounded-xl p-5 border border-[var(--border-subtle)] flex items-center justify-between shadow-inner">
+                    <div>
+                      <div className="text-[var(--text-primary)] font-bold">{b.item}</div>
+                      <div className="text-[var(--text-muted)] text-[10px] uppercase font-black tracking-wider mt-1">{b.detail}</div>
+                    </div>
+                    <div className="text-2xl font-black text-[var(--accent-green)]">{b.cost}</div>
+                  </div>
+                ))}
+                <div className="bg-[var(--accent-green)] rounded-xl p-5 flex items-center justify-between shadow-[0_0_30px_rgba(16,185,129,0.3)]">
+                  <div className="text-black font-black uppercase tracking-widest text-sm">Projected Total</div>
+                  <div className="text-3xl font-black text-black">~$100–200</div>
+                </div>
               </div>
             </div>
           </div>
         </div>
-      </div>
-    </section>
+      </section>
+    </>
   );
 }

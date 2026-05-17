@@ -20,15 +20,15 @@ import Billing from './pages/Billing';
 import Footer from './components/Footer';
 
 const pageVariants = {
-  initial: { opacity: 0, y: 12 },
-  in: { opacity: 1, y: 0 },
-  out: { opacity: 0, y: -8 },
+  initial: { opacity: 0, y: 24, filter: 'blur(4px)' },
+  in: { opacity: 1, y: 0, filter: 'blur(0px)' },
+  out: { opacity: 0, y: -8, filter: 'blur(2px)' },
 };
 
 const pageTransition: any = {
   type: 'tween',
   ease: [0.16, 1, 0.3, 1],
-  duration: 0.35,
+  duration: 0.45,
 };
 
 function AnimatedRoutes() {
